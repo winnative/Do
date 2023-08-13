@@ -1,0 +1,89 @@
+﻿<Window x:Class="MelakifyMind.ToastWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MelakifyMind"
+        mc:Ignorable="d"
+        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" Top="0" Left="0" MaxHeight="600" MinHeight="300" Height="500" MinWidth="400" MaxWidth="400" Width="400" Loaded="Window_Loaded" Background="#A3FFFFFF">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" CaptionHeight="0" UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Storyboard x:Key="storyClose">
+            <DoubleAnimation To="{Binding ElementName=windowApp, Path=CloseLeft}" From="{Binding ElementName=windowApp, Path=Left}" Storyboard.TargetName="windowApp" Storyboard.TargetProperty="Left" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation From="{Binding ElementName=windowApp, Path=CloseLeft}" To="{Binding ElementName=windowApp, Path=Left}" Storyboard.TargetProperty="Left" Duration="0:0:0.4">
+                        <DoubleAnimation.EasingFunction>
+                            <ExponentialEase Exponent="5" EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid FlowDirection="RightToLeft">
+        <MediaElement Name="mediaPlayer" LoadedBehavior="Play" Source="Rings/Waterdrop_Drop.mp3"/>
+        <TextBlock Name="textBlockTitle" FontFamily="Fonts/#Segoe UI Variable Static Display SemiLight" FontSize="18" Margin="167,24,16,0" Height="30" VerticalAlignment="Top" FlowDirection="LeftToRight"><Run Foreground="#FFE59300">+Do</Run> <Run Foreground="Purple" FontFamily="Fonts/#Segoe UI Variable Static Text">MagicSense</Run></TextBlock>
+        <Button ToolTip="صفحه اصلی" Height="36" Width="36" Name="buttonShowTheMain" Style="{StaticResource buttonFlat}" Margin="57,18,307,0" VerticalAlignment="Top" Click="buttonShowTheMain_Click">
+            <Image SnapsToDevicePixels="False" Grid.Column="1" Name="comboBoxUIImageMain" Margin="8" Stretch="None" OpacityMask="Black">
+                <Image.Source>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Brush>
+                                    <VisualBrush Stretch="None">
+                                        <VisualBrush.Visual>
+                                            <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE8A7;" FontSize="16">
+
+                                            </TextBlock>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </GeometryDrawing.Brush>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="20,20,20,20"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Image.Source>
+            </Image>
+        </Button>
+        <Button ToolTip="فهمیدم و بستن" Height="36" Width="36" Name="buttonClose" Style="{StaticResource buttonFlat}" Margin="16,18,348,0" VerticalAlignment="Top" Click="buttonClose_Click">
+            <Image SnapsToDevicePixels="False" Grid.Column="1" Margin="8" Stretch="None" OpacityMask="Black">
+                <Image.Source>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Brush>
+                                    <VisualBrush Stretch="None">
+                                        <VisualBrush.Visual>
+                                            <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE711;" FontSize="16">
+
+                                            </TextBlock>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </GeometryDrawing.Brush>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="20,20,20,20"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Image.Source>
+            </Image>
+        </Button>
+        <TextBlock TextWrapping="Wrap" Name="textBlockAI" Margin="32,110,32,32" FontFamily="Fonts/#IRANSansX Regular" FontSize="16">
+سلام! من درک جادویی هستم. من در برنامه +Do می توانم مدیریت موعد های شما را برعهده بگیرم.
+        </TextBlock>
+    </Grid>
+</Window>
