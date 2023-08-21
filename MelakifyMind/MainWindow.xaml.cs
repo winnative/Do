@@ -842,8 +842,9 @@ namespace melakify.Do
             }
 
             DateTime? time = $"{YearNumber}/{MonthNumber}/{1}".ToGregorianDateTime();
-            MessageBox.Show(time.Value.DayOfWeek.ToString());
-            
+            string firstWeekDay = AutoBack.DateTime.Convert.ToPersianWeekDay(time.Value.DayOfWeek.ToString());
+
+
         }
 
         private void textBoxDescription_PreviewKeyUp(object sender, KeyEventArgs e)
