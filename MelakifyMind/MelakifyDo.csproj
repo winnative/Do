@@ -12,8 +12,11 @@
     <Copyright>Copyrights 2023. All rights reserved.</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentWPF" Version="0.10.2" />
+    <PackageReference Include="DNTPersianUtils.Core" Version="5.7.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Fonts/Segoe Fluent Icons.ttf">

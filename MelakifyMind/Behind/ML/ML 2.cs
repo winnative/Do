@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-using MelakifyMind.Behind;
+using melakify.Entities.Behind;
 using System.Globalization;
 using Newtonsoft.Json;
 
-namespace MelakifyDo.Behind.ML
+namespace melakify.Behind.ML
 {
     public class ML2
     {

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MelakifyMind.UIs.BackDrops
+namespace melakify.UI.BackDrop
 {
     static class BackDropCoWorker
     {

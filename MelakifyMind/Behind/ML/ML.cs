@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using melakify.Entities.Behind;
 using System.Diagnostics.Eventing.Reader;
 using System.Xaml;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace MelakifyMind.Behind.MelakifyML
+namespace melakify.Behind.ML
 {
     public static class ML
     {

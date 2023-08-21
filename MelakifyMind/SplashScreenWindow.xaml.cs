@@ -1,5 +1,5 @@
 ﻿using MelakifyMind;
-using MelakifyMind.UIs.BackDrops;
+using melakify.UI.BackDrop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MelakifyDo
+namespace melakify.Do
 {
     /// <summary>
     /// Interaction logic for SplashScreenWindow.xaml
@@ -33,7 +33,7 @@ namespace MelakifyDo
 
         private void storyBoardClose_Completed(object sender, EventArgs e)
         {
-            MainWindow win = new MainWindow();
+            melakify.Do.MainWindow win = new melakify.Do.MainWindow();
             win.Show();
             Close();
         }

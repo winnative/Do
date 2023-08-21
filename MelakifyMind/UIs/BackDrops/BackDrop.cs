@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Windows.Interop;
 using System.Windows;
 using System.Windows.Media;
-using static MelakifyMind.UIs.BackDrops.BackDropCoWorker.Method;
-using static MelakifyMind.UIs.BackDrops.BackDropCoWorker.Parameter;
+using static melakify.UI.BackDrop.BackDropCoWorker.Method;
+using static melakify.UI.BackDrop.BackDropCoWorker.Parameter;
 
-namespace MelakifyMind.UIs.BackDrops
+namespace melakify.UI.BackDrop
 {
     static class BackDrop
     {
