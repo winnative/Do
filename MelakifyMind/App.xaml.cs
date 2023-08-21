@@ -5,11 +5,11 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using MelakifyMind.Behind;
+using melakify.Do;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace MelakifyMind
+namespace melakify.Do
 {
     
     public partial class App : Application

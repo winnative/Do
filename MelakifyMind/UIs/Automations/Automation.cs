@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace MelakifyMind.UIs.Automations
+namespace melakify.Automation.UI
 {
     public static class Automation
     {

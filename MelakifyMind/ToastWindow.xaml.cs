@@ -1,4 +1,4 @@
-﻿using MelakifyMind.UIs.BackDrops;
+﻿using melakify.UI.BackDrop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +14,15 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
-using MelakifyMind.Behind;
+using melakify.Entities.Behind;
 using System.IO;
 using System.Globalization;
 using MelakifyDo.Properties;
 using MelakifyDo;
-using MelakifyMind.UIs.Automations;
+using melakify.Automation.UI;
+using System.Data.SQLite;
 
-namespace MelakifyMind
+namespace melakify.Do
 {
     /// <summary>
     /// Interaction logic for ToastWindow.xaml
@@ -31,11 +32,14 @@ namespace MelakifyMind
         Storyboard storyToastClose = new Storyboard();
         List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
+        SQLiteConnection connection = new SQLiteConnection("DataSource = DOs.sqlite; Version = 3;");
+        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
+        SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
 
-        public const string Path = "DOs.json";
+        public const string Path = "DOs.sqlite";
         public ToastWindow()
         {
             InitializeComponent();
@@ -46,62 +50,69 @@ namespace MelakifyMind
             storyToastClose = (Storyboard)Resources["storyClose"];
             storyToastClose.Completed += StoryToastClose_Completed;
 
-            if (File.Exists(Path) && File.ReadAllText(Path).Length > 0)
+
+            try
             {
-                reminders = JsonConvert.DeserializeObject<List<Reminder>>(File.ReadAllText(Path));
-
-                var r = from re in reminders
-                        where re.ShowDay == persian.GetDayOfMonth(time)
-                        where re.ShowMonth == persian.GetMonth(time)
-                        where re.ShowYear == persian.GetYear(time)
-                        select re;
-
-                var l = from le in reminders
-                        where le.Day == persian.GetDayOfMonth(time)
-                        where le.Month == persian.GetMonth(time)
-                        where le.Year == persian.GetYear(time)
-                        select le;
-
-
-                if (r.Count() > 0 && l.Count() > 0)
+                command.Connection = connection;
+                if (File.Exists(Path))
                 {
-                    textBlockAI.Text = "وقت بخیر. موعد های مربوط به امروز شما عبارتند از: ";
-                    foreach (var w in l)
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    command.CommandText = "SELECT * FROM TblReminder";
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        textBlockAI.Text += $"\n\n{w.Description}";
+                        Reminder reminder = new Reminder();
+                        reminder.Description = (string)reader["Description"];
+                        reminder.DaysBefore = (int)reader["DaysBefore"];
+                        reminder.Day = (int)reader["Day"];
+                        reminder.Month = (int)reader["Month"];
+                        reminder.Year = (int)reader["Year"];
+                        reminder.ShowDay = (int)reader["ShowDay"];
+                        reminder.ShowMonth = (int)reader["ShowMonth"];
+                        reminder.ShowYear = (int)reader["ShowYear"];
+                        reminder.IsImportant = (string)reader["IsImportant"];
+
+                        reminders.Add(reminder);
                     }
-                    textBlockAI.Text += "\n\n\nموعد های مربوط به روز های آینده که گفته بودید امروز تذکر داده شود:\n\n";
-                    foreach (var w in r)
+                    connection.Close();
+
+                    var result = from remind in reminders
+                                 where remind.ShowDay == new PersianCalendar().GetDayOfMonth(DateTime.Now)
+                                 where remind.ShowMonth == new PersianCalendar().GetMonth(DateTime.Now)
+                                 where remind.ShowYear == new PersianCalendar().GetYear(DateTime.Now)
+                                 select remind;
+
+                    if (result.Count() > 0)
                     {
-                        textBlockAI.Text += $"\n\n{w.Description} تا {w.DaysBefore} روز دیگر.";
+                        textBlockAI.Text = "با سلام و وقت بخیر!\nمن برای شما هشدار هایی دارم.\n\n\n";
+
+                        foreach(var item in result)
+                        {
+                            textBlockAI.Text += $"-{item.Description} تا {item.DaysBefore} روز دیگر\n";
+                        }
                     }
-                }
-                else if (r.Count() > 0)
-                {
-                    textBlockAI.Text += "با سلام. ";
-                    textBlockAI.Text += "موعد های مربوط به روز های آینده که گفته بودید امروز یادآوری شود:\n\n";
-                    foreach (var w in r)
+                    else
                     {
-                        textBlockAI.Text += $"\n\n{w.Description} تا {w.DaysBefore} روز دیگر.";
-                    }
-                }
-                else if (l.Count() > 0)
-                {
-                    textBlockAI.Text = "وقت بخیر. موعد های مربوط به امروز شما عبارتند از: ";
-                    foreach (var w in l)
-                    {
-                        textBlockAI.Text += $"\n\n{w.Description}";
+                        textBlockAI.Text = "با سلام. شما برای امروز موعدی ندارید.";
                     }
                 }
                 else
                 {
-                    textBlockAI.Text = "با سلام و وقت بخیر، طبق بررسی هایی که انجام دادم،";
-                    textBlockAI.Text += "شما هیچ موعدی یا یادآوری برای امروز ندارید.";
+                    SQLiteConnection.CreateFile(Path);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    textBlockAI.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
                 }
             }
-            else
+            finally
             {
-                textBlockAI.Text = "سلام. من درک جادویی هستم!\n\n من جستجو انجام دادم، ولی متاسفانه شما هیچ موعدی تنظیم نکرده اید! برای ذخیره موعد به صفحه اصلی بروید ، من در آنجا هستم تا موعدی برای شما ذخیره کنم.";
+                connection.Close();
             }
             
         }

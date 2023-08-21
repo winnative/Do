@@ -45,5 +45,29 @@ namespace MelakifyDo.Properties {
                 this["WatchTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FirstReminder {
+            get {
+                return ((bool)(this["FirstReminder"]));
+            }
+            set {
+                this["FirstReminder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OnStartup {
+            get {
+                return ((bool)(this["OnStartup"]));
+            }
+            set {
+                this["OnStartup"] = value;
+            }
+        }
     }
 }
