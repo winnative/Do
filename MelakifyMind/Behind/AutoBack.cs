@@ -29,7 +29,7 @@ namespace melakify.Automation.Behind
             public static class Convert
             {
                 public static (string name, int number)[] MonthConnection = { ("فروردین", 1), ("اردیبهشت", 2), ("خرداد", 3), ("تیر", 4), ("مرداد", 5), ("شهریور", 6), ("مهر", 7), ("آبان", 8), ("آذر", 9), ("دی", 10), ("بهمن", 11), ("اسفند", 12) };
-                public static (string gre, string per)[] WeekDayConnection = { ("Saturday", "شنبه"), ("Sunday", "یکشنبه"), ("Monday", "دوشنبه"), ("Tuesday", "سه‌شنبه"), ("Wednesday", "چهارشنبه"), ("Thursday", "پنجشنبه"), ("Friday", "جمعه") };
+                public static (string gre, int num)[] WeekDayConnection = { ("Saturday", 1), ("Sunday", 2), ("Monday", 3), ("Tuesday", 4), ("Wednesday", 5), ("Thursday", 6), ("Friday", 7) };
                 public static string ToMonthName(int monthNumber)
                 {
                     return MonthConnection.OrderBy(x => x.number).Where(x => x.number == monthNumber).Select(x => x.name).First();
@@ -40,14 +40,9 @@ namespace melakify.Automation.Behind
                     return MonthConnection.OrderBy(x => x.name).Where(x => x.name == monthName).Select(x => x.number).First();
                 }
 
-                public static string ToGregorianWeekDay(string persianWeekDay)
+                public static int ToNumberWeekDay(string gregorianWeekDay)
                 {
-                    return WeekDayConnection.OrderBy(x => x.per).Where(x => x.per == persianWeekDay).Select(x => x.gre).First();
-                }
-
-                public static string ToPersianWeekDay(string gregorianWeekDay)
-                {
-                    return WeekDayConnection.OrderBy(x => x.gre).Where(x => x.gre == gregorianWeekDay).Select(x => x.per).First();
+                    return WeekDayConnection.OrderBy(x => x.gre).Where(x => x.gre == gregorianWeekDay).Select(x => x.num).First();
                 }
             }
         }

@@ -841,10 +841,144 @@ namespace melakify.Do
                 buttonForwardCalendar.IsEnabled = false;
             }
 
+            for (int i = 0; i < 35; i++)
+            {
+                ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
+                ((Button)gridDaysOfCalendar.Children[i]).Content = "";
+            }
+
             DateTime? time = $"{YearNumber}/{MonthNumber}/{1}".ToGregorianDateTime();
-            string firstWeekDay = AutoBack.DateTime.Convert.ToPersianWeekDay(time.Value.DayOfWeek.ToString());
+            int firstWeekDay = AutoBack.DateTime.Convert.ToNumberWeekDay(time.Value.DayOfWeek.ToString());
 
-
+            switch (firstWeekDay)
+            {
+                case 1:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 4:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 5:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 6:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 7:
+                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                        }
+                    }
+                    break;
+            }
         }
 
         private void textBoxDescription_PreviewKeyUp(object sender, KeyEventArgs e)
