@@ -759,7 +759,7 @@
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <VirtualizingStackPanel Margin="4,0,0,0" Orientation="Horizontal">
-                                                <TextBlock VerticalAlignment="Center" FontSize="14" Text="{Binding DaysBefore}"></TextBlock>
+                                                <TextBlock VerticalAlignment="Center" FontSize="14" Text="{Binding DaysDistance}"></TextBlock>
                                                 <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" FontSize="14">روز مانده</TextBlock>
                                             </VirtualizingStackPanel>
                                             <VirtualizingStackPanel Orientation="Horizontal" Grid.Column="1">
@@ -778,7 +778,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
-                                    <Border ToolTip="{TemplateBinding Content}" Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="12" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000">
+                                    <Border Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="12" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000" MouseLeftButtonUp="listBoxItemUIMain_MouseLeftButtonUp">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
                                                 <VisualState x:Name="Disabled">

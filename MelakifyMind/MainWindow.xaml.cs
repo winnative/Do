@@ -221,12 +221,6 @@ namespace melakify.Do
                     }
                     reader.Close();
                     connection.Close();
-
-                    var result = from remind in reminders
-                                 where remind.ShowDay == new PersianCalendar().GetDayOfMonth(DateTime.Now)
-                                 where remind.ShowMonth == new PersianCalendar().GetMonth(DateTime.Now)
-                                 where remind.ShowYear == new PersianCalendar().GetYear(DateTime.Now)
-                                 select remind;
                 }
                 else
                 {
@@ -249,15 +243,11 @@ namespace melakify.Do
                 textBlockNoReminderComment.Visibility = Visibility.Collapsed;
 
                 var fewDays = from f in reminders
-                              where f.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) >= 1 && f.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) <= 3
-                              where f.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                              where f.Year == new PersianCalendar().GetYear(DateTime.Now)
+                              where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 3
                               select f;
 
                 var week = from w in reminders
-                           where w.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) >= 1 && w.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) <= 7
-                           where w.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                           where w.Year == new PersianCalendar().GetYear(DateTime.Now)
+                           where $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 7
                            select w;
 
                 var month = from m in reminders
@@ -340,7 +330,7 @@ namespace melakify.Do
         }
 
         public const string Path = @"C:\melakify\+Do\DOs.sqlite";
-
+        public object ListSelected = null;
         SQLiteConnection connection = new SQLiteConnection($"DataSource={Path}; Version=3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
@@ -842,34 +832,7 @@ namespace melakify.Do
 
         private void EditLists_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = false;
-            selectedReminder = (Reminder)((ListBox)sender).SelectedItem;
-            try
-            {
-                textBoxDescription.Text = selectedReminder.Description;
-                textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
-                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
-
-                if (selectedReminder.IsImportant == "")
-                {
-                    textBlockIsImportantContent.Foreground = Brushes.Black;
-                }
-                else
-                {
-                    textBlockIsImportantContent.Foreground = Brushes.IndianRed;
-                }
-
-                buttonAddReminderKey.Content = "ویرایش کردن";
-                buttonAddReminderKey.IsEnabled = false;
-                buttonAddReminderDelete.Visibility = Visibility.Visible;
-                borderSmoke.Visibility = Visibility.Visible;
-                borderAddReminder.Visibility = Visibility.Visible;
-                storyAddOpen.Begin();
-            }
-            catch
-            {
-
-            }
+            ListSelected = sender;
         }
 
         private void buttonAddReminderDelete_Click(object sender, RoutedEventArgs e)
@@ -1294,6 +1257,37 @@ namespace melakify.Do
         private void buttonMMS_Click(object sender, RoutedEventArgs e)
         {
             ShowMessage("بعضی وقت ها این ارور داده می شود، ها ها", "سلام چطوری","باشه");
+        }
+
+        private void listBoxItemUIMain_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            selectedReminder = (Reminder)((ListBox)ListSelected).SelectedItem;
+            try
+            {
+                textBoxDescription.Text = selectedReminder.Description;
+                textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
+                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
+
+                if (selectedReminder.IsImportant == "")
+                {
+                    textBlockIsImportantContent.Foreground = Brushes.Black;
+                }
+                else
+                {
+                    textBlockIsImportantContent.Foreground = Brushes.IndianRed;
+                }
+
+                buttonAddReminderKey.Content = "ویرایش کردن";
+                buttonAddReminderKey.IsEnabled = false;
+                buttonAddReminderDelete.Visibility = Visibility.Visible;
+                borderSmoke.Visibility = Visibility.Visible;
+                borderAddReminder.Visibility = Visibility.Visible;
+                storyAddOpen.Begin();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
