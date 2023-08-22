@@ -5,12 +5,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <PackageId>Melakify +Do</PackageId>
+    <PackageId>melakify +Do</PackageId>
     <Version>1.1.0</Version>
     <Authors>Hassan Kazemi</Authors>
-    <Company>Melakify</Company>
+    <Company>melakify</Company>
     <Copyright>Copyrights 2023. All rights reserved.</Copyright>
     <ApplicationIcon>Melak +Mind.ico</ApplicationIcon>
+    <Product>melakify +Do</Product>
+    <AssemblyName>melakify +Do</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Melak +Mind.ico" />

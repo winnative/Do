@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33711.374
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelakifyDo", "MelakifyMind\MelakifyDo.csproj", "{5CF23E00-59D9-4C09-88AE-E984B060FA1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelakifyMind", "MelakifyMind\MelakifyMind.csproj", "{5CF23E00-59D9-4C09-88AE-E984B060FA1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MelakifyVision", "MelakifyVision\MelakifyVision.csproj", "{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelakifyVision", "MelakifyVision\MelakifyVision.csproj", "{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

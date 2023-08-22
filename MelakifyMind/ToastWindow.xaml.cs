@@ -17,8 +17,8 @@ using Newtonsoft.Json;
 using melakify.Entities.Behind;
 using System.IO;
 using System.Globalization;
-using MelakifyDo.Properties;
-using MelakifyDo;
+using MelakifyMind.Properties;
+using MelakifyMind;
 using melakify.Automation.UI;
 using System.Data.SQLite;
 using System.Net;
@@ -118,7 +118,7 @@ namespace melakify.Do
                             {
                                 textBlockAI.Text += $"-{item.Description} تا {item.DaysBefore} روز دیگر\n";
                             }
-                            this.MaxHeight = 200;
+                            this.MaxHeight = 400;
                         }
                         else
                         {

@@ -24,7 +24,7 @@ using static melakify.Behind.ML.ML2;
 using System.Data.SQLite;
 using System.Reflection.PortableExecutable;
 using melakify.Automation.Behind;
-using MelakifyDo.Properties;
+using MelakifyMind.Properties;
 using DNTPersianUtils.Core;
 using Microsoft.Win32;
 
@@ -264,6 +264,11 @@ namespace melakify.Do
                     listBoxDatePins.Visibility = Visibility.Visible;
                     textBlockDatePins.Visibility = Visibility.Visible;
                     listBoxDatePins.ItemsSource = pin;
+                }
+                else
+                {
+                    listBoxDatePins.Visibility = Visibility.Collapsed;
+                    textBlockDatePins.Visibility = Visibility.Collapsed;
                 }
 
                 if (fewDays.Count() > 0)
@@ -1208,6 +1213,9 @@ namespace melakify.Do
 
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
                 key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"MelakifyDo.exe"));
+
+                storyReminderFirstEnable.Begin();
+                Settings.Default.FirstReminder = true;
                 
                 
             }

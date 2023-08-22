@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MelakifyMind"
         mc:Ignorable="d"
-        Title="Melakify +Do" Name="windowRoot" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Loaded="windowRoot_Loaded" Background="#FFCFDFFF" WindowStartupLocation="CenterScreen" Icon="/Images/Melak +Mind.ico" Closing="windowRoot_Closing">
+        Title="melakify +Do" Name="windowRoot" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Loaded="windowRoot_Loaded" Background="#FFCFDFFF" WindowStartupLocation="CenterScreen" Icon="/Images/Melak +Mind.ico" Closing="windowRoot_Closing">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
