@@ -20,14 +20,13 @@ using Newtonsoft;
 using Newtonsoft.Json;
 using System.IO;
 using System.Globalization;
-using Windows.UI.WindowManagement;
 using static melakify.Behind.ML.ML2;
 using System.Data.SQLite;
 using System.Reflection.PortableExecutable;
 using melakify.Automation.Behind;
-using Windows.ApplicationModel.VoiceCommands;
 using MelakifyDo.Properties;
 using DNTPersianUtils.Core;
+using Microsoft.Win32;
 
 namespace melakify.Do
 {
@@ -222,12 +221,6 @@ namespace melakify.Do
                     }
                     reader.Close();
                     connection.Close();
-
-                    var result = from remind in reminders
-                                 where remind.ShowDay == new PersianCalendar().GetDayOfMonth(DateTime.Now)
-                                 where remind.ShowMonth == new PersianCalendar().GetMonth(DateTime.Now)
-                                 where remind.ShowYear == new PersianCalendar().GetYear(DateTime.Now)
-                                 select remind;
                 }
                 else
                 {
@@ -250,15 +243,11 @@ namespace melakify.Do
                 textBlockNoReminderComment.Visibility = Visibility.Collapsed;
 
                 var fewDays = from f in reminders
-                              where f.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) >= 1 && f.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) <= 3
-                              where f.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                              where f.Year == new PersianCalendar().GetYear(DateTime.Now)
+                              where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 3
                               select f;
 
                 var week = from w in reminders
-                           where w.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) >= 1 && w.Day - new PersianCalendar().GetDayOfMonth(DateTime.Now) <= 7
-                           where w.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                           where w.Year == new PersianCalendar().GetYear(DateTime.Now)
+                           where $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 7
                            select w;
 
                 var month = from m in reminders
@@ -340,9 +329,9 @@ namespace melakify.Do
             Successful
         }
 
-        public const string Path = @"DOs.json";
-
-        SQLiteConnection connection = new SQLiteConnection("DataSource=DOs.sqlite; Version=3;");
+        public const string Path = @"C:\melakify\+Do\DOs.sqlite";
+        public object ListSelected = null;
+        SQLiteConnection connection = new SQLiteConnection($"DataSource={Path}; Version=3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         List<(string monthName, int monthNumber)> MonthConnection = new List<(string monthName, int monthNumber)>();
@@ -667,9 +656,6 @@ namespace melakify.Do
             {
                 if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                 {
-                    if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) - Convert.ToInt32(textBoxDaysBefore.Text)) > new PersianCalendar().GetDayOfMonth(DateTime.Now))
-                    {
-                    
                         string[] date = textBoxDateTime.Text.Split('/');
 
                         int showDay = 0;
@@ -785,11 +771,6 @@ namespace melakify.Do
                         {
                             connection.Close();
                         }
-                    }
-                    else
-                    {
-                        ShowMessage("تاریخی که برای یادآور خود در نظر گرفته اید مربوط به گذشته است.", "تاریخ، گذشته!");
-                    }
                 }
                 else
                 {
@@ -851,34 +832,7 @@ namespace melakify.Do
 
         private void EditLists_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = false;
-            selectedReminder = (Reminder)((ListBox)sender).SelectedItem;
-            try
-            {
-                textBoxDescription.Text = selectedReminder.Description;
-                textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
-                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
-
-                if (selectedReminder.IsImportant == "")
-                {
-                    textBlockIsImportantContent.Foreground = Brushes.Black;
-                }
-                else
-                {
-                    textBlockIsImportantContent.Foreground = Brushes.IndianRed;
-                }
-
-                buttonAddReminderKey.Content = "ویرایش کردن";
-                buttonAddReminderKey.IsEnabled = false;
-                buttonAddReminderDelete.Visibility = Visibility.Visible;
-                borderSmoke.Visibility = Visibility.Visible;
-                borderAddReminder.Visibility = Visibility.Visible;
-                storyAddOpen.Begin();
-            }
-            catch
-            {
-
-            }
+            ListSelected = sender;
         }
 
         private void buttonAddReminderDelete_Click(object sender, RoutedEventArgs e)
@@ -1241,13 +1195,21 @@ namespace melakify.Do
         {
             if (Settings.Default.OnStartup)
             {
-                storyOnStartupEnable.Begin();
+                storyOnStartupDisable.Begin();
                 Settings.Default.OnStartup = false;
+
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                key.DeleteValue("PlusDoOnStartup", false);
             }
             else
             {
-                storyOnStartupDisable.Begin();
+                storyOnStartupEnable.Begin();
                 Settings.Default.OnStartup = true;
+
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"MelakifyDo.exe"));
+                
+                
             }
             Settings.Default.Save();
         }
@@ -1256,12 +1218,18 @@ namespace melakify.Do
         {
             if (Settings.Default.FirstReminder)
             {
-                storyReminderFirstEnable.Begin();
+                storyReminderFirstDisable.Begin();
+                storyOnStartupDisable.Begin();
                 Settings.Default.FirstReminder = false;
+
+                Settings.Default.OnStartup = false;
+
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                key.DeleteValue("PlusDoOnStartup", false);
             }
             else
             {
-                storyReminderFirstDisable.Begin();
+                storyReminderFirstEnable.Begin();
                 Settings.Default.FirstReminder = true;
             }
             Settings.Default.Save();
@@ -1289,6 +1257,37 @@ namespace melakify.Do
         private void buttonMMS_Click(object sender, RoutedEventArgs e)
         {
             ShowMessage("بعضی وقت ها این ارور داده می شود، ها ها", "سلام چطوری","باشه");
+        }
+
+        private void listBoxItemUIMain_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            selectedReminder = (Reminder)((ListBox)ListSelected).SelectedItem;
+            try
+            {
+                textBoxDescription.Text = selectedReminder.Description;
+                textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
+                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
+
+                if (selectedReminder.IsImportant == "")
+                {
+                    textBlockIsImportantContent.Foreground = Brushes.Black;
+                }
+                else
+                {
+                    textBlockIsImportantContent.Foreground = Brushes.IndianRed;
+                }
+
+                buttonAddReminderKey.Content = "ویرایش کردن";
+                buttonAddReminderKey.IsEnabled = false;
+                buttonAddReminderDelete.Visibility = Visibility.Visible;
+                borderSmoke.Visibility = Visibility.Visible;
+                borderAddReminder.Visibility = Visibility.Visible;
+                storyAddOpen.Begin();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

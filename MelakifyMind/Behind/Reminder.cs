@@ -5,8 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DNTPersianUtils;
 using System.Windows.Controls;
-using Windows.Media.Devices;
+using DNTPersianUtils.Core;
 
 namespace melakify.Entities.Behind
 {
@@ -22,6 +23,14 @@ namespace melakify.Entities.Behind
         public int ShowMonth { get; set; }
         public int ShowYear { get; set; }
         public string IsImportant { get; set; }
+
+        public int DaysDistance
+        {
+            get
+            {
+                return $"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1;
+            }
+        }
 
         public Reminder() { }
         public Reminder(string description, int daysBefore, int day, int month, int year, bool isChecked)
