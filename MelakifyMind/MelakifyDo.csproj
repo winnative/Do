@@ -10,7 +10,11 @@
     <Authors>Hassan Kazemi</Authors>
     <Company>Melakify</Company>
     <Copyright>Copyrights 2023. All rights reserved.</Copyright>
+    <ApplicationIcon>Melak +Mind.ico</ApplicationIcon>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Melak +Mind.ico" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DNTPersianUtils.Core" Version="5.7.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />

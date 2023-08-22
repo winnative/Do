@@ -44,6 +44,13 @@ namespace melakify.Do
         public ToastWindow()
         {
             InitializeComponent();
+
+            if (!Settings.Default.FirstReminder)
+            {
+                MainWindow win = new MainWindow();
+                win.Show();
+                Close();
+            }
         }
 
         private void StoryToastClose_Completed(object? sender, EventArgs e)
@@ -62,8 +69,6 @@ namespace melakify.Do
 
                 BackDrop.UseAcrylic(this);
 
-                Left = SystemParameters.PrimaryScreenWidth - Width - 16;
-                Top = SystemParameters.PrimaryScreenHeight - Height - 64;
                 Topmost = true;
                 DataContext = this;
                 storyToastClose = (Storyboard)Resources["storyClose"];
@@ -113,11 +118,16 @@ namespace melakify.Do
                             {
                                 textBlockAI.Text += $"-{item.Description} تا {item.DaysBefore} روز دیگر\n";
                             }
+                            this.MaxHeight = 200;
                         }
                         else
                         {
-                            textBlockAI.Text = "با سلام. شما برای امروز موعدی ندارید.";
+                            this.MaxHeight = 72;
+                            textBlockAI.Text = "با سلام. شما برای امروز یادآوری ندارید.";
                         }
+
+                        Left = SystemParameters.PrimaryScreenWidth - Width - 16;
+                        Top = SystemParameters.PrimaryScreenHeight - Height - 64;
                     }
                     else
                     {

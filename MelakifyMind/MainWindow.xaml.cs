@@ -666,9 +666,6 @@ namespace melakify.Do
             {
                 if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                 {
-                    if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) - Convert.ToInt32(textBoxDaysBefore.Text)) > new PersianCalendar().GetDayOfMonth(DateTime.Now))
-                    {
-                    
                         string[] date = textBoxDateTime.Text.Split('/');
 
                         int showDay = 0;
@@ -784,11 +781,6 @@ namespace melakify.Do
                         {
                             connection.Close();
                         }
-                    }
-                    else
-                    {
-                        ShowMessage("تاریخی که برای یادآور خود در نظر گرفته اید مربوط به گذشته است.", "تاریخ، گذشته!");
-                    }
                 }
                 else
                 {
@@ -1264,7 +1256,13 @@ namespace melakify.Do
             if (Settings.Default.FirstReminder)
             {
                 storyReminderFirstDisable.Begin();
+                storyOnStartupDisable.Begin();
                 Settings.Default.FirstReminder = false;
+
+                Settings.Default.OnStartup = false;
+
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                key.DeleteValue("PlusDoOnStartup", false);
             }
             else
             {
