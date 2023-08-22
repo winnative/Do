@@ -10,6 +10,34 @@
         <WindowChrome GlassFrameThickness="-1" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
+        <Storyboard x:Key="storyMessageDialogOpen">
+            <DoubleAnimation From="1.05" To="1" Storyboard.TargetName="scaleTransformMessage" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Duration="0:0:0.333">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="4" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation From="1.05" To="1" Storyboard.TargetName="scaleTransformMessage" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" Duration="0:0:0.333">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="4" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation From="0" To="1" Storyboard.TargetName="borderMessage" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+            <DoubleAnimation From="0" To="1" Storyboard.TargetName="borderMessageBack" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+        </Storyboard>
+        <Storyboard Duration="0:0:0.16" x:Key="storyMessageDialogClose">
+            <DoubleAnimation From="1" To="1.05" Storyboard.TargetName="scaleTransformMessage" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="4" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation From="1" To="1.05" Storyboard.TargetName="scaleTransformMessage" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="4" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetName="borderMessage" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetName="borderMessageBack" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+        </Storyboard>
         <Storyboard x:Key="storyOnStartupEnable">
             <ColorAnimation To="#FF47C824" Storyboard.TargetName="borderOnStartupActivator" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1"/>
         </Storyboard>
@@ -648,7 +676,7 @@
                             </Image>
                         </VirtualizingStackPanel>
                     </Button>
-                    <Button Margin="4,0,0,0" Name="buttonMMS" Width="36" Style="{StaticResource buttonFlat}">
+                    <Button Margin="4,0,0,0" Name="buttonMMS" Width="36" Style="{StaticResource buttonFlat}" Click="buttonMMS_Click">
                         <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
                             <Image SnapsToDevicePixels="True" Stretch="None">
                                 <Image.Source>
@@ -994,17 +1022,17 @@
                                 </Grid.RowDefinitions>
                                 <Grid Visibility="Collapsed" Name="gridCalendarYear" Grid.RowSpan="2">
                                     <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Name="wrapPanelCalendarYear">
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1402</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1403</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1404</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1405</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1406</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1407</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1408</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1409</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1410</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1411</Button>
-                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click">1412</Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
+                                        <Button Margin="4" Height="32" Width="64" FontSize="14" Style="{StaticResource buttonFlat}" Click="YearCalendarButton_Click"></Button>
                                     </WrapPanel>
                                 </Grid>
                                 <Grid Name="gridCalendarMainBar">
@@ -1106,42 +1134,50 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                             <RowDefinition/>
+                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <Button IsEnabled="False" Style="{StaticResource buttonFlat}" Name="buttonCalendar1"/>
-                                        <Button IsEnabled="False" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar2"/>
-                                        <Button IsEnabled="False" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar3"/>
-                                        <Button IsEnabled="False" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar4"/>
-                                        <Button IsEnabled="False" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar5"/>
-                                        <Button IsEnabled="False" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar6"/>
-                                        <Button IsEnabled="False" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar7"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar8"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar9"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar10"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar11"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar12"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar13"/>
-                                        <Button IsEnabled="False" Grid.Row="1" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar14"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar15"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar16"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar17"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar18"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar19"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar20"/>
-                                        <Button IsEnabled="False" Grid.Row="2" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar21"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar22"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar23"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar24"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar25"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar26"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar27"/>
-                                        <Button IsEnabled="False" Grid.Row="3" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar28"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar29"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar30"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar31"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar32"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar33"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar34"/>
-                                        <Button IsEnabled="False" Grid.Row="4" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar35"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Style="{StaticResource buttonFlat}" Name="buttonCalendar1"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar2"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar3"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar4"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar5"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar6"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar7"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar8"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar9"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar10"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar11"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar12"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar13"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="1" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar14"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar15"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar16"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar17"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar18"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar19"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar20"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="2" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar21"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar22"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar23"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar24"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar25"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar26"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar27"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="3" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar28"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar29"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar30"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar31"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar32"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar33"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar34"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="4" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar35"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="0" Style="{StaticResource buttonFlat}" Name="buttonCalendar36"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonCalendar37"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonCalendar38"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="3" Style="{StaticResource buttonFlat}" Name="buttonCalendar39"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="4" Style="{StaticResource buttonFlat}" Name="buttonCalendar40"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="5" Style="{StaticResource buttonFlat}" Name="buttonCalendar41"/>
+                                        <Button IsEnabled="False" Click="buttonCalendarDays_Click" Grid.Row="5" Grid.Column="6" Style="{StaticResource buttonFlat}" Name="buttonCalendar42"/>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -1223,5 +1259,28 @@
             </Image>
             <TextBlock Name="textBlockNevigationBackDrop" Visibility="Collapsed" FontFamily="Fonts/#IRANSansX SemiBold" Text="تنظیمات" FontSize="28"/>
         </VirtualizingStackPanel>
+        <Border Name="borderMessageBack" Visibility="Collapsed" Background="#66000000">
+        </Border>
+        <Border Visibility="Collapsed" Opacity="0" RenderTransformOrigin="0.5,0.5" FlowDirection="RightToLeft" UseLayoutRounding="True" CornerRadius="8" BorderThickness="1" BorderBrush="#FFFFFFFF" Name="borderMessage" Margin="333,235,333,235" Background="#FFF1F1F1">
+            <Border.Effect>
+                <DropShadowEffect Direction="270" Opacity="0.12" ShadowDepth="8" BlurRadius="32"/>
+            </Border.Effect>
+            <Border.RenderTransform>
+                <ScaleTransform x:Name="scaleTransformMessage" ScaleX="1" ScaleY="1"/>
+            </Border.RenderTransform>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <TextBlock Name="textBlockMessageTitle" FontSize="20" HorizontalAlignment="Left" Margin="32" VerticalAlignment="Top" FontFamily="Fonts/#IRANSansX Regular" Text="عنوان پیام"/>
+                <TextBlock TextWrapping="Wrap" Name="textBlockMessageComment" FontSize="14" Margin="32,73,32,0" VerticalAlignment="Top" FontFamily="Fonts/#IRANSansX Regular" Text="متن پیام"/>
+                <Border Grid.Row="1" Name="borderMessageToolBar" CornerRadius="0,0,8,8" UseLayoutRounding="True" Background="#51CACACA">
+                    <Grid>
+                        <Button Name="buttonMessageOK" Content="باشه" Margin="32,0,0,0" HorizontalContentAlignment="Center" Height="32" Width="132" VerticalAlignment="Center" HorizontalAlignment="Left" Click="buttonMessageOK_Click"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

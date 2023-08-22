@@ -36,6 +36,160 @@ namespace melakify.Do
     /// </summary>
     public partial class MainWindow : Window
     {
+        public void ShowMessage(string message, string title, string primaryText = "باشه")
+        {
+            borderMessage.Visibility = Visibility.Visible;
+            borderMessageBack.Visibility = Visibility.Visible;
+
+            textBlockMessageTitle.Text = title;
+            textBlockMessageComment.Text = message;
+            buttonMessageOK.Content = primaryText;
+
+            storyMessageDialogOpen.Begin();
+        }
+
+        public void RefreshCalendarDays()
+        {
+            for (int i = 0; i < 42; i++)
+            {
+                ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
+                ((Button)gridDaysOfCalendar.Children[i]).Content = "";
+            }
+
+            DateTime? time = $"{YearNumber}/{MonthNumber}/{1}".ToGregorianDateTime();
+            int firstWeekDay = AutoBack.DateTime.Convert.ToNumberWeekDay(time.Value.DayOfWeek.ToString());
+
+            switch (firstWeekDay)
+            {
+                case 1:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 4:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 5:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 6:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                        }
+                    }
+                    break;
+                case 7:
+                    if (MonthNumber >= 1 && MonthNumber <= 6)
+                    {
+                        for (int i = 0; i < 31; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                        }
+                    }
+                    break;
+            }
+        }
+
         public void Refresh()
         {
             try
@@ -169,6 +323,16 @@ namespace melakify.Do
 
         }
 
+        public void RecalculateYears()
+        {
+            int currentYear = new PersianCalendar().GetYear(DateTime.Now);
+
+            for (int i = 0; i < 11; i++)
+            {
+                ((Button)wrapPanelCalendarYear.Children[i]).Content = (currentYear + i).ToString();
+            }
+        }
+
         public enum FlyoutIcon
         {
             Info,
@@ -203,6 +367,8 @@ namespace melakify.Do
         Storyboard storyOnStartupDisable = new Storyboard();
         Storyboard storyReminderFirstEnable = new Storyboard();
         Storyboard storyReminderFirstDisable = new Storyboard();
+        Storyboard storyMessageDialogOpen = new Storyboard();
+        Storyboard storyMessageDialogClose = new Storyboard();
         Reminder newReminder = new Reminder();
         Reminder selectedReminder = new Reminder();
         List<Reminder> reminders = new List<Reminder>();
@@ -240,6 +406,8 @@ namespace melakify.Do
             storyOnStartupDisable = (Storyboard)Resources["storyOnStartupDisable"];
             storyReminderFirstEnable = (Storyboard)Resources["storyReminderFirstEnable"];
             storyReminderFirstDisable = (Storyboard)Resources["storyReminderFirstDisable"];
+            storyMessageDialogClose = (Storyboard)Resources["storyMessageDialogClose"];
+            storyMessageDialogOpen = (Storyboard)Resources["storyMessageDialogOpen"];
 
 
             storyPreviewClose.Completed += StoryPreviewClose_Completed;
@@ -250,7 +418,14 @@ namespace melakify.Do
             storySettingsClose.Completed += StorySettingsClose_Completed;
             storyBoardExpandAIClose.Completed += StoryBoardExpandAIClose_Completed;
             storyAddClose.Completed += StoryAddClose_Completed;
+            storyMessageDialogClose.Completed += StoryMessageDialogClose_Completed;
 
+        }
+
+        private void StoryMessageDialogClose_Completed(object? sender, EventArgs e)
+        {
+            borderMessage.Visibility = Visibility.Collapsed;
+            borderMessageBack.Visibility = Visibility.Collapsed;
         }
 
         private void StoryAddClose_Completed(object? sender, EventArgs e)
@@ -375,6 +550,8 @@ namespace melakify.Do
             {
                 storyReminderFirstDisable.Begin();
             }
+
+            RecalculateYears();
         }
 
         private void borderDragMove_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -486,122 +663,143 @@ namespace melakify.Do
 
         private void buttonAddReminderKey_Click(object sender, RoutedEventArgs e)
         {
-            string[] date = textBoxDateTime.Text.Split('/');
-
-            int showDay = 0;
-            int showMonth = 0;
-            int showYear = 0;
-
-            int day = 0;
-            int month = 0;
-            int year = 0;
-            int daysBefore = 0;
-            string isImportant = "";
-
-            day = Convert.ToInt32(date[2]);
-            month = Convert.ToInt32(date[1]);
-            year = Convert.ToInt32(date[0]);
-            daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
-
-            if (buttonAddReminderKey.Content=="ویرایش کردن")
+            if (textBoxDescription.Text != "")
             {
-                command.CommandText = "UPDATE TblReminder SET Description=@Description, DaysBefore=@DaysBefore, Day=@Day, Month=@Month, Year=@Year, ShowDay=@ShowDay, ShowMonth=@ShowMonth, ShowYear=@ShowYear, IsImportant=@IsImportant WHERE Description=@Desc AND DaysBefore=@OldBefore AND Day=@OldDay AND Month=@OldMonth AND Year=@OldYear";
-            }
-            else if (buttonAddReminderKey.Content=="اضافه کردن")
-            {
-                command.CommandText = "INSERT INTO TblReminder VALUES (@Description, @DaysBefore, @Day, @Month, @Year, @ShowDay, @ShowMonth, @ShowYear, @IsImportant)";
-            }
-
-            command.Parameters.Clear();
-            command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
-            command.Parameters.AddWithValue("@DaysBefore", daysBefore);
-            command.Parameters.AddWithValue("@Day", day);
-            command.Parameters.AddWithValue("@Month", month);
-            command.Parameters.AddWithValue("@Year", year);
-            command.Parameters.AddWithValue("@Desc", selectedReminder.Description);
-            command.Parameters.AddWithValue("@OldBefore", selectedReminder.DaysBefore);
-            command.Parameters.AddWithValue("@OldDay", selectedReminder.Day);
-            command.Parameters.AddWithValue("@OldMonth", selectedReminder.Month);
-            command.Parameters.AddWithValue("@OldYear", selectedReminder.Year);
-
-            if ((day - daysBefore) < 1)
-            {
-                if (month == 1)
+                if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                 {
-                    if (new PersianCalendar().IsLeapYear(year - 1))
+                    if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) - Convert.ToInt32(textBoxDaysBefore.Text)) > new PersianCalendar().GetDayOfMonth(DateTime.Now))
                     {
-                        showDay = 29 + (day - daysBefore);
+                    
+                        string[] date = textBoxDateTime.Text.Split('/');
+
+                        int showDay = 0;
+                        int showMonth = 0;
+                        int showYear = 0;
+
+                        int day = 0;
+                        int month = 0;
+                        int year = 0;
+                        int daysBefore = 0;
+                        string isImportant = "";
+
+                        day = Convert.ToInt32(date[2]);
+                        month = Convert.ToInt32(date[1]);
+                        year = Convert.ToInt32(date[0]);
+                        daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
+
+                        if (buttonAddReminderKey.Content == "ویرایش کردن")
+                        {
+                            command.CommandText = "UPDATE TblReminder SET Description=@Description, DaysBefore=@DaysBefore, Day=@Day, Month=@Month, Year=@Year, ShowDay=@ShowDay, ShowMonth=@ShowMonth, ShowYear=@ShowYear, IsImportant=@IsImportant WHERE Description=@Desc AND DaysBefore=@OldBefore AND Day=@OldDay AND Month=@OldMonth AND Year=@OldYear";
+                        }
+                        else if (buttonAddReminderKey.Content == "اضافه کردن")
+                        {
+                            command.CommandText = "INSERT INTO TblReminder VALUES (@Description, @DaysBefore, @Day, @Month, @Year, @ShowDay, @ShowMonth, @ShowYear, @IsImportant)";
+                        }
+
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
+                        command.Parameters.AddWithValue("@DaysBefore", daysBefore);
+                        command.Parameters.AddWithValue("@Day", day);
+                        command.Parameters.AddWithValue("@Month", month);
+                        command.Parameters.AddWithValue("@Year", year);
+                        command.Parameters.AddWithValue("@Desc", selectedReminder.Description);
+                        command.Parameters.AddWithValue("@OldBefore", selectedReminder.DaysBefore);
+                        command.Parameters.AddWithValue("@OldDay", selectedReminder.Day);
+                        command.Parameters.AddWithValue("@OldMonth", selectedReminder.Month);
+                        command.Parameters.AddWithValue("@OldYear", selectedReminder.Year);
+
+                        if ((day - daysBefore) < 1)
+                        {
+                            if (month == 1)
+                            {
+                                if (new PersianCalendar().IsLeapYear(year - 1))
+                                {
+                                    showDay = 29 + (day - daysBefore);
+                                }
+                                else
+                                {
+                                    showDay = 30 + (day - daysBefore);
+                                }
+                                showYear = year - 1;
+                                showMonth = 12;
+                            }
+                            else if (month > 1 && month <= 6)
+                            {
+                                showDay = 31 + (day - daysBefore);
+                                showMonth = month - 1;
+                                showYear = year;
+                            }
+                            else if (month > 6 && month <= 12)
+                            {
+                                showDay = 30 + (day - daysBefore);
+                                showMonth = month - 1;
+                                showYear = year;
+                            }
+                        }
+                        else
+                        {
+                            showYear = year;
+                            showMonth = month;
+                            showDay = day - daysBefore;
+                        }
+
+                        command.Parameters.AddWithValue("@ShowDay", showDay);
+                        command.Parameters.AddWithValue("@ShowMonth", showMonth);
+                        command.Parameters.AddWithValue("@ShowYear", showYear);
+
+                        if (textBlockIsImportantContent.Foreground == Brushes.Black)
+                        {
+                            isImportant = "";
+                        }
+                        else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
+                        {
+                            isImportant = "مهم";
+                        }
+
+                        command.Parameters.AddWithValue("@IsImportant", isImportant);
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            connection.Close();
+                            storyAddClose.Begin();
+                            borderSmoke.Visibility = Visibility.Collapsed;
+
+                            Reminder reminder = new Reminder();
+                            reminder.Description = textBoxDescription.Text;
+                            reminder.Day = day;
+                            reminder.Month = month;
+                            reminder.Year = year;
+                            reminder.DaysBefore = daysBefore;
+                            reminder.ShowYear = showYear;
+                            reminder.ShowMonth = showMonth;
+                            reminder.ShowDay = showDay;
+                            reminder.IsImportant = isImportant;
+
+                            reminders.Add(reminder);
+
+                            Refresh();
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
                     }
                     else
                     {
-                        showDay = 30 + (day - daysBefore);
+                        ShowMessage("تاریخی که برای یادآور خود در نظر گرفته اید مربوط به گذشته است.", "تاریخ، گذشته!");
                     }
-                    showYear = year - 1;
-                    showMonth = 12;
                 }
-                else if (month > 1 && month <= 6)
+                else
                 {
-                    showDay = 31 + (day - daysBefore);
-                    showMonth = month - 1;
-                    showYear = year;
-                }
-                else if (month > 6 && month <= 12)
-                {
-                    showDay = 30 + (day - daysBefore);
-                    showMonth = month - 1;
-                    showYear = year;
+                    ShowMessage("تاریخی که وارد کرده اید از لحاظ منطقی صحیح نمی باشد.", "تاریخ صحیح نیست!");
                 }
             }
             else
             {
-                showYear = year;
-                showMonth = month;
-                showDay = day - daysBefore;
+                ShowMessage("لطفا توضیحی برای یادآور وارد کنید.", "درباره یادآور توضیح دهید!");
             }
-
-            command.Parameters.AddWithValue("@ShowDay", showDay);
-            command.Parameters.AddWithValue("@ShowMonth", showMonth);
-            command.Parameters.AddWithValue("@ShowYear", showYear);
-
-            if (textBlockIsImportantContent.Foreground == Brushes.Black)
-            {
-                isImportant = "";
-            }
-            else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
-            {
-                isImportant = "مهم";
-            }
-
-            command.Parameters.AddWithValue("@IsImportant", isImportant);
-
-            try
-            {
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-                storyAddClose.Begin();
-                borderSmoke.Visibility = Visibility.Collapsed;
-
-                Reminder reminder = new Reminder();
-                reminder.Description = textBoxDescription.Text;
-                reminder.Day = day;
-                reminder.Month = month;
-                reminder.Year = year;
-                reminder.DaysBefore = daysBefore;
-                reminder.ShowYear = showYear;
-                reminder.ShowMonth = showMonth;
-                reminder.ShowDay = showDay;
-                reminder.IsImportant = isImportant;
-
-                reminders.Add(reminder);
-
-                Refresh();
-            }
-            finally
-            {
-                connection.Close();
-            }
-
         }
 
         private void textBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
@@ -736,8 +934,29 @@ namespace melakify.Do
             MonthName = AutoBack.DateTime.Convert.ToMonthName(MonthNumber);
 
             textBlockCalendarMonthYear.Text = $"{MonthName} {YearNumber}";
-            buttonBackCalendar.IsEnabled = false;
-            buttonForwardCalendar.IsEnabled = true;
+
+            if (MonthNumber == new PersianCalendar().GetMonth(DateTime.Now) && YearNumber == new PersianCalendar().GetYear(DateTime.Now))
+            {
+                buttonBackCalendar.IsEnabled = false;
+                buttonForwardCalendar.IsEnabled = true;
+            }
+            else if (MonthNumber == 12)
+            {
+                buttonBackCalendar.IsEnabled = true;
+                buttonForwardCalendar.IsEnabled = false;
+            }
+            else if (MonthNumber == 1)
+            {
+                buttonBackCalendar.IsEnabled = false;
+                buttonForwardCalendar.IsEnabled = true;
+            }
+            else
+            {
+                buttonBackCalendar.IsEnabled = true;
+                buttonForwardCalendar.IsEnabled = true;
+            }
+
+            RefreshCalendarDays();
         }
 
         public int MonthNumber { get; set; } = new PersianCalendar().GetMonth(DateTime.Now);
@@ -808,6 +1027,8 @@ namespace melakify.Do
                     buttonBackCalendar.IsEnabled = false;
                 }
             }
+
+            RefreshCalendarDays();
         }
 
         private void buttonForwardCalendar_Click(object sender, RoutedEventArgs e)
@@ -841,144 +1062,7 @@ namespace melakify.Do
                 buttonForwardCalendar.IsEnabled = false;
             }
 
-            for (int i = 0; i < 35; i++)
-            {
-                ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
-                ((Button)gridDaysOfCalendar.Children[i]).Content = "";
-            }
-
-            DateTime? time = $"{YearNumber}/{MonthNumber}/{1}".ToGregorianDateTime();
-            int firstWeekDay = AutoBack.DateTime.Convert.ToNumberWeekDay(time.Value.DayOfWeek.ToString());
-
-            switch (firstWeekDay)
-            {
-                case 1:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
-                        }
-                    }
-                    break;
-                case 2:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
-                        }
-                    }
-                    break;
-                case 3:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
-                        }
-                    }
-                    break;
-                case 4:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
-                        }
-                    }
-                    break;
-                case 5:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
-                        }
-                    }
-                    break;
-                case 6:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
-                        }
-                    }
-                    break;
-                case 7:
-                    if (new PersianCalendar().IsLeapMonth(YearNumber, MonthNumber))
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 30; i++)
-                        {
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
-                        }
-                    }
-                    break;
-            }
+            RefreshCalendarDays();
         }
 
         private void textBoxDescription_PreviewKeyUp(object sender, KeyEventArgs e)
@@ -1124,9 +1208,14 @@ namespace melakify.Do
 
             textBlockCalendarMonthYear.Text = $"{MonthName} {YearNumber}";
 
+            RefreshCalendarDays();
+
             gridCalendarMainBar.Visibility = Visibility.Visible;
             gridCalendarMainDays.Visibility = Visibility.Visible;
             gridCalendarYear.Visibility = Visibility.Collapsed;
+
+            buttonForwardCalendar.IsEnabled = true;
+            buttonBackCalendar.IsEnabled = false;
         }
 
         private void buttonCalendarMonthYear_Click(object sender, RoutedEventArgs e)
@@ -1176,6 +1265,30 @@ namespace melakify.Do
                 Settings.Default.FirstReminder = true;
             }
             Settings.Default.Save();
+        }
+
+        private void buttonCalendarDays_Click(object sender, RoutedEventArgs e)
+        {
+            int year, month, day = 0;
+
+            day = Convert.ToInt32(((Button)sender).Content);
+            month = Convert.ToInt32(AutoBack.DateTime.Convert.ToMonthNumber(textBlockCalendarMonthYear.Text.Split(' ')[0]));
+            year = Convert.ToInt32(textBlockCalendarMonthYear.Text.Split(' ')[1]);
+
+            textBoxDateTime.Text = $"{year:0000}/{month:00}/{day:00}";
+
+            borderCalendarBack.Visibility = Visibility.Collapsed;
+            borderCalendar.Visibility = Visibility.Collapsed;
+        }
+
+        private void buttonMessageOK_Click(object sender, RoutedEventArgs e)
+        {
+            storyMessageDialogClose.Begin();
+        }
+
+        private void buttonMMS_Click(object sender, RoutedEventArgs e)
+        {
+            ShowMessage("بعضی وقت ها این ارور داده می شود، ها ها", "سلام چطوری","باشه");
         }
     }
 }
