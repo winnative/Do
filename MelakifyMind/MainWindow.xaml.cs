@@ -1212,7 +1212,7 @@ namespace melakify.Do
                 Settings.Default.OnStartup = true;
 
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
-                key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"MelakifyDo.exe"));
+                key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"melakify +Do.exe"));
 
                 storyReminderFirstEnable.Begin();
                 Settings.Default.FirstReminder = true;
