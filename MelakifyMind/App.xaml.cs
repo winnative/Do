@@ -8,12 +8,17 @@ using System.Windows.Controls;
 using melakify.Do;
 using Newtonsoft.Json;
 using System.IO;
+using System.Windows.Threading;
 
 namespace melakify.Do
 {
     
     public partial class App : Application
     {
-        
+        private void HelloError(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
+            e.Handled = true;
+        }
     }
 }

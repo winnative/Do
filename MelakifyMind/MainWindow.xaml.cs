@@ -20,14 +20,13 @@ using Newtonsoft;
 using Newtonsoft.Json;
 using System.IO;
 using System.Globalization;
-using Windows.UI.WindowManagement;
 using static melakify.Behind.ML.ML2;
 using System.Data.SQLite;
 using System.Reflection.PortableExecutable;
 using melakify.Automation.Behind;
-using Windows.ApplicationModel.VoiceCommands;
 using MelakifyDo.Properties;
 using DNTPersianUtils.Core;
+using Microsoft.Win32;
 
 namespace melakify.Do
 {
@@ -340,9 +339,9 @@ namespace melakify.Do
             Successful
         }
 
-        public const string Path = @"DOs.json";
+        public const string Path = @"C:\melakify\+Do\DOs.sqlite";
 
-        SQLiteConnection connection = new SQLiteConnection("DataSource=DOs.sqlite; Version=3;");
+        SQLiteConnection connection = new SQLiteConnection($"DataSource={Path}; Version=3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         List<(string monthName, int monthNumber)> MonthConnection = new List<(string monthName, int monthNumber)>();
@@ -1241,13 +1240,21 @@ namespace melakify.Do
         {
             if (Settings.Default.OnStartup)
             {
-                storyOnStartupEnable.Begin();
+                storyOnStartupDisable.Begin();
                 Settings.Default.OnStartup = false;
+
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                key.DeleteValue("PlusDoOnStartup", false);
             }
             else
             {
-                storyOnStartupDisable.Begin();
+                storyOnStartupEnable.Begin();
                 Settings.Default.OnStartup = true;
+
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"MelakifyDo.exe"));
+                
+                
             }
             Settings.Default.Save();
         }
@@ -1256,12 +1263,12 @@ namespace melakify.Do
         {
             if (Settings.Default.FirstReminder)
             {
-                storyReminderFirstEnable.Begin();
+                storyReminderFirstDisable.Begin();
                 Settings.Default.FirstReminder = false;
             }
             else
             {
-                storyReminderFirstDisable.Begin();
+                storyReminderFirstEnable.Begin();
                 Settings.Default.FirstReminder = true;
             }
             Settings.Default.Save();

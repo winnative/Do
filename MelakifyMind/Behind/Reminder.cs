@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Windows.Media.Devices;
 
 namespace melakify.Entities.Behind
 {

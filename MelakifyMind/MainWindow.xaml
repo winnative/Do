@@ -463,7 +463,7 @@
             </Border>
         </Grid>
         <Grid Visibility="Visible" Name="gridContent">
-            <Border FlowDirection="RightToLeft" CornerRadius="8" UseLayoutRounding="True" Name="borderSearch" SnapsToDevicePixels="True" Width="400" Margin="300,22,300,0" BorderBrush="#F4FFFFFF" BorderThickness="1" Background="#8EFFFFFF" Height="34" VerticalAlignment="Top">
+            <Border IsEnabled="False" FlowDirection="RightToLeft" CornerRadius="8" UseLayoutRounding="True" Name="borderSearch" SnapsToDevicePixels="True" Width="400" Margin="300,22,300,0" BorderBrush="#F4FFFFFF" BorderThickness="1" Background="#8EFFFFFF" Height="34" VerticalAlignment="Top">
                 <Border.Triggers>
                     <EventTrigger RoutedEvent="Border.MouseLeave">
                         <BeginStoryboard>
@@ -676,7 +676,7 @@
                             </Image>
                         </VirtualizingStackPanel>
                     </Button>
-                    <Button Margin="4,0,0,0" Name="buttonMMS" Width="36" Style="{StaticResource buttonFlat}" Click="buttonMMS_Click">
+                    <Button Margin="4,0,0,0" IsEnabled="False" Name="buttonMMS" Width="36" Style="{StaticResource buttonFlat}" Click="buttonMMS_Click">
                         <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
                             <Image SnapsToDevicePixels="True" Stretch="None">
                                 <Image.Source>
@@ -843,7 +843,7 @@
             </ScrollViewer>
         </Grid>
         <Border Visibility="Collapsed" Name="borderSmoke" Background="#40000000"/>
-        <Border Opacity="1" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" UseLayoutRounding="True" Height="400" Name="borderAddReminder" CornerRadius="8" BorderThickness="1" BorderBrush="#F4FFFFFF" Background="#FFE8E8E8">
+        <Border Opacity="0" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" UseLayoutRounding="True" Height="10" Name="borderAddReminder" CornerRadius="8" BorderThickness="1" BorderBrush="#F4FFFFFF" Background="#FFE8E8E8">
             <Border.Effect>
                 <DropShadowEffect Direction="270" Opacity="0.08" ShadowDepth="12" BlurRadius="24"/>
             </Border.Effect>
@@ -1011,7 +1011,7 @@
                             </Image>
                         </Button>
                         <Border Visibility="Collapsed" Name="borderCalendarBack" Background="Transparent" MouseLeftButtonDown="borderCalendarBack_MouseLeftButtonDown"/>
-                        <Border Visibility="Visible" UseLayoutRounding="True" BorderBrush="White" BorderThickness="1" Name="borderCalendar" CornerRadius="8" Margin="250,101,91,115" Background="#FFF3F3F3">
+                        <Border Visibility="Collapsed" UseLayoutRounding="True" BorderBrush="White" BorderThickness="1" Name="borderCalendar" CornerRadius="8" Margin="250,101,91,115" Background="#FFF3F3F3">
                             <Border.Effect>
                                 <DropShadowEffect Direction="270" Opacity="0.16" ShadowDepth="8" BlurRadius="16"/>
                             </Border.Effect>
