@@ -264,7 +264,7 @@
         <Grid Name="gridCaption" Height="80" VerticalAlignment="Top">
             <TextBlock Name="textBlockTitle" HorizontalAlignment="Left" Margin="40,32,0,-4" FontFamily="Fonts/#Segoe UI Variable Static Small">melakify +Do (Preview)</TextBlock>
         </Grid>
-        <Grid Visibility="Collapsed" FlowDirection="RightToLeft" Name="gridSettings">
+        <Grid Visibility="Visible" FlowDirection="RightToLeft" Name="gridSettings">
             <Border Name="borderAbout" CornerRadius="10" Margin="687,180,83,82" BorderThickness="1">
                 <TextBlock Margin="16" TextWrapping="Wrap" FlowDirection="LeftToRight" FontSize="16" Name="textBlockAbout">
                 <Span FontWeight="SemiBold" FontSize="18">درباره این برنامه</Span>
@@ -392,6 +392,86 @@
                         <TextBlock Name="textBlockReminderFirstComment" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,0" FontSize="12" FontFamily="Fonts/#IRANSansX Regular" Foreground="#E0000000">هنگامی که برنامه اجرا شود ابتدا یادآور های آن روز به شما یادآوری خواهد شد.</TextBlock>
                     </VirtualizingStackPanel>
                     <Border Grid.Column="1" Name="borderReminderFirstActivator" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" Background="#FF47C824" MouseLeftButtonUp="borderReminderFirstActivator_MouseLeftButtonUp">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="18" Storyboard.TargetProperty="Width" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="18" Storyboard.TargetProperty="Height" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="16" Storyboard.TargetProperty="Width" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="16" Storyboard.TargetProperty="Height" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="14" Storyboard.TargetProperty="Width" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="14" Storyboard.TargetProperty="Height" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="16" Storyboard.TargetProperty="Width" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="16" Storyboard.TargetProperty="Height" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border UseLayoutRounding="True" CornerRadius="8" VerticalAlignment="Top" Height="64" Name="borderBackup" BorderBrush="#F4FFFFFF" BorderThickness="1" Background="#8EFFFFFF" Margin="104,355,484,0">
+                <Grid Name="gridBackup">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <VirtualizingStackPanel Name="stackPanelBackupContent">
+                        <TextBlock Name="textBlockBackupTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,12,0" FontSize="14" FontFamily="Fonts/#IRANSansX DemiBold">امنیت دیتابیس</TextBlock>
+                        <TextBlock Name="textBlockBackupComment" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,0" FontSize="12" FontFamily="Fonts/#IRANSansX Regular" Foreground="#E0000000">از دیتابیس خود پشتیبانی بگیرید و در صورت نیاز پشتیبانی را وارد کنید.</TextBlock>
+                    </VirtualizingStackPanel>
+                    <Border Grid.Column="1" Name="borderBackupActivator" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" Background="#FF47C824" MouseLeftButtonUp="borderReminderFirstActivator_MouseLeftButtonUp">
                         <Border.Triggers>
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
