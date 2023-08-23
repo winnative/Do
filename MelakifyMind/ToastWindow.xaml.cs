@@ -149,6 +149,7 @@ namespace melakify.Do
                 MessageBox.Show(ex.Message);
             }
 
+            mediaPlayer.Play();
         }
 
         private void buttonClose_Click(object sender, RoutedEventArgs e)

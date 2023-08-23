@@ -32,7 +32,7 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid FlowDirection="RightToLeft">
-        <MediaElement Name="mediaPlayer" LoadedBehavior="Play" Source="Rings/Waterdrop_Drop.mp3"/>
+        <MediaElement Name="mediaPlayer" LoadedBehavior="Manual" Source="Rings/Waterdrop_Drop.mp3"/>
         <Button ToolTip="صفحه اصلی" Height="36" HorizontalAlignment="Right" Width="36" Name="buttonShowTheMain" Style="{StaticResource buttonFlat}" Margin="57,18,57,0" VerticalAlignment="Top" Click="buttonShowTheMain_Click">
             <Image SnapsToDevicePixels="False" Grid.Column="1" Name="comboBoxUIImageMain" Margin="8" Stretch="None" OpacityMask="Black">
                 <Image.Source>
