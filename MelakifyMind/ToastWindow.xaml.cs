@@ -67,8 +67,6 @@ namespace melakify.Do
                     Directory.CreateDirectory(@"C:\melakify\+Do");
                 }
 
-                BackDrop.UseAcrylic(this);
-
                 Topmost = true;
                 DataContext = this;
                 storyToastClose = (Storyboard)Resources["storyClose"];
@@ -112,7 +110,7 @@ namespace melakify.Do
 
                         if (result.Count() > 0)
                         {
-                            textBlockAI.Text = "با سلام و وقت بخیر!\nمن برای شما هشدار هایی دارم.\n\n\n";
+                            textBlockAI.Text = "با سلام و وقت بخیر!\nیادت نره کار هایت را انجام بدی!؟\n\n\n";
 
                             foreach (var item in result)
                             {
@@ -126,7 +124,7 @@ namespace melakify.Do
                             textBlockAI.Text = "با سلام. شما برای امروز یادآوری ندارید.";
                         }
 
-                        Left = SystemParameters.PrimaryScreenWidth - Width - 16;
+                        Left = SystemParameters.PrimaryScreenWidth - Width;
                         Top = SystemParameters.PrimaryScreenHeight - Height - 64;
                     }
                     else
@@ -146,10 +144,8 @@ namespace melakify.Do
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
-
-            mediaPlayer.Play();
         }
 
         private void buttonClose_Click(object sender, RoutedEventArgs e)

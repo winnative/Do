@@ -24,11 +24,26 @@ namespace melakify.Entities.Behind
         public int ShowYear { get; set; }
         public string IsImportant { get; set; }
 
-        public int DaysDistance
+        public string DaysDistance
         {
             get
             {
-                return $"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1;
+                if (($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1) == 0)
+                {
+                    return "امروز";
+                }
+                else if (($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1) == 1)
+                {
+                    return "فردا";
+                }
+                else if (($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1) == 2)
+                {
+                    return "پس فردا";
+                }
+                else
+                {
+                    return ($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1).ToString() + " روز مانده";
+                }
             }
         }
 
@@ -43,7 +58,7 @@ namespace melakify.Entities.Behind
             IsChecked = isChecked;
         }
 
-        public static void Read(ListBox listBox)
+        public static void Read(System.Windows.Controls.ListBox listBox)
         {
             List<Reminder> list = new List<Reminder>();
 

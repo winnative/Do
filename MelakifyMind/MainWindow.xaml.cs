@@ -4,9 +4,9 @@ using melakify.UI.BackDrop;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -51,8 +51,8 @@ namespace melakify.Do
         {
             for (int i = 0; i < 42; i++)
             {
-                ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
-                ((Button)gridDaysOfCalendar.Children[i]).Content = "";
+                ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
+                ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).Content = "";
             }
 
             DateTime? time = $"{YearNumber}/{MonthNumber}/{1}".ToGregorianDateTime();
@@ -65,16 +65,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
                         }
                     }
                     break;
@@ -83,16 +83,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
                         }
                     }
                     break;
@@ -101,16 +101,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
                         }
                     }
                     break;
@@ -119,16 +119,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
                         }
                     }
                     break;
@@ -137,16 +137,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
                         }
                     }
                     break;
@@ -155,16 +155,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
                         }
                     }
                     break;
@@ -173,16 +173,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
                         }
                     }
                     break;
@@ -323,7 +323,7 @@ namespace melakify.Do
 
             for (int i = 0; i < 11; i++)
             {
-                ((Button)wrapPanelCalendarYear.Children[i]).Content = (currentYear + i).ToString();
+                ((System.Windows.Controls.Button)wrapPanelCalendarYear.Children[i]).Content = (currentYear + i).ToString();
             }
         }
 
@@ -361,6 +361,8 @@ namespace melakify.Do
         Storyboard storyOnStartupDisable = new Storyboard();
         Storyboard storyReminderFirstEnable = new Storyboard();
         Storyboard storyReminderFirstDisable = new Storyboard();
+        Storyboard storyBackupEnable = new Storyboard();
+        Storyboard storyBackupDisable = new Storyboard();
         Storyboard storyMessageDialogOpen = new Storyboard();
         Storyboard storyMessageDialogClose = new Storyboard();
         Reminder newReminder = new Reminder();
@@ -376,7 +378,7 @@ namespace melakify.Do
         public MainWindow()
         {
             InitializeComponent();
-            Background = Brushes.Transparent;
+            Background = System.Windows.Media.Brushes.Transparent;
             this.DataContext = gridContent;
 
             storyBoardExpandAI = (Storyboard)this.Resources["storyExpandAI"];
@@ -400,6 +402,8 @@ namespace melakify.Do
             storyOnStartupDisable = (Storyboard)Resources["storyOnStartupDisable"];
             storyReminderFirstEnable = (Storyboard)Resources["storyReminderFirstEnable"];
             storyReminderFirstDisable = (Storyboard)Resources["storyReminderFirstDisable"];
+            storyBackupEnable = (Storyboard)Resources["storyBackupEnable"];
+            storyBackupDisable = (Storyboard)Resources["storyBackupDisable"];
             storyMessageDialogClose = (Storyboard)Resources["storyMessageDialogClose"];
             storyMessageDialogOpen = (Storyboard)Resources["storyMessageDialogOpen"];
 
@@ -545,6 +549,15 @@ namespace melakify.Do
                 storyReminderFirstDisable.Begin();
             }
 
+            if (Settings.Default.AutoBackup)
+            {
+                storyBackupEnable.Begin();
+            }
+            else
+            {
+                storyBackupDisable.Begin();
+            }
+
             RecalculateYears();
         }
 
@@ -605,12 +618,12 @@ namespace melakify.Do
             textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
         }
 
-        private void borderMessageAI_MouseEnter(object sender, MouseEventArgs e)
+        private void borderMessageAI_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             storyMessageClose.Pause();
         }
 
-        private void borderMessageAI_MouseLeave(object sender, MouseEventArgs e)
+        private void borderMessageAI_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             storyMessageClose.Resume();
         }
@@ -738,11 +751,11 @@ namespace melakify.Do
                         command.Parameters.AddWithValue("@ShowMonth", showMonth);
                         command.Parameters.AddWithValue("@ShowYear", showYear);
 
-                        if (textBlockIsImportantContent.Foreground == Brushes.Black)
+                        if (textBlockIsImportantContent.Foreground == System.Windows.Media.Brushes.Black)
                         {
                             isImportant = "";
                         }
-                        else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
+                        else if (textBlockIsImportantContent.Foreground == System.Windows.Media.Brushes.IndianRed)
                         {
                             isImportant = "مهم";
                         }
@@ -790,9 +803,9 @@ namespace melakify.Do
 
         private void textBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
-            melakify.Automation.UI.Automation.PlaceHolderAI((TextBox)sender, "توضیحات مربوط به یادآور");
+            melakify.Automation.UI.Automation.PlaceHolderAI((System.Windows.Controls.TextBox)sender, "توضیحات مربوط به یادآور");
 
-            if (((TextBox)sender).Text != "")
+            if (((System.Windows.Controls.TextBox)sender).Text != "")
             {
                 buttonAddReminderKey.IsEnabled = true;
             }
@@ -810,7 +823,7 @@ namespace melakify.Do
             textBoxDateTime.Text = string.Format($"{new PersianCalendar().GetYear(firstTime):0000}/{new PersianCalendar().GetMonth(firstTime):00}/{new PersianCalendar().GetDayOfMonth(firstTime):00}");
             buttonAddReminderKey.Content = "اضافه کردن";
             textBoxDescription.Text = "";
-            textBlockIsImportantContent.Foreground = Brushes.Black;
+            textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.Black;
             buttonAddReminderDelete.Visibility = Visibility.Collapsed;
             borderAddReminder.Visibility = Visibility.Visible;
             borderSmoke.Visibility = Visibility.Visible;
@@ -825,13 +838,13 @@ namespace melakify.Do
 
         private void buttonIsImportant_Click(object sender, RoutedEventArgs e)
         {
-            if (textBlockIsImportantContent.Foreground == Brushes.Black)
+            if (textBlockIsImportantContent.Foreground == System.Windows.Media.Brushes.Black)
             {
-                textBlockIsImportantContent.Foreground = Brushes.IndianRed;
+                textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.IndianRed;
             }
-            else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
+            else if (textBlockIsImportantContent.Foreground == System.Windows.Media.Brushes.IndianRed)
             {
-                textBlockIsImportantContent.Foreground = Brushes.Black;
+                textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.Black;
             }
         }
 
@@ -869,7 +882,13 @@ namespace melakify.Do
 
         private void windowRoot_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+            if (Settings.Default.AutoBackup)
+            {
+                if (Settings.Default.BackupPath != "None")
+                {
+                    File.Copy(Path, Settings.Default.BackupPath + @"DOs.sqlite", true);
+                }
+            }
         }
 
         private void menuItemDeleteList_Click(object sender, RoutedEventArgs e)
@@ -1024,7 +1043,7 @@ namespace melakify.Do
             RefreshCalendarDays();
         }
 
-        private void textBoxDescription_PreviewKeyUp(object sender, KeyEventArgs e)
+        private void textBoxDescription_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -1107,11 +1126,11 @@ namespace melakify.Do
                     command.Parameters.AddWithValue("@ShowMonth", showMonth);
                     command.Parameters.AddWithValue("@ShowYear", showYear);
 
-                    if (textBlockIsImportantContent.Foreground == Brushes.Black)
+                    if (textBlockIsImportantContent.Foreground == System.Windows.Media.Brushes.Black)
                     {
                         isImportant = "";
                     }
-                    else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
+                    else if (textBlockIsImportantContent.Foreground == System.Windows.Media.Brushes.IndianRed)
                     {
                         isImportant = "مهم";
                     }
@@ -1151,7 +1170,7 @@ namespace melakify.Do
 
         private void YearCalendarButton_Click(object sender, RoutedEventArgs e)
         {
-            int year = Convert.ToInt32(((Button)sender).Content.ToString());
+            int year = Convert.ToInt32(((System.Windows.Controls.Button)sender).Content.ToString());
             YearNumber = year;
 
             if (YearNumber > new PersianCalendar().GetYear(DateTime.Now))
@@ -1247,7 +1266,7 @@ namespace melakify.Do
         {
             int year, month, day = 0;
 
-            day = Convert.ToInt32(((Button)sender).Content);
+            day = Convert.ToInt32(((System.Windows.Controls.Button)sender).Content);
             month = Convert.ToInt32(AutoBack.DateTime.Convert.ToMonthNumber(textBlockCalendarMonthYear.Text.Split(' ')[0]));
             year = Convert.ToInt32(textBlockCalendarMonthYear.Text.Split(' ')[1]);
 
@@ -1269,7 +1288,7 @@ namespace melakify.Do
 
         private void listBoxItemUIMain_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            selectedReminder = (Reminder)((ListBox)ListSelected).SelectedItem;
+            selectedReminder = (Reminder)((System.Windows.Controls.ListBox)ListSelected).SelectedItem;
             try
             {
                 textBoxDescription.Text = selectedReminder.Description;
@@ -1278,11 +1297,11 @@ namespace melakify.Do
 
                 if (selectedReminder.IsImportant == "")
                 {
-                    textBlockIsImportantContent.Foreground = Brushes.Black;
+                    textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.Black;
                 }
                 else
                 {
-                    textBlockIsImportantContent.Foreground = Brushes.IndianRed;
+                    textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.IndianRed;
                 }
 
                 buttonAddReminderKey.Content = "ویرایش کردن";
@@ -1295,6 +1314,48 @@ namespace melakify.Do
             catch
             {
 
+            }
+        }
+
+        private void textBoxDaysBefore_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Convert.ToInt32(textBoxDaysBefore.Text) < 1)
+            {
+                textBoxDaysBefore.Text = "1";
+            }
+        }
+
+        private void borderBackupActivator_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Settings.Default.AutoBackup)
+            {
+                storyBackupDisable.Begin();
+                Settings.Default.AutoBackup = false;
+            }
+            else
+            {
+                if (Settings.Default.BackupPath != "None")
+                {
+                    storyBackupEnable.Begin();
+                    Settings.Default.AutoBackup = true;
+                }
+                else
+                {
+                    storyBackupDisable.Begin();
+                    Settings.Default.AutoBackup = false;
+                    ShowMessage("شما می بایست یک مسیر را برای ذخیره فایل پشتیبان وارد کنید.", "مسیر ذخیره پشتیبان تعیین نشده!");
+                }
+            }
+            Settings.Default.Save();
+        }
+
+        private void buttonSelectBackupPath_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.BackupPath = dialog.SelectedPath;
+                Settings.Default.Save();
             }
         }
     }

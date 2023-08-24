@@ -925,6 +925,7 @@
     <Style TargetType="ToolTip">
         <Setter Property="Foreground" Value="#FF292929"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Fonts/#IRANSansX Regular"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
