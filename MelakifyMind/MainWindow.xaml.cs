@@ -378,7 +378,6 @@ namespace melakify.Do
         public MainWindow()
         {
             InitializeComponent();
-            Background = System.Windows.Media.Brushes.Transparent;
             this.DataContext = gridContent;
 
             storyBoardExpandAI = (Storyboard)this.Resources["storyExpandAI"];
@@ -511,7 +510,25 @@ namespace melakify.Do
 
         private void windowRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            BackDrop.UseNewMica(this);
+            
+            if ((System.Environment.OSVersion.Version.Major == 10) && (Environment.OSVersion.Version.Build >= 22621))
+            {
+                if (Settings.Default.IsTranslucent)
+                {
+                    BackDrop.UseNewMica(this);
+                    windowChrome.UseAeroCaptionButtons = true;
+                    Background = System.Windows.Media.Brushes.Transparent;
+                }
+                else
+                {
+                    windowChrome.UseAeroCaptionButtons = false;
+                }
+            }
+            else
+            {
+                borderAllowTrans.Visibility = Visibility.Collapsed;
+                windowChrome.UseAeroCaptionButtons = false;
+            }
 
             MonthConnection.Add(("فروردین", 1));
             MonthConnection.Add(("اردیبهشت", 2));
@@ -789,6 +806,14 @@ namespace melakify.Do
                         {
                             connection.Close();
                         }
+
+                    if (Settings.Default.AutoBackup)
+                    {
+                        if (Settings.Default.BackupPath != "None")
+                        {
+                            File.Copy(Path, Settings.Default.BackupPath + @"DOs.sqlite", true);
+                        }
+                    }
                 }
                 else
                 {
@@ -1357,6 +1382,22 @@ namespace melakify.Do
                 Settings.Default.BackupPath = dialog.SelectedPath;
                 Settings.Default.Save();
             }
+        }
+
+        private void buttonReturnBackup_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.Filter = "SQLite files|*.sqlite";
+            ofd.Title = "وارد کردن فایل پشتیبانی...";
+            if (ofd.ShowDialog() == true)
+            {
+                File.Copy(ofd.FileName, Path, true);
+            }
+        }
+
+        private void borderAllowTransActivator_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

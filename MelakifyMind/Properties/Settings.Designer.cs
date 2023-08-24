@@ -93,5 +93,17 @@ namespace MelakifyMind.Properties {
                 this["BackupPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsTranslucent {
+            get {
+                return ((bool)(this["IsTranslucent"]));
+            }
+            set {
+                this["IsTranslucent"] = value;
+            }
+        }
     }
 }
