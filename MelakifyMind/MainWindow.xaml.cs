@@ -365,6 +365,16 @@ namespace melakify.Do
         Storyboard storyBackupDisable = new Storyboard();
         Storyboard storyMessageDialogOpen = new Storyboard();
         Storyboard storyMessageDialogClose = new Storyboard();
+        Storyboard storySettingsPerformanceOpen = new Storyboard();
+        Storyboard storySettingsPerformanceClose = new Storyboard();
+        Storyboard storySettingsUserOpen = new Storyboard();
+        Storyboard storySettingsUserClose = new Storyboard();
+        Storyboard storySettingsPersonalizeOpen = new Storyboard();
+        Storyboard storySettingsPersonalizeClose = new Storyboard();
+        Storyboard storySettingsDatabaseOpen = new Storyboard();
+        Storyboard storySettingsDatabaseClose = new Storyboard();
+        Storyboard storySettingsOptionsOpen = new Storyboard();
+        Storyboard storySettingsOptionsClose = new Storyboard();
         Reminder newReminder = new Reminder();
         Reminder selectedReminder = new Reminder();
         List<Reminder> reminders = new List<Reminder>();
@@ -405,6 +415,16 @@ namespace melakify.Do
             storyBackupDisable = (Storyboard)Resources["storyBackupDisable"];
             storyMessageDialogClose = (Storyboard)Resources["storyMessageDialogClose"];
             storyMessageDialogOpen = (Storyboard)Resources["storyMessageDialogOpen"];
+            storySettingsOptionsOpen = (Storyboard)Resources["storySettingsOptionsOpen"];
+            storySettingsOptionsClose = (Storyboard)Resources["storySettingsOptionsClose"];
+            storySettingsPerformanceOpen = (Storyboard)Resources["storySettingsPerformanceOpen"];
+            storySettingsPerformanceClose = (Storyboard)Resources["storySettingsPerformanceClose"];
+            storySettingsUserOpen = (Storyboard)Resources["storySettingsUserOpen"];
+            storySettingsUserClose = (Storyboard)Resources["storySettingsUserClose"];
+            storySettingsPersonalizeOpen = (Storyboard)Resources["storySettingsPersonalizeOpen"];
+            storySettingsPersonalizeClose = (Storyboard)Resources["storySettingsPersonalizeClose"];
+            storySettingsDatabaseOpen = (Storyboard)Resources["storySettingsDatabaseOpen"];
+            storySettingsDatabaseClose = (Storyboard)Resources["storySettingsDatabaseClose"];
 
 
             storyPreviewClose.Completed += StoryPreviewClose_Completed;
@@ -416,7 +436,68 @@ namespace melakify.Do
             storyBoardExpandAIClose.Completed += StoryBoardExpandAIClose_Completed;
             storyAddClose.Completed += StoryAddClose_Completed;
             storyMessageDialogClose.Completed += StoryMessageDialogClose_Completed;
+            storySettingsOptionsClose.Completed += StorySettingsOptionsClose_Completed;
+            storySettingsPerformanceClose.Completed += StorySettingsPerformanceClose_Completed;
+            storySettingsUserClose.Completed += StorySettingsUserClose_Completed;
+            storySettingsPersonalizeClose.Completed += StorySettingsPersonalizeClose_Completed;
+            storySettingsDatabaseClose.Completed += StorySettingsDatabaseClose_Completed;
 
+        }
+
+        private void StorySettingsDatabaseClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsDatabase.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        private void StorySettingsPersonalizeClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsPersonalize.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        private void StorySettingsUserClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsUser.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        private void StorySettingsPerformanceClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsPerformance.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        System.Windows.Controls.Button buttonSelectedCatagorySettings;
+
+        private void StorySettingsOptionsClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsOptions.Visibility = Visibility.Collapsed;
+
+            if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            {
+                gridSettingsPerformance.Visibility = Visibility.Visible;
+                storySettingsPerformanceOpen.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+            {
+                gridSettingsDatabase.Visibility = Visibility.Visible;
+                storySettingsDatabaseOpen.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+            {
+                gridSettingsPersonalize.Visibility = Visibility.Visible;
+                storySettingsPersonalizeOpen.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+            {
+                gridSettingsUser.Visibility = Visibility.Visible;
+                storySettingsUserOpen.Begin();
+            }
         }
 
         private void StoryMessageDialogClose_Completed(object? sender, EventArgs e)
@@ -515,13 +596,61 @@ namespace melakify.Do
             {
                 if (Settings.Default.IsTranslucent)
                 {
-                    BackDrop.UseNewMica(this);
+                    if (Settings.Default.TranslucentMode == "میکا")
+                    {
+                        BackDrop.UseNewMica(this);
+                        borderBack.Visibility = Visibility.Collapsed;
+                        comboBoxChooseBackDrop.Text = "میکا";
+                    }
+                    else if (Settings.Default.TranslucentMode == "اکلیل")
+                    {
+                        BackDrop.UseAcrylic(this);
+                        borderBack.Visibility = Visibility.Visible;
+                        borderBack.Background = new SolidColorBrush(new System.Windows.Media.Color() { A = 160, R = 255, B = 255, G = 255 });
+                        comboBoxChooseBackDrop.Text = "اکلیل";
+                    }
+
                     windowChrome.UseAeroCaptionButtons = true;
                     Background = System.Windows.Media.Brushes.Transparent;
                 }
                 else
                 {
+                    BackDrop.Disable(this);
+                    comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
                     windowChrome.UseAeroCaptionButtons = false;
+                    System.Windows.Media.Color color = new System.Windows.Media.Color();
+                    System.Windows.Media.Color backColor = new System.Windows.Media.Color();
+                    
+                    if (Settings.Default.ColorPalette == "Orange")
+                    {
+                        color.A = 255;
+                        color.R = 235;
+                        color.G = 209;
+                        color.B = 186;
+                    }
+                    else if (Settings.Default.ColorPalette == "Green")
+                    {
+                        color.A = 255;
+                        color.R = 186;
+                        color.G = 235;
+                        color.B = 201;
+                    }
+                    else if (Settings.Default.ColorPalette == "Blue")
+                    {
+                        color.A = 255;
+                        color.R = 186;
+                        color.G = 201;
+                        color.B = 235;
+                    }
+
+                    Background = new SolidColorBrush(color);
+
+                    backColor.A = 104;
+                    backColor.R = 240;
+                    backColor.G = 240;
+                    backColor.B = 240;
+                    borderBack.Background = new SolidColorBrush(backColor);
+                    borderBack.Visibility = Visibility.Visible;
                 }
             }
             else
@@ -616,6 +745,8 @@ namespace melakify.Do
             imageBetweenNevigation.Visibility = Visibility.Visible;
             textBlockNevigationBackDrop.Visibility = Visibility.Visible;
             textBlockNavigationHome.IsEnabled = true;
+            textBlockNavigationHome.Opacity = 0.64;
+            textBlockNevigationBackDrop.Opacity = 1;
         }
 
         private void buttonMessageAIClose_Click(object sender, RoutedEventArgs e)
@@ -629,10 +760,31 @@ namespace melakify.Do
             storySettingsClose.Begin();
             borderSearch.Visibility = Visibility.Visible;
 
-            textBlockNavigationHome.IsEnabled = false;
             textBlockNavigationHome.Opacity = 1;
+            textBlockNavigationHome.IsEnabled = false;
             imageBetweenNevigation.Visibility = Visibility.Collapsed;
             textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+
+            imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+            textBlockNevigationBackDrop.IsEnabled = false;
+
+            if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+            {
+                storySettingsDatabaseClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            {
+                storySettingsPerformanceClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+            {
+                storySettingsPersonalizeClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+            {
+                storySettingsUserClose.Begin();
+            }
         }
 
         private void borderMessageAI_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -1233,10 +1385,32 @@ namespace melakify.Do
             storySettingsClose.Begin();
             borderSearch.Visibility = Visibility.Visible;
 
-            textBlockNavigationHome.IsEnabled = false;
             textBlockNavigationHome.Opacity = 1;
+            textBlockNavigationHome.IsEnabled = false;
             imageBetweenNevigation.Visibility = Visibility.Collapsed;
             textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+
+            imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+            textBlockNevigationBackDrop.IsEnabled = false;
+
+            if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+            {
+                storySettingsDatabaseClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            {
+                storySettingsPerformanceClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+            {
+                storySettingsPersonalizeClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+            {
+                storySettingsUserClose.Begin();
+            }
+            textBlockNavigationHome.Opacity = 1;
         }
 
         
@@ -1397,7 +1571,205 @@ namespace melakify.Do
 
         private void borderAllowTransActivator_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (Settings.Default.IsTranslucent)
+            {
+                Settings.Default.IsTranslucent = false;
+                BackDrop.Disable(this);
+                comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
+                windowChrome.UseAeroCaptionButtons = false;
+                System.Windows.Media.Color color = new System.Windows.Media.Color();
+                System.Windows.Media.Color backColor = new System.Windows.Media.Color();
 
+                if (Settings.Default.ColorPalette == "Orange")
+                {
+                    color.A = 255;
+                    color.R = 235;
+                    color.G = 209;
+                    color.B = 186;
+                }
+                else if (Settings.Default.ColorPalette == "Green")
+                {
+                    color.A = 255;
+                    color.R = 186;
+                    color.G = 235;
+                    color.B = 201;
+                }
+                else if (Settings.Default.ColorPalette == "Blue")
+                {
+                    color.A = 255;
+                    color.R = 186;
+                    color.G = 201;
+                    color.B = 235;
+                }
+
+                Background = new SolidColorBrush(color);
+
+                backColor.A = 104;
+                backColor.R = 230;
+                backColor.G = 230;
+                backColor.B = 230;
+                borderBack.Background = new SolidColorBrush(backColor);
+                borderBack.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Settings.Default.IsTranslucent = true;
+                Background = System.Windows.Media.Brushes.Transparent;
+                windowChrome.UseAeroCaptionButtons = true;
+                comboBoxChooseBackDrop.Visibility = Visibility.Visible;
+                comboBoxChooseBackDrop.Text = Settings.Default.TranslucentMode;
+
+                if (Settings.Default.TranslucentMode == "اکلیل")
+                {
+                    borderBack.Visibility = Visibility.Visible;
+                    borderBack.Background = new SolidColorBrush(new System.Windows.Media.Color() { A = 160, R = 255, B = 255, G = 255 });
+                    BackDrop.UseAcrylic(this);
+                }
+                else if (Settings.Default.TranslucentMode == "میکا")
+                {
+                    borderBack.Visibility = Visibility.Collapsed;
+                    BackDrop.UseNewMica(this);
+                }
+            }
+            Settings.Default.Save();
+        }
+
+        private void buttonSettingsPerformance_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "عملکرد برنامه";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void buttonSettingsUser_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "حساب شما";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void buttonSettingsPersonalize_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "شخصی سازی";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void buttonSettingsDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "پایگاه داده";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void textBlockNevigationBackDrop_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+            imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+            textBlockNevigationBackDrop.IsEnabled = false;
+
+            if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+            {
+                storySettingsDatabaseClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            {
+                storySettingsPerformanceClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+            {
+                storySettingsPersonalizeClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+            {
+                storySettingsUserClose.Begin();
+            }
+        }
+
+        private void textBlockNavigationHome_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            textBlockNavigationHome.Opacity = 1;
+        }
+
+        private void textBlockNavigationHome_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (textBlockNevigationBackDrop.IsVisible)
+            {
+                textBlockNavigationHome.Opacity = 0.64;
+            }
+            else
+            {
+                textBlockNavigationHome.Opacity = 1;
+            }
+        }
+
+        private void textBlockNavigationHome_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            textBlockNavigationHome.Opacity = 0.48;
+        }
+
+        private void textBlockNevigationBackDrop_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            textBlockNevigationBackDrop.Opacity = 1;
+        }
+
+        private void textBlockNevigationBackDrop_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (textBlockNevigationSubBackDrop.IsVisible)
+            {
+                textBlockNevigationBackDrop.Opacity = 0.64;
+            }
+            else
+            {
+                textBlockNevigationBackDrop.Opacity = 1;
+            }
+        }
+
+        private void textBlockNevigationBackDrop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            textBlockNevigationBackDrop.Opacity = 0.48;
+        }
+
+        private void comboBoxChooseBackDrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                ComboBoxItem item = (ComboBoxItem)comboBoxChooseBackDrop.SelectedItem;
+                if (item.Content.ToString() == "میکا")
+                {
+                    BackDrop.UseNewMica(this);
+                    borderBack.Visibility = Visibility.Collapsed;
+                    Settings.Default.TranslucentMode = "میکا";
+                }
+                else if (item.Content.ToString() == "اکلیل")
+                {
+                    BackDrop.UseAcrylic(this);
+                    borderBack.Visibility = Visibility.Visible;
+                    Settings.Default.TranslucentMode = "اکلیل";
+                }
+                Settings.Default.Save();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

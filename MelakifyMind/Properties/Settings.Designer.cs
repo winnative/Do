@@ -105,5 +105,29 @@ namespace MelakifyMind.Properties {
                 this["IsTranslucent"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("میکا")]
+        public string TranslucentMode {
+            get {
+                return ((string)(this["TranslucentMode"]));
+            }
+            set {
+                this["TranslucentMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        public string ColorPalette {
+            get {
+                return ((string)(this["ColorPalette"]));
+            }
+            set {
+                this["ColorPalette"] = value;
+            }
+        }
     }
 }

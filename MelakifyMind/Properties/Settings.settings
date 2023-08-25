@@ -23,5 +23,11 @@
     <Setting Name="IsTranslucent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="TranslucentMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">میکا</Value>
+    </Setting>
+    <Setting Name="ColorPalette" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Orange</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
