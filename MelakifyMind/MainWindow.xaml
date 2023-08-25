@@ -345,6 +345,12 @@
         <Storyboard x:Key="storyBackupDisable">
             <ColorAnimation To="#FFBDBDBD" Storyboard.TargetName="borderBackupActivator" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1"/>
         </Storyboard>
+        <Storyboard x:Key="storyAllowTransEnable">
+            <ColorAnimation To="#FF47C824" Storyboard.TargetName="borderAllowTransActivator" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1"/>
+        </Storyboard>
+        <Storyboard x:Key="storyAllowTransDisable">
+            <ColorAnimation To="#FFBDBDBD" Storyboard.TargetName="borderAllowTransActivator" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1"/>
+        </Storyboard>
         <Storyboard x:Key="storyAddOpen">
             <DoubleAnimation To="400" Storyboard.TargetName="borderAddReminder" Storyboard.TargetProperty="Height" Duration="0:0:0.333">
                 <DoubleAnimation.EasingFunction>
@@ -988,6 +994,21 @@
                                 <Border x:Name="borderColorPaletteChosenColor" CornerRadius="16" Width="16" Height="16" Background="Green"/>
                             </VirtualizingStackPanel>
                         </Button>
+                    </Grid>
+                </Border>
+                <Border Name="borderChoosePalette" CornerRadius="8" UseLayoutRounding="True" BorderThickness="1" BorderBrush="#A3FFFFFF" Background="#FFF6F6F6" Margin="532,89,32,288">
+                    <Border.Effect>
+                        <DropShadowEffect Direction="270" Opacity="0.12" ShadowDepth="4" BlurRadius="8"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button Name="buttonChooseColorOrange" Style="{StaticResource buttonFlat}" Content="نارنجی" Margin="4" FontSize="14" FontFamily="Fonts/#IRANSansX Regular"/>
+                        <Button Grid.Row="1" Name="buttonChooseColorGreen" Style="{StaticResource buttonFlat}" Content="سبز" Margin="4" FontSize="14" FontFamily="Fonts/#IRANSansX Regular"/>
+                        <Button Grid.Row="2" Name="buttonChooseColorBlue" Style="{StaticResource buttonFlat}" Content="آبی" Margin="4" FontSize="14" FontFamily="Fonts/#IRANSansX Regular"/>
                     </Grid>
                 </Border>
             </Grid>

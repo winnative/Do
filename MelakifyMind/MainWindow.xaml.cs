@@ -363,6 +363,8 @@ namespace melakify.Do
         Storyboard storyReminderFirstDisable = new Storyboard();
         Storyboard storyBackupEnable = new Storyboard();
         Storyboard storyBackupDisable = new Storyboard();
+        Storyboard storyAllowTransEnable = new Storyboard();
+        Storyboard storyAllowTransDisable = new Storyboard();
         Storyboard storyMessageDialogOpen = new Storyboard();
         Storyboard storyMessageDialogClose = new Storyboard();
         Storyboard storySettingsPerformanceOpen = new Storyboard();
@@ -413,6 +415,8 @@ namespace melakify.Do
             storyReminderFirstDisable = (Storyboard)Resources["storyReminderFirstDisable"];
             storyBackupEnable = (Storyboard)Resources["storyBackupEnable"];
             storyBackupDisable = (Storyboard)Resources["storyBackupDisable"];
+            storyAllowTransEnable = (Storyboard)Resources["storyAllowTransEnable"];
+            storyAllowTransDisable = (Storyboard)Resources["storyAllowTransDisable"];
             storyMessageDialogClose = (Storyboard)Resources["storyMessageDialogClose"];
             storyMessageDialogOpen = (Storyboard)Resources["storyMessageDialogOpen"];
             storySettingsOptionsOpen = (Storyboard)Resources["storySettingsOptionsOpen"];
@@ -702,6 +706,15 @@ namespace melakify.Do
             else
             {
                 storyBackupDisable.Begin();
+            }
+
+            if (Settings.Default.IsTranslucent)
+            {
+                storyAllowTransEnable.Begin();
+            }
+            else
+            {
+                storyAllowTransDisable.Begin();
             }
 
             RecalculateYears();
@@ -1573,6 +1586,7 @@ namespace melakify.Do
         {
             if (Settings.Default.IsTranslucent)
             {
+                storyAllowTransDisable.Begin();
                 Settings.Default.IsTranslucent = false;
                 BackDrop.Disable(this);
                 comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
@@ -1613,6 +1627,7 @@ namespace melakify.Do
             }
             else
             {
+                storyAllowTransEnable.Begin();
                 Settings.Default.IsTranslucent = true;
                 Background = System.Windows.Media.Brushes.Transparent;
                 windowChrome.UseAeroCaptionButtons = true;
