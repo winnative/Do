@@ -11,7 +11,7 @@
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Style TargetType="ComboBoxItem">
-            <Setter Property="BorderBrush" Value="{Binding ElementName=borderColorPaletteChosenColor ,Path=Background}"/>
+            <Setter Property="BorderBrush" Value="Orange"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBoxItem">
@@ -563,25 +563,224 @@
     <Grid Name="gridRoot">
         <Border Name="borderDragMove" Height="40" Background="Transparent" PreviewMouseLeftButtonDown="borderDragMove_PreviewMouseLeftButtonDown" Margin="0,4,0,0" VerticalAlignment="Top"/>
         <Grid Name="gridCaption" Height="80" VerticalAlignment="Top">
+            <Button x:Name="buttonClose" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0" Click="ButtonClose_Click" Height="32" Width="48">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="buttonUIMainClose" CornerRadius="0" Background="#00000000">
+                            <Image SnapsToDevicePixels="False" Grid.Column="1" Margin="4" Stretch="None" OpacityMask="Black">
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Brush>
+                                                    <VisualBrush Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <TextBlock Name="textBlockUIMainClose" FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE8BB;" FontSize="9.5">
+
+                                                            </TextBlock>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </GeometryDrawing.Brush>
+                                                <GeometryDrawing.Geometry>
+                                                    <RectangleGeometry Rect="16,16,16,16"/>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#FFBD0000" Storyboard.TargetName="buttonUIMainClose" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <ColorAnimation To="WhiteSmoke" Storyboard.TargetName="textBlockUIMainClose" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="Transparent" Storyboard.TargetName="buttonUIMainClose" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <ColorAnimation To="Black" Storyboard.TargetName="textBlockUIMainClose" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#FFCF4545" Storyboard.TargetName="buttonUIMainClose" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <ColorAnimation To="WhiteSmoke" Storyboard.TargetName="textBlockUIMainClose" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#FFBD0000" Storyboard.TargetName="buttonUIMainClose" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <ColorAnimation To="WhiteSmoke" Storyboard.TargetName="textBlockUIMainClose" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+            <Button x:Name="buttonMaximize" VerticalAlignment="Top" Height="32" Width="48" HorizontalAlignment="Right" Margin="0,0,48,0" Foreground="Black" Click="buttonMaximize_Click">
+                <Image SnapsToDevicePixels="False" Grid.Column="1" Margin="4" Stretch="None" OpacityMask="Black">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Brush>
+                                        <VisualBrush Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock Name="textBlockUIMainMaximize" FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE922;" FontSize="9.5">
+
+                                                </TextBlock>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </GeometryDrawing.Brush>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry Rect="20,20,16,16"/>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="buttonUIMainMini" Background="#00000000">
+                            <ContentPresenter Name="borderContentMini"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#14000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#00000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#1E000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.02"/>
+                                        <DoubleAnimation To="0.6" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#14000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.02"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="buttonMinimize" VerticalAlignment="Top" Height="32" Width="48" HorizontalAlignment="Right" Click="ButtonMinimize_Click" Margin="0,0,96,0" Foreground="Black">
+                <Image SnapsToDevicePixels="False" Grid.Column="1" Margin="4" Stretch="None" OpacityMask="Black">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Brush>
+                                        <VisualBrush Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock Name="textBlockUIMainMinimize" FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE921;" FontSize="9.5">
+
+                                                </TextBlock>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </GeometryDrawing.Brush>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry Rect="20,20,16,16"/>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="buttonUIMainMini" Background="#00000000">
+                            <ContentPresenter Name="borderContentMini"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#14000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#00000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.04"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.04"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#1E000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.02"/>
+                                        <DoubleAnimation To="0.6" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#14000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.02"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             <Image Name="imageTitle" HorizontalAlignment="Left" Margin="40,32,0,32" Source="/Images/Melak +Mind.ico">
                 <Image.Effect>
                     <DropShadowEffect Direction="270" Opacity="0.12" ShadowDepth="2" BlurRadius="2"/>
                 </Image.Effect>
             </Image>
-            <TextBlock Name="textBlockTitle" HorizontalAlignment="Left" Margin="72,32,0,28" FontFamily="Fonts/#Segoe UI Variable Static Small">melakify +Do</TextBlock>
+            <TextBlock Name="textBlockTitle" HorizontalAlignment="Left" Margin="72,32,0,28" FontFamily="Fonts/#Segoe UI Variable Static Small">emtudio +Do</TextBlock>
         </Grid>
         <Border Margin="0,80,0,0" BorderThickness="0,1,0,0" BorderBrush="#A3FFFFFF" Name="borderBack" Background="#A3FFFFFF"/>
-        <Grid Visibility="Visible" FlowDirection="RightToLeft" Name="gridSettings">
+        <Grid Visibility="Collapsed" FlowDirection="RightToLeft" Name="gridSettings">
             <Border Name="borderAbout" CornerRadius="10" Margin="687,180,83,82" BorderThickness="1">
                 <TextBlock Margin="16" TextWrapping="Wrap" FlowDirection="LeftToRight" FontSize="16" Name="textBlockAbout">
                 <Span FontWeight="SemiBold" FontSize="18">درباره این برنامه</Span>
                 <LineBreak/><LineBreak/>
                 Version 2308
                 <LineBreak/>
-                melakify MagicFlow version : 1.1
+                emtudio MagicFlow version : 1.1
 <LineBreak/>
-                melakify MagicSence version: 0.2 (Preview)
-                <LineBreak/><LineBreak/><LineBreak/>Copyrights 2023 melakify. All rights reserved.
+                emtudio MagicSence version: 0.2 (Preview)
+                <LineBreak/><LineBreak/><LineBreak/>Copyrights 2023 emtudio. All rights reserved.
                 </TextBlock>
             </Border>
             <Button Name="buttonBackToHome" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="37" Width="38" Margin="979,110,83,538" Click="buttonBackToHome_Click">
@@ -825,7 +1024,7 @@
                 <TextBlock Name="textBlockSettingsUserProfileName" FontSize="22" Text="کاربر مهمان" FlowDirection="RightToLeft" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Fonts/#IRANSansX Regular" Margin="132,48,0,0"/>
                 <TextBlock Name="textBlockSettingsUserProfileSigner" FontSize="14" FontFamily="Fonts/#IRANSansX Regular" HorizontalAlignment="Left" VerticalAlignment="Top" Text="یک شماره تلفن یا ایمیل وارد کنید." FlowDirection="RightToLeft" Margin="132,81,0,0"/>
             </Grid>
-            <Grid Visibility="Visible" Name="gridSettingsPersonalize" Margin="32,162,418,32">
+            <Grid Visibility="Collapsed" Name="gridSettingsPersonalize" Margin="32,162,418,32">
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="translateSettingsPersonalize" X="64" Y="0"/>
                 </Grid.RenderTransform>
@@ -939,9 +1138,9 @@
                     <Grid Name="gridColorPalette">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="102"/>
                         </Grid.ColumnDefinitions>
-                        <Image SnapsToDevicePixels="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0" Stretch="None" OpacityMask="Black">
+                        <Image SnapsToDevicePixels="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Stretch="None" OpacityMask="Black" Height="20" Width="20">
                             <Image.Source>
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
@@ -967,48 +1166,11 @@
                             <TextBlock Name="textBlockColorPaletteTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="64,12,64,0" FontSize="14" FontFamily="Fonts/#IRANSansX DemiBold">پالت رنگی</TextBlock>
                             <TextBlock Name="textBlockColorPaletteComment" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="64,0,0,0" FontSize="12" FontFamily="Fonts/#IRANSansX Regular" Foreground="#E0000000" Width="430">رنگ پس‌زمینه را مشخص می کند. زمانی که شفافیت فعال باشد، این تنظیم تاثیر ندارد.</TextBlock>
                         </VirtualizingStackPanel>
-                        <Button Margin="8,12" Name="buttonColorPalette" Style="{StaticResource buttonFlat}" Grid.Column="1">
-                            <VirtualizingStackPanel FlowDirection="RightToLeft" Orientation="Horizontal" Name="stackPanelColorPalette">
-                                <Image Margin="0,0,8,0" SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
-                                    <Image.Source>
-                                        <DrawingImage>
-                                            <DrawingImage.Drawing>
-                                                <GeometryDrawing>
-                                                    <GeometryDrawing.Brush>
-                                                        <VisualBrush Stretch="None">
-                                                            <VisualBrush.Visual>
-                                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE70D;" FontSize="16" Foreground="#E0000000">
-
-                                                                </TextBlock>
-                                                            </VisualBrush.Visual>
-                                                        </VisualBrush>
-                                                    </GeometryDrawing.Brush>
-                                                    <GeometryDrawing.Geometry>
-                                                        <RectangleGeometry Rect="20,20,20,20"/>
-                                                    </GeometryDrawing.Geometry>
-                                                </GeometryDrawing>
-                                            </DrawingImage.Drawing>
-                                        </DrawingImage>
-                                    </Image.Source>
-                                </Image>
-                                <Border x:Name="borderColorPaletteChosenColor" CornerRadius="16" Width="16" Height="16" Background="Green"/>
-                            </VirtualizingStackPanel>
-                        </Button>
-                    </Grid>
-                </Border>
-                <Border Name="borderChoosePalette" CornerRadius="8" UseLayoutRounding="True" BorderThickness="1" BorderBrush="#A3FFFFFF" Background="#FFF6F6F6" Margin="532,89,32,288">
-                    <Border.Effect>
-                        <DropShadowEffect Direction="270" Opacity="0.12" ShadowDepth="4" BlurRadius="8"/>
-                    </Border.Effect>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Button Name="buttonChooseColorOrange" Style="{StaticResource buttonFlat}" Content="نارنجی" Margin="4" FontSize="14" FontFamily="Fonts/#IRANSansX Regular"/>
-                        <Button Grid.Row="1" Name="buttonChooseColorGreen" Style="{StaticResource buttonFlat}" Content="سبز" Margin="4" FontSize="14" FontFamily="Fonts/#IRANSansX Regular"/>
-                        <Button Grid.Row="2" Name="buttonChooseColorBlue" Style="{StaticResource buttonFlat}" Content="آبی" Margin="4" FontSize="14" FontFamily="Fonts/#IRANSansX Regular"/>
+                        <ComboBox Grid.Column="1" Margin="8,14" Name="comboBoxColorPalette" SelectionChanged="comboBoxColorPalette_SelectionChanged">
+                            <ComboBoxItem>نارنجی</ComboBoxItem>
+                            <ComboBoxItem>سبز</ComboBoxItem>
+                            <ComboBoxItem>آبی</ComboBoxItem>
+                        </ComboBox>
                     </Grid>
                 </Border>
             </Grid>
@@ -1201,7 +1363,7 @@
                     </Grid>
                 </Border>
             </Grid>
-            <Grid Margin="32,162,418,32" Visibility="Collapsed" Name="gridSettingsOptions">
+            <Grid Margin="32,162,418,32" Visibility="Visible" Name="gridSettingsOptions">
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="translateSettingsOptions" X="0" Y="0"/>
                 </Grid.RenderTransform>
@@ -1261,7 +1423,7 @@
                         </Image>
                     </Grid>
                 </Button>
-                <Button HorizontalContentAlignment="Stretch" Name="buttonSettingsUser" Style="{StaticResource buttonFlatItem}" Margin="32,118,32,0" Height="64" VerticalAlignment="Top" Click="buttonSettingsUser_Click">
+                <Button IsEnabled="False" HorizontalContentAlignment="Stretch" Name="buttonSettingsUser" Style="{StaticResource buttonFlatItem}" Margin="32,118,32,0" Height="64" VerticalAlignment="Top" Click="buttonSettingsUser_Click">
                     <Grid Margin="8,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -1387,7 +1549,7 @@
                                             <GeometryDrawing.Brush>
                                                 <VisualBrush Stretch="None">
                                                     <VisualBrush.Visual>
-                                                        <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE77B;" FontSize="20" Foreground="#E0000000">
+                                                        <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE83B;" FontSize="20" Foreground="#E0000000">
 
                                                         </TextBlock>
                                                     </VisualBrush.Visual>
@@ -1431,7 +1593,7 @@
                 </Button>
             </Grid>
         </Grid>
-        <Grid Visibility="Collapsed" Name="gridContent">
+        <Grid Visibility="Visible" Name="gridContent">
             <Border IsEnabled="False" FlowDirection="RightToLeft" CornerRadius="8" UseLayoutRounding="True" Name="borderSearch" SnapsToDevicePixels="True" Width="400" Margin="300,22,300,0" BorderBrush="#F4FFFFFF" BorderThickness="1" Background="#8EFFFFFF" Height="34" VerticalAlignment="Top">
                 <Border.Triggers>
                     <EventTrigger RoutedEvent="Border.MouseLeave">
@@ -1693,7 +1855,167 @@
             </Image>
             <TextBlock FlowDirection="RightToLeft" Name="textBlockNoReminder" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Text="شما هیچ یادآوری ندارید." FontFamily="Fonts/#IRANSansX Regular" Foreground="#CC000000" Margin="0,354,0,0"/>
             <TextBlock FlowDirection="RightToLeft" Name="textBlockNoReminderComment" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" Text="با کلیک بر روی دکمه + یک یادآور جدید ایجاد کنید." FontFamily="Fonts/#IRANSansX Regular" Foreground="#A3000000" Margin="0,390,0,0"/>
-            <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto" Name="scrollViewerRoot" Margin="8,168,104,88">
+            <ListBox Name="listBoxTimeLine" Margin="40,158,104,434" Background="{x:Null}" BorderBrush="{x:Null}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <ListBox.Resources>
+                    <Style TargetType="ListBox">
+                        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+                        <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True"/>
+                        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+                        <Setter Property="BorderBrush" Value="#51B4B4B4"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontFamily" Value="Segoe UI Variable Display"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBox">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12" BorderBrush="{TemplateBinding BorderBrush}" Name="listBoxUIMain">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <StackPanel Name="listBoxUICotainer" Orientation="Horizontal" IsItemsHost="True"/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ItemTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="32"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Margin="8,10" FontFamily="Fonts/#IRANSansX Regular" TextTrimming="WordEllipsis" TextWrapping="Wrap" Text="{Binding Description}" FontSize="20"/>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="104"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <VirtualizingStackPanel Margin="4,0,0,0" Orientation="Horizontal">
+                                                <TextBlock FontFamily="Fonts/#IRANSansX Regular" VerticalAlignment="Center" FontSize="14" Text="{Binding DaysDistance}"></TextBlock>
+                                            </VirtualizingStackPanel>
+                                            <VirtualizingStackPanel Orientation="Horizontal" Grid.Column="1">
+
+                                            </VirtualizingStackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="RenderTransformOrigin" Value="0.5,0.7"/>
+                        <Setter Property="Width" Value="140"/>
+                        <Setter Property="Height" Value="88"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border ToolTip="{Binding Description}" Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="12" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000" MouseLeftButtonUp="listBoxItemUIMain_MouseLeftButtonUp">
+                                        <Border.Effect>
+                                            <DropShadowEffect x:Name="dropShadowEffectItem" Direction="270" Opacity="0" BlurRadius="8" ShadowDepth="4"/>
+                                        </Border.Effect>
+                                        <Border.RenderTransform>
+                                            <TranslateTransform x:Name="translateTransformItem" Y="0" X="0"/>
+                                        </Border.RenderTransform>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <ColorAnimation To="#06000000" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                                        <DoubleAnimation To="0.4" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.05"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Border.Triggers>
+                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation To="0" Storyboard.TargetName="translateTransformItem" Storyboard.TargetProperty="(TranslateTransform.Y)" Duration="0:0:0.56">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <DoubleAnimation To="0" Storyboard.TargetName="dropShadowEffectItem" Storyboard.TargetProperty="Opacity" Duration="0:0:0.5">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <ColorAnimation To="#A3FFFFFF" Duration="0:0:0.5" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                            <ColorAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </ColorAnimation.EasingFunction>
+                                                        </ColorAnimation>
+                                                        <DoubleAnimation To="1" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.5">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation To="-2" Storyboard.TargetName="translateTransformItem" Storyboard.TargetProperty="(TranslateTransform.Y)" Duration="0:0:0.56">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <DoubleAnimation To="0.08" Storyboard.TargetName="dropShadowEffectItem" Storyboard.TargetProperty="Opacity" Duration="0:0:0.5">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <ColorAnimation To="#FFFFFFFF" Duration="0:0:0.5" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                            <ColorAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </ColorAnimation.EasingFunction>
+                                                        </ColorAnimation>
+                                                        <DoubleAnimation To="1" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.5">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation To="0" Storyboard.TargetName="translateTransformItem" Storyboard.TargetProperty="(TranslateTransform.Y)" Duration="0:0:0.56">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <DoubleAnimation To="0" Storyboard.TargetName="dropShadowEffectItem" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+                                                        <ColorAnimation To="#A3FFFFFF" Duration="0:0:0.04" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                                        <DoubleAnimation To="0.5" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.04"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation To="-2" Storyboard.TargetName="translateTransformItem" Storyboard.TargetProperty="(TranslateTransform.Y)" Duration="0:0:0.56">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <DoubleAnimation To="0.08" Storyboard.TargetName="dropShadowEffectItem" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+                                                        <ColorAnimation To="#8EFFFFFF" Duration="0:0:0.02" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                                        <DoubleAnimation To="1" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Border.Triggers>
+                                        <ContentPresenter Name="menuItemContent" ContentSource="{TemplateBinding Content}" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+            <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto" Name="scrollViewerRoot" Margin="8,277,104,88">
                 <ScrollViewer.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -1857,7 +2179,7 @@
                     <ListBox Visibility="Collapsed" Height="200" Name="listBoxDatePins" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
                     <TextBlock Margin="0,0,0,8" Name="textBlockDateFewDays" FontSize="20" Text="چند روز آینده" FontFamily="Fonts/#IRANSansX Regular"/>
                     <ListBox Height="200" Name="listBoxDateFewDays" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <TextBlock Name="textBlockDateCurrentWeek" FontSize="20" Text="این هفته" FontFamily="Fonts/#IRANSansX Regular"/>
+                    <TextBlock Name="textBlockDateCurrentWeek" FontSize="20" Text="هفت روز آینده" FontFamily="Fonts/#IRANSansX Regular"/>
                     <ListBox Height="200" Name="listBoxDateWeek" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
                     <TextBlock Name="textBlockDateCurrentMonth" FontSize="20" Text="این ماه" FontFamily="Fonts/#IRANSansX Regular"/>
                     <ListBox Height="200" Name="listBoxDateMonth" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>

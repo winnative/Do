@@ -35,6 +35,7 @@ namespace melakify.Do
     /// </summary>
     public partial class MainWindow : Window
     {
+        public SolidColorBrush selectedPalette { get; set; }
         public void ShowMessage(string message, string title, string primaryText = "باشه")
         {
             borderMessage.Visibility = Visibility.Visible;
@@ -390,8 +391,8 @@ namespace melakify.Do
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = gridContent;
-
+            this.DataContext = this;
+            
             storyBoardExpandAI = (Storyboard)this.Resources["storyExpandAI"];
             storyBoardExpandAIClose = (Storyboard)this.Resources["storyExpandAIClose"];
             storyPreviewOpen = (Storyboard)this.Resources["storyPreviewOpen"];
@@ -595,7 +596,8 @@ namespace melakify.Do
 
         private void windowRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            comboBoxColorPalette.Text = Settings.Default.ColorName;
+
             if ((System.Environment.OSVersion.Version.Major == 10) && (Environment.OSVersion.Version.Build >= 22621))
             {
                 if (Settings.Default.IsTranslucent)
@@ -615,6 +617,10 @@ namespace melakify.Do
                     }
 
                     windowChrome.UseAeroCaptionButtons = true;
+                    buttonClose.Visibility = Visibility.Collapsed;
+                    buttonMinimize.Visibility = Visibility.Collapsed;
+                    buttonMaximize.Visibility = Visibility.Collapsed;
+                    comboBoxColorPalette.IsEnabled = false;
                     Background = System.Windows.Media.Brushes.Transparent;
                 }
                 else
@@ -622,32 +628,14 @@ namespace melakify.Do
                     BackDrop.Disable(this);
                     comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
                     windowChrome.UseAeroCaptionButtons = false;
-                    System.Windows.Media.Color color = new System.Windows.Media.Color();
+                    buttonClose.Visibility = Visibility.Visible;
+                    buttonMinimize.Visibility = Visibility.Visible;
+                    buttonMaximize.Visibility = Visibility.Visible;
+                    comboBoxColorPalette.IsEnabled = true;
                     System.Windows.Media.Color backColor = new System.Windows.Media.Color();
-                    
-                    if (Settings.Default.ColorPalette == "Orange")
-                    {
-                        color.A = 255;
-                        color.R = 235;
-                        color.G = 209;
-                        color.B = 186;
-                    }
-                    else if (Settings.Default.ColorPalette == "Green")
-                    {
-                        color.A = 255;
-                        color.R = 186;
-                        color.G = 235;
-                        color.B = 201;
-                    }
-                    else if (Settings.Default.ColorPalette == "Blue")
-                    {
-                        color.A = 255;
-                        color.R = 186;
-                        color.G = 201;
-                        color.B = 235;
-                    }
 
-                    Background = new SolidColorBrush(color);
+                    Background = Settings.Default.ColorBackground;
+                    
 
                     backColor.A = 104;
                     backColor.R = 240;
@@ -1495,7 +1483,7 @@ namespace melakify.Do
 
         private void buttonMMS_Click(object sender, RoutedEventArgs e)
         {
-            ShowMessage("بعضی وقت ها این ارور داده می شود، ها ها", "سلام چطوری","باشه");
+            
         }
 
         private void listBoxItemUIMain_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1591,32 +1579,14 @@ namespace melakify.Do
                 BackDrop.Disable(this);
                 comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
                 windowChrome.UseAeroCaptionButtons = false;
+                buttonClose.Visibility = Visibility.Visible;
+                buttonMaximize.Visibility = Visibility.Visible;
+                buttonMinimize.Visibility = Visibility.Visible;
                 System.Windows.Media.Color color = new System.Windows.Media.Color();
                 System.Windows.Media.Color backColor = new System.Windows.Media.Color();
+                comboBoxColorPalette.IsEnabled = true;
 
-                if (Settings.Default.ColorPalette == "Orange")
-                {
-                    color.A = 255;
-                    color.R = 235;
-                    color.G = 209;
-                    color.B = 186;
-                }
-                else if (Settings.Default.ColorPalette == "Green")
-                {
-                    color.A = 255;
-                    color.R = 186;
-                    color.G = 235;
-                    color.B = 201;
-                }
-                else if (Settings.Default.ColorPalette == "Blue")
-                {
-                    color.A = 255;
-                    color.R = 186;
-                    color.G = 201;
-                    color.B = 235;
-                }
-
-                Background = new SolidColorBrush(color);
+                Background = Settings.Default.ColorBackground;
 
                 backColor.A = 104;
                 backColor.R = 230;
@@ -1631,8 +1601,12 @@ namespace melakify.Do
                 Settings.Default.IsTranslucent = true;
                 Background = System.Windows.Media.Brushes.Transparent;
                 windowChrome.UseAeroCaptionButtons = true;
+                buttonClose.Visibility = Visibility.Collapsed;
+                buttonMinimize.Visibility = Visibility.Collapsed;
+                buttonMaximize.Visibility = Visibility.Collapsed;
                 comboBoxChooseBackDrop.Visibility = Visibility.Visible;
                 comboBoxChooseBackDrop.Text = Settings.Default.TranslucentMode;
+                comboBoxColorPalette.IsEnabled = false;
 
                 if (Settings.Default.TranslucentMode == "اکلیل")
                 {
@@ -1785,6 +1759,57 @@ namespace melakify.Do
             {
 
             }
+        }
+
+        private void comboBoxColorPalette_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = (ComboBoxItem)comboBoxColorPalette.SelectedItem;
+
+            if (item.Content.ToString() == "نارنجی")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 235, G = 209, B = 186 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Orange;
+                Settings.Default.ColorName = "Orange";
+            }
+            else if (item.Content.ToString() == "سبز")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 186, G = 235, B = 201 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Green;
+                Settings.Default.ColorName = "Green";
+            }
+            else if (item.Content.ToString() == "آبی")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 186, G = 201, B = 235 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Blue;
+                Settings.Default.ColorName = "Blue";
+            }
+            Settings.Default.Save();
+            Background = Settings.Default.ColorBackground;
+            selectedPalette = Settings.Default.ColorPalette;
+        }
+
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown(0);
+        }
+
+        private void buttonMaximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                gridRoot.Margin = new Thickness(0);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                gridRoot.Margin = new Thickness(8);
+            }
+        }
+
+        private void ButtonMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }

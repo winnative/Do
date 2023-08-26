@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MelakifyMind"
         mc:Ignorable="d"
-        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" Top="0" Left="0" MaxHeight="600" MinHeight="72" Height="1000" Width="500" Loaded="Window_Loaded" Background="{x:Null}" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True">
+        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" Top="0" Left="0" Loaded="Window_Loaded" Background="{x:Null}" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" ResizeMode="NoResize">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" CaptionHeight="0" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
@@ -35,7 +35,7 @@
         <Grid.RenderTransform>
             <TranslateTransform x:Name="translateTransform" X="400" Y="0"/>
         </Grid.RenderTransform>
-        <Border Name="borderRoot" BorderThickness="1" BorderBrush="#28000000" Background="White" UseLayoutRounding="True" CornerRadius="12"/>
+        <Border Name="borderRoot" BorderThickness="1" Width="400" BorderBrush="#28000000" Background="White" UseLayoutRounding="True" CornerRadius="12"/>
         <MediaElement Name="mediaPlayer" LoadedBehavior="Play" Source="Rings/Waterdrop_Drop.mp3"/>
         <Button ToolTip="صفحه اصلی" Height="36" HorizontalAlignment="Right" Width="36" Name="buttonShowTheMain" Style="{StaticResource buttonFlat}" Margin="57,18,57,0" VerticalAlignment="Top" Click="buttonShowTheMain_Click">
             <Image SnapsToDevicePixels="False" Grid.Column="1" Name="comboBoxUIImageMain" Margin="8" Stretch="None" OpacityMask="Black">
@@ -85,7 +85,8 @@
                 </Image.Source>
             </Image>
         </Button>
-        <TextBlock TextWrapping="Wrap" Name="textBlockAI" Margin="32,25,98,0" FontFamily="Fonts/#IRANSansX Regular" FontSize="16" Height="143" VerticalAlignment="Top">
+        <TextBlock Name="textBlockTitle" FontSize="18" Margin="32,24" FontFamily="Fonts/#IRANSansX Regular" HorizontalAlignment="Left" Text="درک جادویی" VerticalAlignment="Top" Foreground="#FF9421AF"/>
+        <TextBlock TextWrapping="Wrap" Name="textBlockAI" Margin="32,96,32,32" FontFamily="Fonts/#IRANSansX Regular" FontSize="18" VerticalAlignment="Top">
 سلام! من درک جادویی هستم. من در برنامه +Do می توانم مدیریت موعد های شما را برعهده بگیرم.
         </TextBlock>
     </Grid>

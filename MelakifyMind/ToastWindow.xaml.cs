@@ -44,7 +44,7 @@ namespace melakify.Do
         public ToastWindow()
         {
             InitializeComponent();
-
+            textBlockAI.Text = "";
             if (!Settings.Default.FirstReminder)
             {
                 MainWindow win = new MainWindow();
@@ -110,22 +110,16 @@ namespace melakify.Do
 
                         if (result.Count() > 0)
                         {
-                            textBlockAI.Text = "با سلام و وقت بخیر!\nیادت نره کار هایت را انجام بدی!؟\n\n\n";
-
                             foreach (var item in result)
                             {
-                                textBlockAI.Text += $"-{item.Description} تا {item.DaysBefore} روز دیگر\n";
+                                textBlockAI.Text += $"- {item.Description} تا {item.DaysBefore} روز دیگر\n\n";
                             }
-                            this.MaxHeight = 400;
                         }
                         else
                         {
-                            this.MaxHeight = 72;
-                            textBlockAI.Text = "با سلام. شما برای امروز یادآوری ندارید.";
+                            textBlockAI.Text = "سلام. برای امروز یادآوری ندارید.";
                         }
-
-                        Left = SystemParameters.PrimaryScreenWidth - Width;
-                        Top = SystemParameters.PrimaryScreenHeight - Height - 64;
+                        
                     }
                     else
                     {
@@ -141,6 +135,11 @@ namespace melakify.Do
                 {
                     connection.Close();
                 }
+
+                Left = SystemParameters.PrimaryScreenWidth - Width;
+                Top = SystemParameters.PrimaryScreenHeight - Height - 64;
+                
+
             }
             catch (Exception ex)
             {

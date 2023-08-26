@@ -121,12 +121,42 @@ namespace MelakifyMind.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
-        public string ColorPalette {
+        public System.Windows.Media.SolidColorBrush ColorPalette {
             get {
-                return ((string)(this["ColorPalette"]));
+                return ((System.Windows.Media.SolidColorBrush)(this["ColorPalette"]));
             }
             set {
                 this["ColorPalette"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        public System.Windows.Media.SolidColorBrush ColorBackground
+        {
+            get
+            {
+                return ((System.Windows.Media.SolidColorBrush)(this["ColorBackground"]));
+            }
+            set
+            {
+                this["ColorBackground"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        public string ColorName
+        {
+            get
+            {
+                return ((string)(this["ColorName"]));
+            }
+            set
+            {
+                this["ColorName"] = value;
             }
         }
     }
