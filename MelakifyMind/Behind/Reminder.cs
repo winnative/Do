@@ -24,6 +24,22 @@ namespace melakify.Entities.Behind
         public int ShowYear { get; set; }
         public string IsImportant { get; set; }
 
+        public string DateFolder
+        {
+            get
+            {
+                return $"{Year:0000}/{Month:00}/{Day:00}";
+            }
+        }
+
+        public string GregorianDateFolder
+        {
+            get
+            {
+                return $"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.ToShortDateString();
+            }
+        }
+
         public string DaysDistance
         {
             get

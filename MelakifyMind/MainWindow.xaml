@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MelakifyMind"
         mc:Ignorable="d"
-        Title="melakify +Do" Name="windowRoot" FontFamily="Fonts/#IRANSansX Regular" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Loaded="windowRoot_Loaded" Background="#FFDDCBB6" WindowStartupLocation="CenterScreen" Icon="/Images/Melak +Mind.ico" Closing="windowRoot_Closing">
+        Title="melakify +Do" Name="windowRoot" FontFamily="Fonts/#IRANSansX Regular" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Loaded="windowRoot_Loaded" Background="#FFD3DFD0" WindowStartupLocation="CenterScreen" Icon="/Images/Melak +Mind.ico" Closing="windowRoot_Closing">
     <WindowChrome.WindowChrome>
         <WindowChrome x:Name="windowChrome" GlassFrameThickness="-1" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
@@ -783,7 +783,7 @@
                 <LineBreak/><LineBreak/><LineBreak/>Copyrights 2023 emtudio. All rights reserved.
                 </TextBlock>
             </Border>
-            <Button Name="buttonBackToHome" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="37" Width="38" Margin="979,110,83,538" Click="buttonBackToHome_Click">
+            <Button Name="buttonBackToHome" Style="{StaticResource buttonFlatItem}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="37" Width="38" Margin="979,110,83,538" Click="buttonBackToHome_Click">
                 <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
                     <Image.Source>
                         <DrawingImage>
@@ -1662,8 +1662,8 @@
                     <TextBox Text="" Grid.Column="1" Name="textBoxSearch" Style="{StaticResource TextBoxFlat}" FontSize="14" Padding="6,5" FontFamily="Fonts/#IRANSansX Regular" CaretBrush="#FF7B7B7B"/>
                 </Grid>
             </Border>
-            <Button FlowDirection="RightToLeft" Style="{StaticResource buttonFlat}" Name="buttonSettings" Margin="480,21,0,0" Height="37" VerticalAlignment="Top" Click="buttonSettings_Click" HorizontalAlignment="Center" Width="38">
-                <Image SnapsToDevicePixels="False" Grid.Column="1" Name="comboBoxUIImageMain" Margin="8" Stretch="None" OpacityMask="Black">
+            <Button FlowDirection="RightToLeft" Style="{StaticResource buttonFlatItem}" Name="buttonSettings" Margin="762,22,0,0" Height="34" VerticalAlignment="Top" Click="buttonSettings_Click" HorizontalAlignment="Left" Width="34">
+                <Image SnapsToDevicePixels="False" Grid.Column="1" Name="comboBoxUIImageMain" Stretch="None" OpacityMask="Black">
                     <Image.Source>
                         <DrawingImage>
                             <DrawingImage.Drawing>
@@ -1855,7 +1855,7 @@
             </Image>
             <TextBlock FlowDirection="RightToLeft" Name="textBlockNoReminder" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Text="شما هیچ یادآوری ندارید." FontFamily="Fonts/#IRANSansX Regular" Foreground="#CC000000" Margin="0,354,0,0"/>
             <TextBlock FlowDirection="RightToLeft" Name="textBlockNoReminderComment" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" Text="با کلیک بر روی دکمه + یک یادآور جدید ایجاد کنید." FontFamily="Fonts/#IRANSansX Regular" Foreground="#A3000000" Margin="0,390,0,0"/>
-            <ListBox Name="listBoxTimeLine" Margin="40,158,104,434" Background="{x:Null}" BorderBrush="{x:Null}">
+            <ListBox FlowDirection="RightToLeft" Name="listBoxTimeLine" Margin="40,144,104,0" Background="{x:Null}" BorderBrush="{x:Null}" Height="128" VerticalAlignment="Top">
                 <ListBox.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -1878,23 +1878,19 @@
                         <Setter Property="ItemTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Grid>
+                                    <Grid Margin="4,0" FlowDirection="RightToLeft">
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Margin="8,10" FontFamily="Fonts/#IRANSansX Regular" TextTrimming="WordEllipsis" TextWrapping="Wrap" Text="{Binding Date}" FontSize="20"/>
-                                        <Grid Grid.Row="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="104"/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <VirtualizingStackPanel Margin="4,0,0,0" Orientation="Horizontal">
-                                                <TextBlock FontFamily="Fonts/#IRANSansX Regular" VerticalAlignment="Center" FontSize="14" Text="{Binding ReminderCounter}"></TextBlock>
-                                            </VirtualizingStackPanel>
-                                            <VirtualizingStackPanel Orientation="Horizontal" Grid.Column="1">
-
-                                            </VirtualizingStackPanel>
+                                        <TextBlock Margin="4,8,4,0" FontFamily="Fonts/#IRANSansX DemiBold" TextAlignment="Left" TextTrimming="WordEllipsis" VerticalAlignment="Top" TextWrapping="Wrap" Text="{Binding Date}" FontSize="16"/>
+                                        <Grid Grid.Row="1" Margin="4,0,4,0">
+                                            <TextBlock FontFamily="Fonts/#IRANSansX Regular" Margin="32,0,0,0" VerticalAlignment="Center" FontSize="14" Text="{Binding ReminderCount}"></TextBlock>
+                                            <Border Height="16" BorderThickness="1" BorderBrush="#08000000" Width="16" CornerRadius="16" HorizontalAlignment="Left" Margin="4,4,4,4" Background="{Binding ImportantColor}" VerticalAlignment="Center">
+                                                <Border.Effect>
+                                                    <DropShadowEffect Direction="270" Opacity="0.16" ShadowDepth="1" BlurRadius="0"/>
+                                                </Border.Effect>
+                                            </Border>
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>
@@ -1903,12 +1899,12 @@
                     </Style>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="RenderTransformOrigin" Value="0.5,0.7"/>
-                        <Setter Property="Width" Value="140"/>
-                        <Setter Property="Height" Value="88"/>
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="Height" Value="96"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
-                                    <Border ToolTip="{Binding Description}" Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="12" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000" MouseLeftButtonUp="listBoxItemUIMain_MouseLeftButtonUp">
+                                    <Border ToolTip="{Binding Description}" Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="12" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000" MouseLeftButtonUp="listBoxItemUIMain_MouseLeftButtonUp_1">
                                         <Border.Effect>
                                             <DropShadowEffect x:Name="dropShadowEffectItem" Direction="270" Opacity="0" BlurRadius="8" ShadowDepth="4"/>
                                         </Border.Effect>
@@ -2015,7 +2011,7 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto" Name="scrollViewerRoot" Margin="8,277,104,88">
+            <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto" Name="scrollViewerRoot" Margin="8,289,104,88">
                 <ScrollViewer.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -2043,7 +2039,7 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Margin="8,10" FontFamily="Fonts/#IRANSansX Regular" TextTrimming="WordEllipsis" TextWrapping="Wrap" Text="{Binding Description}" FontSize="20"/>
+                                        <TextBlock Margin="8,10" FontFamily="Fonts/#IRANSansX Regular" TextTrimming="WordEllipsis" TextWrapping="Wrap" Text="{Binding Description}" FontSize="16"/>
                                         <Grid Grid.Row="1">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="104"/>
@@ -2175,13 +2171,13 @@
                     </Style>
                 </ScrollViewer.Resources>
                 <VirtualizingStackPanel Name="stackPanelRoot">
-                    <TextBlock Visibility="Collapsed" Margin="0,0,0,8" Name="textBlockDatePins" FontSize="20" Text="پین شده‌ها" FontFamily="Fonts/#IRANSansX Regular"/>
+                    <Button Style="{StaticResource buttonFlat}" Padding="8,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="100" Visibility="Collapsed" Margin="0,0,0,8" Name="textBlockDatePins" FontSize="20" Content="مهم ها" FontFamily="Fonts/#IRANSansX Regular"/>
                     <ListBox Visibility="Collapsed" Height="200" Name="listBoxDatePins" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <TextBlock Margin="0,0,0,8" Name="textBlockDateFewDays" FontSize="20" Text="چند روز آینده" FontFamily="Fonts/#IRANSansX Regular"/>
+                    <Button Style="{StaticResource buttonFlat}" HorizontalAlignment="Left" Padding="8,0" HorizontalContentAlignment="Left" Margin="0,0,0,8" Name="textBlockDateFewDays" FontSize="20" Content="چند روز آینده" FontFamily="Fonts/#IRANSansX Regular"/>
                     <ListBox Height="200" Name="listBoxDateFewDays" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <TextBlock Name="textBlockDateCurrentWeek" FontSize="20" Text="هفت روز آینده" FontFamily="Fonts/#IRANSansX Regular"/>
+                    <Button Padding="8,0" Name="textBlockDateCurrentWeek" Style="{StaticResource buttonFlat}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" FontSize="20" Content="هفت روز آینده" FontFamily="Fonts/#IRANSansX Regular" Background="#FF3D3D3D"/>
                     <ListBox Height="200" Name="listBoxDateWeek" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <TextBlock Name="textBlockDateCurrentMonth" FontSize="20" Text="این ماه" FontFamily="Fonts/#IRANSansX Regular"/>
+                    <Button Name="textBlockDateCurrentMonth" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Padding="8,0" FontSize="20" Content="این ماه" FontFamily="Fonts/#IRANSansX Regular"/>
                     <ListBox Height="200" Name="listBoxDateMonth" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
                 </VirtualizingStackPanel>
             </ScrollViewer>
@@ -2313,7 +2309,7 @@
                                                 <GeometryDrawing.Brush>
                                                     <VisualBrush Stretch="None">
                                                         <VisualBrush.Visual>
-                                                            <TextBlock Name="textBlockIsImportantContent" FontFamily="Fonts/#Segoe Fluent Icons" Foreground="Black" Text="&#xE718;" FontSize="16"/>
+                                                            <TextBlock Name="textBlockIsImportantContent" FontFamily="Fonts/#Segoe Fluent Icons" Foreground="Black" Text="&#xE8C9;" FontSize="16"/>
                                                         </VisualBrush.Visual>
                                                     </VisualBrush>
                                                 </GeometryDrawing.Brush>

@@ -22,6 +22,8 @@ using MelakifyMind;
 using melakify.Automation.UI;
 using System.Data.SQLite;
 using System.Net;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace melakify.Do
 {
@@ -34,7 +36,7 @@ namespace melakify.Do
         List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
         SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\melakify\+Do\DOs.sqlite; Version = 3;");
-        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
+        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4), IsChecked boolean)");
         SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
@@ -44,7 +46,6 @@ namespace melakify.Do
         public ToastWindow()
         {
             InitializeComponent();
-            textBlockAI.Text = "";
             if (!Settings.Default.FirstReminder)
             {
                 MainWindow win = new MainWindow();
@@ -110,14 +111,16 @@ namespace melakify.Do
 
                         if (result.Count() > 0)
                         {
-                            foreach (var item in result)
-                            {
-                                textBlockAI.Text += $"- {item.Description} تا {item.DaysBefore} روز دیگر\n\n";
-                            }
+                            textBlockDescription.Text = result.ToList()[0].Description.ToString();
+                            textBlockDaysDistance.Text = result.ToList()[0].DaysDistance.ToString();
+                            buttonDismiss.Visibility = Visibility.Visible;
+                            buttonSnooze.Visibility = Visibility.Visible;
                         }
                         else
                         {
-                            textBlockAI.Text = "سلام. برای امروز یادآوری ندارید.";
+                            textBlockDescription.Text = "سلام. برای امروز یادآوری ندارید.";
+                            buttonSnooze.Visibility = Visibility.Collapsed;
+                            buttonDismiss.Visibility = Visibility.Visible;
                         }
                         
                     }
@@ -128,7 +131,7 @@ namespace melakify.Do
                         command.ExecuteNonQuery();
                         connection.Close();
 
-                        textBlockAI.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
+                        textBlockDescription.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
                     }
                 }
                 finally
@@ -152,11 +155,16 @@ namespace melakify.Do
             storyToastClose.Begin();
         }
 
-        private void buttonShowTheMain_Click(object sender, RoutedEventArgs e)
+        private void buttonCloseNow_Click(object sender, RoutedEventArgs e)
         {
             Topmost = false;
             MainWindow win = new MainWindow();
             win.Show();
+            storyToastClose.Begin();
+        }
+
+        private void buttonDismiss_Click(object sender, RoutedEventArgs e)
+        {
             storyToastClose.Begin();
         }
     }

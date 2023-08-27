@@ -27,6 +27,7 @@ using melakify.Automation.Behind;
 using MelakifyMind.Properties;
 using DNTPersianUtils.Core;
 using Microsoft.Win32;
+using MelakifyMind.Behind;
 
 namespace melakify.Do
 {
@@ -260,6 +261,33 @@ namespace melakify.Do
                           where p.IsImportant == "مهم"
                           select p;
 
+                var dateShortcut = from ds in reminders
+                                   group ds by ds.DateFolder into folder
+                                   select new { Reminders = folder, Title = folder.Key.ToString() };
+
+                if (dateShortcut.Count() > 0)
+                {
+                    folders.Clear();
+                    listBoxTimeLine.Visibility = Visibility.Visible;
+                    scrollViewerRoot.Margin = new Thickness(8, 272, 104, 88);
+                    foreach(var d in dateShortcut)
+                    {
+                        foreach(var f in d.Reminders)
+                        {
+                            folders.Add(new Folder() { Date = d.Title, Reminders = d.Reminders.ToList() });
+                        }
+                    }
+
+                    folders = folders.DistinctBy(d => d.Date).ToList();
+
+                    listBoxTimeLine.ItemsSource = folders;
+                }
+                else
+                {
+                    listBoxTimeLine.Visibility = Visibility.Collapsed;
+                    scrollViewerRoot.Margin = new Thickness(8, 162, 104, 88);
+                }
+
                 if (pin.Count() > 0)
                 {
                     listBoxDatePins.Visibility = Visibility.Visible;
@@ -381,6 +409,7 @@ namespace melakify.Do
         Reminder newReminder = new Reminder();
         Reminder selectedReminder = new Reminder();
         List<Reminder> reminders = new List<Reminder>();
+        List<Folder> folders = new List<Folder>();
         PersianCalendar persian = new PersianCalendar();
         public string DescriptionPreview { get; set; }
         public int DaysBefore { get; set; }
@@ -633,21 +662,14 @@ namespace melakify.Do
                     buttonMaximize.Visibility = Visibility.Visible;
                     comboBoxColorPalette.IsEnabled = true;
                     System.Windows.Media.Color backColor = new System.Windows.Media.Color();
-
+                    borderBack.Visibility = Visibility.Collapsed;
                     Background = Settings.Default.ColorBackground;
-                    
-
-                    backColor.A = 104;
-                    backColor.R = 240;
-                    backColor.G = 240;
-                    backColor.B = 240;
-                    borderBack.Background = new SolidColorBrush(backColor);
-                    borderBack.Visibility = Visibility.Visible;
                 }
             }
             else
             {
                 borderAllowTrans.Visibility = Visibility.Collapsed;
+                borderBack.Visibility = Visibility.Collapsed;
                 windowChrome.UseAeroCaptionButtons = false;
             }
 
@@ -1064,7 +1086,7 @@ namespace melakify.Do
             {
                 if (Settings.Default.BackupPath != "None")
                 {
-                    File.Copy(Path, Settings.Default.BackupPath + @"DOs.sqlite", true);
+                    File.Copy(Path, Settings.Default.BackupPath + @"\DOs.sqlite", true);
                 }
             }
         }
@@ -1587,13 +1609,6 @@ namespace melakify.Do
                 comboBoxColorPalette.IsEnabled = true;
 
                 Background = Settings.Default.ColorBackground;
-
-                backColor.A = 104;
-                backColor.R = 230;
-                backColor.G = 230;
-                backColor.B = 230;
-                borderBack.Background = new SolidColorBrush(backColor);
-                borderBack.Visibility = Visibility.Visible;
             }
             else
             {
@@ -1767,19 +1782,19 @@ namespace melakify.Do
 
             if (item.Content.ToString() == "نارنجی")
             {
-                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 235, G = 209, B = 186 });
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 236, G = 211, B = 203 });
                 Settings.Default.ColorPalette = System.Windows.Media.Brushes.Orange;
                 Settings.Default.ColorName = "Orange";
             }
             else if (item.Content.ToString() == "سبز")
             {
-                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 186, G = 235, B = 201 });
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 211, G = 223, B = 208 });
                 Settings.Default.ColorPalette = System.Windows.Media.Brushes.Green;
                 Settings.Default.ColorName = "Green";
             }
             else if (item.Content.ToString() == "آبی")
             {
-                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 186, G = 201, B = 235 });
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 207, G = 220, B = 235 });
                 Settings.Default.ColorPalette = System.Windows.Media.Brushes.Blue;
                 Settings.Default.ColorName = "Blue";
             }
@@ -1810,6 +1825,11 @@ namespace melakify.Do
         private void ButtonMinimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        private void listBoxItemUIMain_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
