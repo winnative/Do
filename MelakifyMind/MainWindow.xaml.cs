@@ -268,8 +268,8 @@ namespace melakify.Do
                 if (dateShortcut.Count() > 0)
                 {
                     folders.Clear();
-                    listBoxTimeLine.Visibility = Visibility.Visible;
-                    scrollViewerRoot.Margin = new Thickness(8, 272, 104, 88);
+                    listBoxTimeLine.Visibility = Visibility.Collapsed;
+                    scrollViewerRoot.Margin = new Thickness(88, 142, 88, 88);
                     foreach(var d in dateShortcut)
                     {
                         foreach(var f in d.Reminders)
@@ -285,54 +285,17 @@ namespace melakify.Do
                 else
                 {
                     listBoxTimeLine.Visibility = Visibility.Collapsed;
-                    scrollViewerRoot.Margin = new Thickness(8, 162, 104, 88);
+                    scrollViewerRoot.Margin = new Thickness(88, 142, 88, 88);
                 }
 
-                if (pin.Count() > 0)
-                {
-                    listBoxDatePins.Visibility = Visibility.Visible;
-                    textBlockDatePins.Visibility = Visibility.Visible;
-                    listBoxDatePins.ItemsSource = pin;
-                }
-                else
-                {
-                    listBoxDatePins.Visibility = Visibility.Collapsed;
-                    textBlockDatePins.Visibility = Visibility.Collapsed;
-                }
-
-                if (fewDays.Count() > 0)
-                {
-                    textBlockDateFewDays.Visibility = Visibility.Visible;
-                    listBoxDateFewDays.Visibility = Visibility.Visible;
-                    listBoxDateFewDays.ItemsSource = fewDays;
-                }
-                else
-                {
-                    textBlockDateFewDays.Visibility = Visibility.Collapsed;
-                    listBoxDateFewDays.Visibility = Visibility.Collapsed;
-                }
-
-                if (week.Count() > 0)
-                {
-                    textBlockDateCurrentWeek.Visibility = Visibility.Visible;
-                    listBoxDateWeek.Visibility = Visibility.Visible;
-                    listBoxDateWeek.ItemsSource = week;
-                }
-                else
-                {
-                    textBlockDateCurrentWeek.Visibility = Visibility.Collapsed;
-                    listBoxDateWeek.Visibility = Visibility.Collapsed;
-                }
-
+                
                 if (month.Count() > 0)
                 {
-                    textBlockDateCurrentMonth.Visibility = Visibility.Visible;
                     listBoxDateMonth.Visibility = Visibility.Visible;
                     listBoxDateMonth.ItemsSource = month;
                 }
                 else
                 {
-                    textBlockDateCurrentMonth.Visibility = Visibility.Collapsed;
                     listBoxDateMonth.Visibility = Visibility.Collapsed;
                 }
             }
@@ -1459,7 +1422,6 @@ namespace melakify.Do
                 textBlockNevigationBackDrop.Opacity = 1;
                 gridTimeLineFolder.Visibility = Visibility.Collapsed;
                 scrollViewerRoot.Visibility = Visibility.Visible;
-                listBoxTimeLine.Visibility = Visibility.Visible;
             }
             else
             {

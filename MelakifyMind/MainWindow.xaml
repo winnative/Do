@@ -1662,7 +1662,7 @@
                     <TextBox Text="" Grid.Column="1" Name="textBoxSearch" Style="{StaticResource TextBoxFlat}" FontSize="14" Padding="6,5" FontFamily="Fonts/#IRANSansX Regular" CaretBrush="#FF7B7B7B"/>
                 </Grid>
             </Border>
-            <Button FlowDirection="RightToLeft" Style="{StaticResource buttonFlatItem}" Name="buttonSettings" Margin="762,22,0,0" Height="34" VerticalAlignment="Top" Click="buttonSettings_Click" HorizontalAlignment="Left" Width="34">
+            <Button FlowDirection="RightToLeft" Style="{StaticResource buttonFlatItem}" Name="buttonSettings" Margin="0,22,-450,0" Height="34" Width="34" VerticalAlignment="Top" Click="buttonSettings_Click" HorizontalAlignment="Center">
                 <Image SnapsToDevicePixels="False" Grid.Column="1" Name="comboBoxUIImageMain" Stretch="None" OpacityMask="Black">
                     <Image.Source>
                         <DrawingImage>
@@ -1855,7 +1855,7 @@
             </Image>
             <TextBlock FlowDirection="RightToLeft" Name="textBlockNoReminder" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Text="شما هیچ یادآوری ندارید." FontFamily="Fonts/#IRANSansX Regular" Foreground="#CC000000" Margin="0,354,0,0"/>
             <TextBlock FlowDirection="RightToLeft" Name="textBlockNoReminderComment" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" Text="با کلیک بر روی دکمه + یک یادآور جدید ایجاد کنید." FontFamily="Fonts/#IRANSansX Regular" Foreground="#A3000000" Margin="0,390,0,0"/>
-            <ListBox FlowDirection="RightToLeft" Name="listBoxTimeLine" Margin="40,144,104,0" Background="{x:Null}" BorderBrush="{x:Null}" Height="128" VerticalAlignment="Top">
+            <ListBox FlowDirection="RightToLeft" Visibility="Collapsed" Name="listBoxTimeLine" Margin="104,144,104,0" Background="{x:Null}" BorderBrush="{x:Null}" Height="128" VerticalAlignment="Top">
                 <ListBox.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -2011,7 +2011,7 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto" Name="scrollViewerRoot" Margin="8,289,104,88">
+            <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto" Name="scrollViewerRoot" Margin="88,144,88,88">
                 <ScrollViewer.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -2024,8 +2024,8 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBox">
                                     <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12" BorderBrush="{TemplateBinding BorderBrush}" Name="listBoxUIMain">
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                            <StackPanel Name="listBoxUICotainer" Orientation="Horizontal" IsItemsHost="True"/>
+                                        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                            <WrapPanel Name="listBoxUICotainer" Orientation="Horizontal" IsItemsHost="True"/>
                                         </ScrollViewer>
                                     </Border>
                                 </ControlTemplate>
@@ -2171,14 +2171,7 @@
                     </Style>
                 </ScrollViewer.Resources>
                 <VirtualizingStackPanel Name="stackPanelRoot">
-                    <Button Width="200" Style="{StaticResource buttonFlat}" Padding="16,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Visibility="Collapsed" Margin="0,0,0,8" Name="textBlockDatePins" FontSize="20" Content="مهم ها" FontFamily="Fonts/#IRANSansX Regular"/>
-                    <ListBox Visibility="Collapsed" Height="200" Name="listBoxDatePins" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <Button Width="200" Style="{StaticResource buttonFlat}" HorizontalAlignment="Left" Padding="16,0" HorizontalContentAlignment="Left" Margin="0,0,0,8" Name="textBlockDateFewDays" FontSize="20" Content="چند روز آینده" FontFamily="Fonts/#IRANSansX Regular"/>
-                    <ListBox Height="200" Name="listBoxDateFewDays" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <Button Width="200" Padding="16,0" Name="textBlockDateCurrentWeek" Style="{StaticResource buttonFlat}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" FontSize="20" Content="هفت روز آینده" FontFamily="Fonts/#IRANSansX Regular" Background="#FF3D3D3D"/>
-                    <ListBox Height="200" Name="listBoxDateWeek" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
-                    <Button Width="200" Style="{StaticResource buttonFlat}" Name="textBlockDateCurrentMonth" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Padding="16,0" FontSize="20" Content="این ماه" FontFamily="Fonts/#IRANSansX Regular"/>
-                    <ListBox Height="200" Name="listBoxDateMonth" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
+                    <ListBox Name="listBoxDateMonth" Background="{x:Null}" BorderBrush="{x:Null}" PreviewMouseLeftButtonUp="EditLists_MouseLeftButtonUp"/>
                 </VirtualizingStackPanel>
             </ScrollViewer>
             <Grid Visibility="Visible" FlowDirection="RightToLeft" Name="gridTimeLineFolder" Margin="80,170,80,88">
@@ -2688,7 +2681,7 @@
                 </Grid>
             </Border>
         </Border>
-        <VirtualizingStackPanel FlowDirection="RightToLeft" Margin="80,104" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+        <VirtualizingStackPanel FlowDirection="RightToLeft" Margin="80,88" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
             <TextBlock Name="textBlockNavigationHome" Opacity="1" IsEnabled="False" FontFamily="Fonts/#IRANSansX SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="28" MouseLeftButtonUp="textBlockSettingsTitle_MouseLeftButtonUp" Foreground="Black" MouseEnter="textBlockNavigationHome_MouseEnter" MouseLeave="textBlockNavigationHome_MouseLeave" MouseLeftButtonDown="textBlockNavigationHome_MouseLeftButtonDown">خانه
 
             </TextBlock>
