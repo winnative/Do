@@ -768,6 +768,7 @@ namespace melakify.Do
             imageBetweenNevigation.Visibility = Visibility.Visible;
             textBlockNevigationBackDrop.Visibility = Visibility.Visible;
             textBlockNavigationHome.IsEnabled = true;
+            textBlockNevigationBackDrop.Text = "تنظیمات";
             textBlockNavigationHome.Opacity = 0.64;
             textBlockNevigationBackDrop.Opacity = 1;
         }
@@ -780,33 +781,52 @@ namespace melakify.Do
 
         private void buttonBackToHome_Click(object sender, RoutedEventArgs e)
         {
-            storySettingsClose.Begin();
-            borderSearch.Visibility = Visibility.Visible;
+            if (gridSettings.Visibility == Visibility.Visible)
+            {
+                storySettingsClose.Begin();
+                borderSearch.Visibility = Visibility.Visible;
 
-            textBlockNavigationHome.Opacity = 1;
-            textBlockNavigationHome.IsEnabled = false;
-            imageBetweenNevigation.Visibility = Visibility.Collapsed;
-            textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
 
-            imageBetweenNevigation2.Visibility = Visibility.Collapsed;
-            textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
-            textBlockNevigationBackDrop.IsEnabled = false;
+                imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+                textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.IsEnabled = false;
 
-            if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
-            {
-                storySettingsDatabaseClose.Begin();
+                if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+                {
+                    storySettingsDatabaseClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+                {
+                    storySettingsPerformanceClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+                {
+                    storySettingsPersonalizeClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+                {
+                    storySettingsUserClose.Begin();
+                }
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                gridTimeLineFolder.Visibility = Visibility.Collapsed;
+                scrollViewerRoot.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
             }
-            else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            else
             {
-                storySettingsPerformanceClose.Begin();
-            }
-            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
-            {
-                storySettingsPersonalizeClose.Begin();
-            }
-            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
-            {
-                storySettingsUserClose.Begin();
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                gridTimeLineFolder.Visibility = Visibility.Collapsed;
+                scrollViewerRoot.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
             }
         }
 
@@ -1405,35 +1425,53 @@ namespace melakify.Do
 
         private void textBlockSettingsTitle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            storySettingsClose.Begin();
-            borderSearch.Visibility = Visibility.Visible;
+            if (gridSettings.Visibility == Visibility.Visible)
+            {
+                storySettingsClose.Begin();
+                borderSearch.Visibility = Visibility.Visible;
 
-            textBlockNavigationHome.Opacity = 1;
-            textBlockNavigationHome.IsEnabled = false;
-            imageBetweenNevigation.Visibility = Visibility.Collapsed;
-            textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
 
-            imageBetweenNevigation2.Visibility = Visibility.Collapsed;
-            textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
-            textBlockNevigationBackDrop.IsEnabled = false;
+                imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+                textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.IsEnabled = false;
 
-            if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
-            {
-                storySettingsDatabaseClose.Begin();
+                if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+                {
+                    storySettingsDatabaseClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+                {
+                    storySettingsPerformanceClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+                {
+                    storySettingsPersonalizeClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+                {
+                    storySettingsUserClose.Begin();
+                }
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                gridTimeLineFolder.Visibility = Visibility.Collapsed;
+                scrollViewerRoot.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
             }
-            else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            else
             {
-                storySettingsPerformanceClose.Begin();
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                gridTimeLineFolder.Visibility = Visibility.Collapsed;
+                scrollViewerRoot.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
             }
-            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
-            {
-                storySettingsPersonalizeClose.Begin();
-            }
-            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
-            {
-                storySettingsUserClose.Begin();
-            }
-            textBlockNavigationHome.Opacity = 1;
         }
 
         
@@ -1829,7 +1867,50 @@ namespace melakify.Do
 
         private void listBoxItemUIMain_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
         {
+            Folder folder = (Folder)listBoxTimeLine.SelectedItem;
 
+            gridTimeLineFolder.Visibility = Visibility.Visible;
+            scrollViewerRoot.Visibility = Visibility.Collapsed;
+            listBoxTimeLine.Visibility = Visibility.Collapsed;
+            imageBetweenNevigation.Visibility = Visibility.Visible;
+            textBlockNavigationHome.Opacity = 0.64;
+            textBlockNavigationHome.IsEnabled = true;
+            textBlockNevigationBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = false;
+            textBlockNevigationBackDrop.Text = $"{folder.Date}";
+
+            listBoxTimeLineReminders.ItemsSource = folder.Reminders;
+        }
+
+        private void listBoxItemUIMain_MouseLeftButtonUp_2(object sender, MouseButtonEventArgs e)
+        {
+            selectedReminder = (Reminder)((System.Windows.Controls.ListBox)listBoxTimeLineReminders).SelectedItem;
+            try
+            {
+                textBoxDescription.Text = selectedReminder.Description;
+                textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
+                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
+
+                if (selectedReminder.IsImportant == "")
+                {
+                    textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.Black;
+                }
+                else
+                {
+                    textBlockIsImportantContent.Foreground = System.Windows.Media.Brushes.IndianRed;
+                }
+
+                buttonAddReminderKey.Content = "ویرایش کردن";
+                buttonAddReminderKey.IsEnabled = false;
+                buttonAddReminderDelete.Visibility = Visibility.Visible;
+                borderSmoke.Visibility = Visibility.Visible;
+                borderAddReminder.Visibility = Visibility.Visible;
+                storyAddOpen.Begin();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

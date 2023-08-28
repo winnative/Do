@@ -111,8 +111,20 @@ namespace melakify.Do
 
                         if (result.Count() > 0)
                         {
-                            textBlockDescription.Text = result.ToList()[0].Description.ToString();
-                            textBlockDaysDistance.Text = result.ToList()[0].DaysDistance.ToString();
+                            textBlockDescription.Text = "یادآور های شما عبارتند از:\n\n";
+
+                            for (int i = 0; i < result.Count(); i++)
+                            {
+                                if (result.ToList()[i].DaysDistance.Contains("فردا") || result.ToList()[i].DaysDistance.Contains("امروز"))
+                                {
+                                    textBlockDescription.Text += $"- {result.ToList()[i].DaysDistance}";
+                                }
+                                else
+                                {
+                                    textBlockDescription.Text += $"- {result.ToList()[i].DaysDistance} روز مانده";
+                                }
+                            }
+
                             buttonDismiss.Visibility = Visibility.Visible;
                             buttonSnooze.Visibility = Visibility.Visible;
                         }
