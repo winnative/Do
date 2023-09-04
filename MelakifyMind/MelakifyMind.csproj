@@ -6,14 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	<UseWindowsForms>true</UseWindowsForms>
-    <PackageId>melakify +Do</PackageId>
+    <PackageId>emtudio +Do</PackageId>
     <Version>1.1.0</Version>
     <Authors>Hassan Kazemi</Authors>
-    <Company>melakify</Company>
+    <Company>emtudio</Company>
     <Copyright>Copyrights 2023. All rights reserved.</Copyright>
     <ApplicationIcon>Melak +Mind.ico</ApplicationIcon>
-    <Product>melakify +Do</Product>
-    <AssemblyName>melakify +Do</AssemblyName>
+    <Product>emtudio +Do</Product>
+    <AssemblyName>emtudio +Do</AssemblyName>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Melak +Mind.ico" />

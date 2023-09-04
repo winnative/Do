@@ -132,7 +132,7 @@ namespace MelakifyMind.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
         public System.Windows.Media.SolidColorBrush ColorBackground
         {
             get
@@ -147,7 +147,7 @@ namespace MelakifyMind.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
         public string ColorName
         {
             get

@@ -929,7 +929,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
-                    <Border Padding="8,8" Width="{Binding ElementName=toolTipContent , Path=Width}" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
+                    <Border Padding="8,8" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="32" Direction="270" Opacity="0.24" ShadowDepth="10"/>
                         </Border.Effect>
@@ -940,7 +940,6 @@
         </Setter>
     </Style>
     <Style TargetType="Popup">
-        <Setter Property="MinWidth" Value="200"/>
         <Setter Property="AllowsTransparency" Value="True"/>
     </Style>
     <Style TargetType="ListView">

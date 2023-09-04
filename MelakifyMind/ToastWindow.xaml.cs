@@ -35,14 +35,14 @@ namespace melakify.Do
         Storyboard storyToastClose = new Storyboard();
         List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
-        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\melakify\+Do\DOs.sqlite; Version = 3;");
-        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4), IsChecked boolean)");
+        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\emtudio\+Do\base.sqlite; Version = 3;");
+        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
 
-        public const string Path = @"C:\melakify\+Do\DOs.sqlite";
+        public const string Path = @"C:\emtudio\+Do\base.sqlite";
         public ToastWindow()
         {
             InitializeComponent();
@@ -63,9 +63,9 @@ namespace melakify.Do
         {
             try
             {
-                if (!Directory.Exists(@"C:\melakify\+Do"))
+                if (!Directory.Exists(@"C:\emtudio\+Do"))
                 {
-                    Directory.CreateDirectory(@"C:\melakify\+Do");
+                    Directory.CreateDirectory(@"C:\emtudio\+Do");
                 }
 
                 Topmost = true;
@@ -111,27 +111,25 @@ namespace melakify.Do
 
                         if (result.Count() > 0)
                         {
-                            textBlockDescription.Text = "یادآور های شما عبارتند از:\n\n";
+                            textBoxDescription.Text = "یادآور های شما عبارتند از:\n\n";
 
                             for (int i = 0; i < result.Count(); i++)
                             {
                                 if (result.ToList()[i].DaysDistance.Contains("فردا") || result.ToList()[i].DaysDistance.Contains("امروز"))
                                 {
-                                    textBlockDescription.Text += $"- {result.ToList()[i].DaysDistance}";
+                                    textBoxDescription.Text += $"- {result.ToList()[i].Description} ({result.ToList()[i].DaysDistance})\n";
                                 }
                                 else
                                 {
-                                    textBlockDescription.Text += $"- {result.ToList()[i].DaysDistance} روز مانده";
+                                    textBoxDescription.Text += $"- {result.ToList()[i].Description}، ({result.ToList()[i].DaysDistance} روز مانده)\n";
                                 }
                             }
 
                             buttonDismiss.Visibility = Visibility.Visible;
-                            buttonSnooze.Visibility = Visibility.Visible;
                         }
                         else
                         {
-                            textBlockDescription.Text = "سلام. برای امروز یادآوری ندارید.";
-                            buttonSnooze.Visibility = Visibility.Collapsed;
+                            textBoxDescription.Text = "سلام. برای امروز یادآوری ندارید.";
                             buttonDismiss.Visibility = Visibility.Visible;
                         }
                         
@@ -143,7 +141,7 @@ namespace melakify.Do
                         command.ExecuteNonQuery();
                         connection.Close();
 
-                        textBlockDescription.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
+                        textBoxDescription.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
                     }
                 }
                 finally
@@ -153,8 +151,6 @@ namespace melakify.Do
 
                 Left = SystemParameters.PrimaryScreenWidth - Width;
                 Top = SystemParameters.PrimaryScreenHeight - Height - 64;
-                
-
             }
             catch (Exception ex)
             {

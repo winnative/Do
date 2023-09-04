@@ -50,6 +50,14 @@ namespace MelakifyMind.Behind
             }
         }
 
+        public string ReminderComment
+        {
+            get
+            {
+                return $"تمامی یادآور ها در تاریخ {Date}";
+            }
+        }
+
         public string ReminderImportant
         {
             get
@@ -71,11 +79,11 @@ namespace MelakifyMind.Behind
                 
                 if (i > 0)
                 {
-                    return $"({i} یادآور مهم)";
+                    return $"{i} یادآور مهم";
                 }
                 else
                 {
-                    return "";
+                    return "یادآور مهم ندارد";
                 }
             }
         }

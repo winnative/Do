@@ -44,7 +44,7 @@ namespace melakify.Entities.Behind
         {
             get
             {
-                if (($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1) == 0)
+                if ((Day == new PersianCalendar().GetDayOfMonth(DateTime.Now)) && (Month == new PersianCalendar().GetMonth(DateTime.Now)) && (Year == new PersianCalendar().GetYear(DateTime.Now)))
                 {
                     return "امروز";
                 }
@@ -56,9 +56,28 @@ namespace melakify.Entities.Behind
                 {
                     return "پس فردا";
                 }
+                else if (($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1) <= 0)
+                {
+                    return "گذشته";
+                }
                 else
                 {
                     return ($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1).ToString() + " روز مانده";
+                }
+            }
+        }
+
+        public string Matter
+        {
+            get
+            {
+                if (IsImportant == "مهم")
+                {
+                    return "دارای یادآور مهم";
+                }
+                else
+                {
+                    return "یادآور مهم ندارد";
                 }
             }
         }

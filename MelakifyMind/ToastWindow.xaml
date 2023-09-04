@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MelakifyMind"
         mc:Ignorable="d"
-        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" MaxHeight="264" Top="0" Left="0" Loaded="Window_Loaded" Background="{x:Null}" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" ResizeMode="NoResize">
+        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" Height="256" Top="0" Left="0" Loaded="Window_Loaded" Background="{x:Null}" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" ResizeMode="NoResize">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" CaptionHeight="0" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
@@ -36,9 +36,29 @@
             <TranslateTransform x:Name="translateTransform" X="400" Y="0"/>
         </Grid.RenderTransform>
         <VirtualizingStackPanel Orientation="Vertical">
-            <Border CornerRadius="12" Height="256" Margin="0,4" Background="#FFE2E2E2" BorderBrush="#14000000" BorderThickness="1">
+            <Border CornerRadius="12" Margin="0,4" Height="248" Background="#FFE2E2E2" BorderBrush="#14000000" BorderThickness="1">
                 <Grid>
-                    <TextBlock Text="درک جادویی" Name="textBlockTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22" FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Foreground="#FF8B1BAD"/>
+                    <Image SnapsToDevicePixels="False" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" OpacityMask="Black" Margin="25,22,0,0">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Brush>
+                                            <VisualBrush Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xF4A5;" FontSize="16" Foreground="#FF8B1BAD"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </GeometryDrawing.Brush>
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="20,20,20,20"/>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="درک جادویی" Name="textBlockTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="58,22,0,0" FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Foreground="#FF8B1BAD"/>
                     <Button Name="buttonCloseNow" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="32" Margin="16" Click="buttonCloseNow_Click">
                         <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
                             <Image.Source>
@@ -61,10 +81,9 @@
                             </Image.Source>
                         </Image>
                     </Button>
-                    <TextBlock Name="textBlockDescription" VerticalAlignment="Top" Margin="32,64,32,0" FontFamily="Fonts/#IRANSansX Regular" Text="" FontSize="18" Height="110"/>
-                    <TextBlock FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Name="textBlockDaysDistance" VerticalAlignment="Top" Margin="32,150,32,0"/>
-                    <Button HorizontalContentAlignment="Center" Name="buttonDismiss" Content="فهمیدم" FontFamily="Fonts/#IRANSansX Regular" Margin="32,197,204,24" Click="buttonDismiss_Click"/>
-                    <Button HorizontalContentAlignment="Center" Name="buttonSnooze" Content="بعداً" FontFamily="Fonts/#IRANSansX Regular" Margin="204,197,32,24"/>
+                    <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" Style="{StaticResource TextBoxFlat}" ContextMenu="{x:Null}" SelectionBrush="Transparent" CaretBrush="Transparent" Name="textBoxDescription" VerticalAlignment="Top" Margin="32,64,32,0" FontFamily="Fonts/#IRANSansX Regular" Text="" FontSize="18" Height="110"/>
+                    <Button HorizontalContentAlignment="Center" Name="buttonDismiss" Content="فهمیدم" FontFamily="Fonts/#IRANSansX Regular" Margin="32,190,204,24" Click="buttonDismiss_Click"/>
+                    <Button HorizontalContentAlignment="Center" Name="buttonSnooze" Visibility="Collapsed" Content="بعداً" FontFamily="Fonts/#IRANSansX Regular" Margin="204,190,32,24"/>
                 </Grid>
             </Border>
         </VirtualizingStackPanel>
