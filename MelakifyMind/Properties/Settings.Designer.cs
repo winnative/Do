@@ -8,11 +8,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Windows.Media;
+using System.Xml.Linq;
+
 namespace MelakifyMind.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -120,28 +123,13 @@ namespace MelakifyMind.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
         public System.Windows.Media.SolidColorBrush ColorPalette {
             get {
                 return ((System.Windows.Media.SolidColorBrush)(this["ColorPalette"]));
             }
             set {
                 this["ColorPalette"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
-        public System.Windows.Media.SolidColorBrush ColorBackground
-        {
-            get
-            {
-                return ((System.Windows.Media.SolidColorBrush)(this["ColorBackground"]));
-            }
-            set
-            {
-                this["ColorBackground"] = value;
             }
         }
 
@@ -157,6 +145,33 @@ namespace MelakifyMind.Properties {
             set
             {
                 this["ColorName"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FolderWatch {
+            get {
+                return ((bool)(this["FolderWatch"]));
+            }
+            set {
+                this["FolderWatch"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
+        public System.Windows.Media.SolidColorBrush ColorBackground
+        {
+            get
+            {
+                return ((System.Windows.Media.SolidColorBrush)(this["ColorBackground"]));
+            }
+            set
+            {
+                this["ColorBackground"] = value;
             }
         }
     }

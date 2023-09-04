@@ -36,7 +36,7 @@
             <TranslateTransform x:Name="translateTransform" X="400" Y="0"/>
         </Grid.RenderTransform>
         <VirtualizingStackPanel Orientation="Vertical">
-            <Border CornerRadius="12" Margin="0,4" Height="248" Background="#FFE2E2E2" BorderBrush="#14000000" BorderThickness="1">
+            <Border Name="borderToast" CornerRadius="12" Margin="0,4" Height="248" Background="#FFE2E2E2" BorderBrush="#14000000" BorderThickness="1">
                 <Grid>
                     <Image SnapsToDevicePixels="False" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" OpacityMask="Black" Margin="25,22,0,0">
                         <Image.Source>

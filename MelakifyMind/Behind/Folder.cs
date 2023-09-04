@@ -39,7 +39,7 @@ namespace MelakifyMind.Behind
 
                 if (i > 0)
                 {
-                    brush = System.Windows.Media.Brushes.IndianRed;
+                    brush = System.Windows.Media.Brushes.DarkGoldenrod;
                 }
                 else
                 {

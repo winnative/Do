@@ -45,12 +45,20 @@ namespace melakify.Do
         public const string Path = @"C:\emtudio\+Do\base.sqlite";
         public ToastWindow()
         {
-            InitializeComponent();
-            if (!Settings.Default.FirstReminder)
+            try
             {
-                MainWindow win = new MainWindow();
-                win.Show();
-                Close();
+                InitializeComponent();
+                borderToast.Background = Settings.Default.ColorBackground;
+                if (!Settings.Default.FirstReminder)
+                {
+                    MainWindow win = new MainWindow();
+                    win.Show();
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 

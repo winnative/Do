@@ -202,6 +202,54 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Storyboard x:Key="storyListOpenWithFolder">
+            <ThicknessAnimation From="64,400,64,0" To="64,277,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+                <ThicknessAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </ThicknessAnimation.EasingFunction>
+            </ThicknessAnimation>
+            <DoubleAnimation From="0" To="1" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="storyListCloseWithFolder">
+            <ThicknessAnimation To="64,400,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+                <ThicknessAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </ThicknessAnimation.EasingFunction>
+            </ThicknessAnimation>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="storyListOpen">
+            <ThicknessAnimation From="64,400,64,0" To="64,144,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+                <ThicknessAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </ThicknessAnimation.EasingFunction>
+            </ThicknessAnimation>
+            <DoubleAnimation From="0" To="1" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="storyListClose">
+            <ThicknessAnimation To="64,400,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+                <ThicknessAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </ThicknessAnimation.EasingFunction>
+            </ThicknessAnimation>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="storyListFolderOpen">
+            <ThicknessAnimation From="64,400,64,0" To="64,144,64,0" Storyboard.TargetName="listBoxTimeLineReminders" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
+                <ThicknessAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </ThicknessAnimation.EasingFunction>
+            </ThicknessAnimation>
+            <DoubleAnimation From="0" To="1" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="storyListFolderClose">
+            <ThicknessAnimation To="64,400,64,0" Storyboard.TargetName="listBoxTimeLineReminders" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
+                <ThicknessAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </ThicknessAnimation.EasingFunction>
+            </ThicknessAnimation>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
+        </Storyboard>
         <Storyboard x:Key="storySettingsOptionsClose">
             <DoubleAnimation To="-64" Storyboard.TargetName="translateSettingsOptions" Storyboard.TargetProperty="(TranslateTransform.X)" Duration="0:0:0.333">
                 <DoubleAnimation.EasingFunction>
@@ -1686,7 +1734,7 @@
                     </Image.Source>
                 </Image>
             </Button>
-            <Button ToolTip="تازه سازی" FlowDirection="RightToLeft" Style="{StaticResource buttonFlatItem}" Name="buttonRefresh" Margin="308,22,0,0" Height="34" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left" Click="buttonRefresh_Click">
+            <Button ToolTip="تازه سازی" FlowDirection="RightToLeft" HorizontalAlignment="Center" Style="{StaticResource buttonFlatItem}" Name="buttonRefresh" Margin="-448,22,0,0" Width="34" VerticalAlignment="Top" Click="buttonRefresh_Click" Height="34">
                 <Image SnapsToDevicePixels="False" Grid.Column="1" Stretch="None" OpacityMask="Black">
                     <Image.Source>
                         <DrawingImage>
@@ -2582,26 +2630,48 @@
                             </Grid>
                         </Border>
                         <Button Name="buttonIsImportant" ToolTip="یادآور مهم" Style="{StaticResource buttonFlat}" Margin="526,57,32,302" Click="buttonIsImportant_Click">
-                            <Image SnapsToDevicePixels="True" Stretch="None">
-                                <Image.Source>
-                                    <DrawingImage>
-                                        <DrawingImage.Drawing>
-                                            <GeometryDrawing>
-                                                <GeometryDrawing.Brush>
-                                                    <VisualBrush Stretch="None">
-                                                        <VisualBrush.Visual>
-                                                            <TextBlock Name="textBlockIsImportantContent" FontFamily="Fonts/#Segoe Fluent Icons" Foreground="Black" Text="&#xE734;" FontSize="16"/>
-                                                        </VisualBrush.Visual>
-                                                    </VisualBrush>
-                                                </GeometryDrawing.Brush>
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="16,16,16,16"/>
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingImage.Drawing>
-                                    </DrawingImage>
-                                </Image.Source>
-                            </Image>
+                            <Grid>
+                                <Image Name="imageNotImportant" SnapsToDevicePixels="True" Stretch="None">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <GeometryDrawing>
+                                                    <GeometryDrawing.Brush>
+                                                        <VisualBrush Stretch="None">
+                                                            <VisualBrush.Visual>
+                                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Foreground="Black" Text="&#xE734;" FontSize="16"/>
+                                                            </VisualBrush.Visual>
+                                                        </VisualBrush>
+                                                    </GeometryDrawing.Brush>
+                                                    <GeometryDrawing.Geometry>
+                                                        <RectangleGeometry Rect="16,16,16,16"/>
+                                                    </GeometryDrawing.Geometry>
+                                                </GeometryDrawing>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                                <Image Visibility="Collapsed" Name="imageImportant" SnapsToDevicePixels="True" Stretch="None">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <GeometryDrawing>
+                                                    <GeometryDrawing.Brush>
+                                                        <VisualBrush Stretch="None">
+                                                            <VisualBrush.Visual>
+                                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Foreground="DarkGoldenrod" Text="&#xE735;" FontSize="16"/>
+                                                            </VisualBrush.Visual>
+                                                        </VisualBrush>
+                                                    </GeometryDrawing.Brush>
+                                                    <GeometryDrawing.Geometry>
+                                                        <RectangleGeometry Rect="16,16,16,16"/>
+                                                    </GeometryDrawing.Geometry>
+                                                </GeometryDrawing>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
                         </Button>
                         <Border Name="borderDescription" Background="#A3FFFFFF" BorderBrush="#16000000" BorderThickness="1" CornerRadius="8" Margin="32,129,32,128">
                             <TextBox Padding="8" FontSize="16" Name="textBoxDescription" Style="{StaticResource TextBoxFlat}" TextWrapping="Wrap" Margin="4" Tag="توضیحات مربوط به یادآور" FontFamily="Fonts/#IRANSansX Regular" TextChanged="textBoxDescription_TextChanged" PreviewKeyUp="textBoxDescription_PreviewKeyUp"/>
