@@ -871,7 +871,7 @@ namespace melakify.Do
             }
             catch
             {
-                ShowFlyout("یک مشکل در تنظیم موعد وجود دارد، ولی نگران نباشید این تقصیر شما نیست!", FlyoutIcon.Error);
+                ShowFlyout("یک مشکل در تنظیم موعد وجود داره، ولی نگران نباشید این تقصیر شما نیست!", FlyoutIcon.Error);
             }
         }
 
