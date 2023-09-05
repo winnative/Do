@@ -1,9 +1,9 @@
-# melakify +Do
+# emtudio +Do
 A simple, AI based Reminder for You!
 
 
 
 
 # System Requirements
-OS: Windows 11 or above
+OS: Windows 7 or above
 
