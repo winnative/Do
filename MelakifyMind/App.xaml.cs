@@ -13,11 +13,11 @@ using System.Windows.Threading;
 namespace melakify.Do
 {
     
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
         private void HelloError(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message);
+            System.Windows.MessageBox.Show(e.Exception.Message);
             e.Handled = true;
         }
     }

@@ -22,6 +22,8 @@ using MelakifyMind;
 using melakify.Automation.UI;
 using System.Data.SQLite;
 using System.Net;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace melakify.Do
 {
@@ -30,26 +32,36 @@ namespace melakify.Do
     /// </summary>
     public partial class ToastWindow : Window
     {
+        bool hasData = false;
         Storyboard storyToastClose = new Storyboard();
+        Storyboard storyToastContent = new Storyboard();
+        Storyboard storyToastContentBack = new Storyboard();
         List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
-        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\melakify\+Do\DOs.sqlite; Version = 3;");
+        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\emtudio\+Do\base.sqlite; Version = 3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
 
-        public const string Path = @"C:\melakify\+Do\DOs.sqlite";
+        public const string Path = @"C:\emtudio\+Do\base.sqlite";
         public ToastWindow()
         {
-            InitializeComponent();
-
-            if (!Settings.Default.FirstReminder)
+            try
             {
-                MainWindow win = new MainWindow();
-                win.Show();
-                Close();
+                InitializeComponent();
+                borderToast.Background = Settings.Default.ColorBackground;
+                if (!Settings.Default.FirstReminder)
+                {
+                    MainWindow win = new MainWindow();
+                    win.Show();
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -62,16 +74,16 @@ namespace melakify.Do
         {
             try
             {
-                if (!Directory.Exists(@"C:\melakify\+Do"))
+                if (!Directory.Exists(@"C:\emtudio\+Do"))
                 {
-                    Directory.CreateDirectory(@"C:\melakify\+Do");
+                    Directory.CreateDirectory(@"C:\emtudio\+Do");
                 }
-
-                BackDrop.UseAcrylic(this);
 
                 Topmost = true;
                 DataContext = this;
                 storyToastClose = (Storyboard)Resources["storyClose"];
+                storyToastContent = (Storyboard)Resources["storyToastNext"];
+                storyToastContentBack = (Storyboard)Resources["storyToastPre"];
                 storyToastClose.Completed += StoryToastClose_Completed;
 
 
@@ -112,22 +124,35 @@ namespace melakify.Do
 
                         if (result.Count() > 0)
                         {
-                            textBlockAI.Text = "با سلام و وقت بخیر!\nمن برای شما هشدار هایی دارم.\n\n\n";
-
-                            foreach (var item in result)
-                            {
-                                textBlockAI.Text += $"-{item.Description} تا {item.DaysBefore} روز دیگر\n";
-                            }
-                            this.MaxHeight = 400;
+                            textBoxDescription.Text = $"{reminders[0].Description} برای {reminders[0].DaysDistance}";
+                            buttonDismiss.Visibility = Visibility.Visible;
+                            hasData = true;
+                            textBlockReminderCount.Visibility = Visibility.Visible;
+                            textBlockReminderCount.Text = $"({1} از {reminders.Count})";
                         }
                         else
                         {
-                            this.MaxHeight = 72;
-                            textBlockAI.Text = "با سلام. شما برای امروز یادآوری ندارید.";
+                            textBoxDescription.Text = "سلام. برای امروز یادآوری ندارید.";
+                            buttonDismiss.Visibility = Visibility.Visible;
+                            hasData = false;
+                            textBlockReminderCount.Visibility = Visibility.Collapsed;
                         }
 
-                        Left = SystemParameters.PrimaryScreenWidth - Width - 16;
-                        Top = SystemParameters.PrimaryScreenHeight - Height - 64;
+                        if (result.Count() > 1)
+                        {
+                            buttonDismiss.Content = "بعدی";
+                            borderSeprator.Visibility = Visibility.Visible;
+                            buttonNextReminder.Visibility = Visibility.Visible;
+                            buttonPreviousReminder.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            buttonDismiss.Content = "فهمیدم";
+                            borderSeprator.Visibility = Visibility.Collapsed;
+                            buttonNextReminder.Visibility = Visibility.Collapsed;
+                            buttonPreviousReminder.Visibility = Visibility.Collapsed;
+                        }
+
                     }
                     else
                     {
@@ -136,20 +161,44 @@ namespace melakify.Do
                         command.ExecuteNonQuery();
                         connection.Close();
 
-                        textBlockAI.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
+                        textBoxDescription.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
                     }
                 }
                 finally
                 {
                     connection.Close();
                 }
+
+                Left = SystemParameters.PrimaryScreenWidth - Width;
+                Top = SystemParameters.PrimaryScreenHeight - Height - 64;
+
+                int basicHeight = 180;
+
+                if (textBoxDescription.LineCount == 1)
+                {
+                    Height = basicHeight;
+                }
+                else if (textBoxDescription.LineCount == 2)
+                {
+                    Height = basicHeight + 20;
+                }
+                else if (textBoxDescription.LineCount == 3)
+                {
+                    Height = basicHeight + 40;
+                }
+                else if (textBoxDescription.LineCount == 4)
+                {
+                    Height = basicHeight + 60;
+                }
+                else if (textBoxDescription.LineCount > 5)
+                {
+                    Height = basicHeight + 80;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
-
-            mediaPlayer.Play();
         }
 
         private void buttonClose_Click(object sender, RoutedEventArgs e)
@@ -157,12 +206,141 @@ namespace melakify.Do
             storyToastClose.Begin();
         }
 
-        private void buttonShowTheMain_Click(object sender, RoutedEventArgs e)
+        private void buttonCloseNow_Click(object sender, RoutedEventArgs e)
         {
             Topmost = false;
             MainWindow win = new MainWindow();
             win.Show();
             storyToastClose.Begin();
+        }
+
+        public int iToast = 1;
+
+        private void buttonDismiss_Click(object sender, RoutedEventArgs e)
+        {
+            if (hasData)
+            {
+                if (reminders.Count > 1)
+                {
+                    if (iToast != (reminders.Count))
+                    {
+                        storyToastContent.Begin();
+                        textBoxDescription.Text = $"{reminders[iToast].Description} برای {reminders[iToast].DaysDistance}";
+                        iToast = iToast + 1;
+                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
+                        if (iToast != (reminders.Count))
+                        {
+                            buttonDismiss.Content = "بعدی";
+                        }
+                        else
+                        {
+                            buttonDismiss.Content = "فهمیدم";
+                        }
+                    }
+                    else
+                    {
+                        storyToastClose.Begin();
+                    }
+                }
+                else
+                {
+                    storyToastClose.Begin();
+                }
+            }
+            else
+            {
+                storyToastClose.Begin();
+            }
+            buttonPreviousReminder.IsEnabled = true;
+        }
+
+        private void buttonCloseJustNow_Click(object sender, RoutedEventArgs e)
+        {
+            storyToastClose.Begin();
+        }
+
+        private void buttonNextReminder_Click(object sender, RoutedEventArgs e)
+        {
+            if (hasData)
+            {
+                if (reminders.Count > 1)
+                {
+                    if (iToast != (reminders.Count))
+                    {
+                        storyToastContent.Begin();
+                        textBoxDescription.Text = $"{reminders[iToast].Description} برای {reminders[iToast].DaysDistance}";
+                        iToast = iToast + 1;
+                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
+                        if (iToast != (reminders.Count))
+                        {
+                            buttonDismiss.Content = "بعدی";
+                        }
+                        else
+                        {
+                            buttonDismiss.Content = "فهمیدم";
+                            buttonNextReminder.IsEnabled = false;
+                        }
+                    }
+                    else
+                    {
+                        buttonNextReminder.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    buttonNextReminder.IsEnabled = false;
+                }
+            }
+            else
+            {
+                buttonNextReminder.IsEnabled = false;
+            }
+            buttonPreviousReminder.IsEnabled = true;
+        }
+
+        private void buttonPreviousReminder_Click(object sender, RoutedEventArgs e)
+        {
+            if (hasData)
+            {
+                if (reminders.Count > 1)
+                {
+                    if (iToast != 1)
+                    {
+                        storyToastContentBack.Begin();
+                        iToast = iToast - 1;
+                        textBoxDescription.Text = $"{reminders[iToast - 1].Description} برای {reminders[iToast - 1].DaysDistance}";
+                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
+
+                        if (iToast != (reminders.Count))
+                        {
+                            buttonDismiss.Content = "بعدی";
+                        }
+                        else
+                        {
+                            buttonDismiss.Content = "فهمیدم";
+                            buttonNextReminder.IsEnabled = false;
+                        }
+
+                        if (iToast == 1)
+                        {
+                            buttonPreviousReminder.IsEnabled = false;
+                        }
+                    }
+                    else
+                    {
+                        buttonPreviousReminder.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    buttonPreviousReminder.IsEnabled = false;
+                }
+            }
+            else
+            {
+                buttonPreviousReminder.IsEnabled = false;
+            }
+            buttonNextReminder.IsEnabled = true;
         }
     }
 }

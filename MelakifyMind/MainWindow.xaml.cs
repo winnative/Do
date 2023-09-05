@@ -4,9 +4,9 @@ using melakify.UI.BackDrop;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -27,6 +27,8 @@ using melakify.Automation.Behind;
 using MelakifyMind.Properties;
 using DNTPersianUtils.Core;
 using Microsoft.Win32;
+using MelakifyMind.Behind;
+using System.Linq.Expressions;
 
 namespace melakify.Do
 {
@@ -35,6 +37,7 @@ namespace melakify.Do
     /// </summary>
     public partial class MainWindow : Window
     {
+        public SolidColorBrush selectedPalette { get; set; }
         public void ShowMessage(string message, string title, string primaryText = "باشه")
         {
             borderMessage.Visibility = Visibility.Visible;
@@ -51,8 +54,8 @@ namespace melakify.Do
         {
             for (int i = 0; i < 42; i++)
             {
-                ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
-                ((Button)gridDaysOfCalendar.Children[i]).Content = "";
+                ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).IsEnabled = false;
+                ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).Content = "";
             }
 
             DateTime? time = $"{YearNumber}/{MonthNumber}/{1}".ToGregorianDateTime();
@@ -65,16 +68,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i]).IsEnabled = true;
                         }
                     }
                     break;
@@ -83,16 +86,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 1]).IsEnabled = true;
                         }
                     }
                     break;
@@ -101,16 +104,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 2]).IsEnabled = true;
                         }
                     }
                     break;
@@ -119,16 +122,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 3]).IsEnabled = true;
                         }
                     }
                     break;
@@ -137,16 +140,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 4]).IsEnabled = true;
                         }
                     }
                     break;
@@ -155,16 +158,16 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 5]).IsEnabled = true;
                         }
                     }
                     break;
@@ -173,20 +176,34 @@ namespace melakify.Do
                     {
                         for (int i = 0; i < 31; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
-                            ((Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).Content = i + 1;
+                            ((System.Windows.Controls.Button)gridDaysOfCalendar.Children[i + 6]).IsEnabled = true;
                         }
                     }
                     break;
             }
+        }
+
+        public int GetLastDayOfWeek()
+        {
+            int dayOfWeek = DateTime.Now.GetPersianWeekDayNumber();
+            int result = new PersianCalendar().GetDayOfMonth(DateTime.Now) + (7 - dayOfWeek);
+            return result;
+        }
+
+        public int GetFirstDayOfWeek()
+        {
+            int dayOfWeek = DateTime.Now.GetPersianWeekDayNumber();
+            int result = new PersianCalendar().GetDayOfMonth(DateTime.Now) - (dayOfWeek - 1);
+            return result;
         }
 
         public void Refresh()
@@ -230,6 +247,10 @@ namespace melakify.Do
                     connection.Close();
                 }
             }
+            catch
+            {
+                
+            }
             finally
             {
                 connection.Close();
@@ -237,84 +258,185 @@ namespace melakify.Do
 
             if (reminders.Count > 0)
             {
-                scrollViewerRoot.Visibility = Visibility.Visible;
+                gridTimes.Visibility = Visibility.Visible;
                 textBlockNoReminder.Visibility = Visibility.Collapsed;
                 imageNoReminder.Visibility = Visibility.Collapsed;
                 textBlockNoReminderComment.Visibility = Visibility.Collapsed;
 
+                var all = from a in reminders
+                          orderby a.Year
+                          orderby a.Month
+                          orderby a.Day
+                          select a;
+
                 var fewDays = from f in reminders
                               where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 3
+                              where f.Month == new PersianCalendar().GetMonth(DateTime.Now)
+                              where f.Year == new PersianCalendar().GetYear(DateTime.Now)
+                              where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                              orderby f.Year
+                              orderby f.Month
+                              orderby f.Day
                               select f;
 
                 var week = from w in reminders
-                           where $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 7
+                           where (w.Day <= GetLastDayOfWeek()) && (w.Day >= GetFirstDayOfWeek())
+                           where w.Month == new PersianCalendar().GetMonth(DateTime.Now)
+                           where w.Year == new PersianCalendar().GetYear(DateTime.Now)
+                           where $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                           orderby w.Year
+                           orderby w.Month
+                           orderby w.Day
                            select w;
 
                 var month = from m in reminders
                             where m.Month == new PersianCalendar().GetMonth(DateTime.Now)
                             where m.Year == new PersianCalendar().GetYear(DateTime.Now)
+                            where $"{m.Year:0000}/{m.Month:00}/{m.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                            orderby m.Year
+                            orderby m.Month
+                            orderby m.Day
                             select m;
 
                 var pin = from p in reminders
                           where p.IsImportant == "مهم"
+                          orderby p.Year
+                          orderby p.Month
+                          orderby p.Day
                           select p;
 
-                if (pin.Count() > 0)
+                var expired = from exp in reminders
+                              where $"{exp.Year:0000}/{exp.Month:00}/{exp.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days < 0
+                              orderby exp.Year
+                              orderby exp.Month
+                              orderby exp.Day
+                              select exp;
+
+                var dateShortcut = (from ds in reminders
+                                    where $"{ds.Year:0000}/{ds.Month:00}/{ds.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                                    group ds by ds.DateFolder into folder
+                                    select new { Reminders = folder, Title = folder.Key.ToString() }).ToList();
+
+                if (dateShortcut.Count() > 0)
                 {
-                    listBoxDatePins.Visibility = Visibility.Visible;
-                    textBlockDatePins.Visibility = Visibility.Visible;
-                    listBoxDatePins.ItemsSource = pin;
+                    folders.Clear();
+                    listBoxTimeLine.Visibility = Visibility.Visible;
+                    foreach(var d in dateShortcut)
+                    {
+                        foreach(var f in d.Reminders)
+                        {
+                            folders.Add(new Folder() { Date = d.Title, Reminders = d.Reminders.ToList() });
+                        }
+                    }
+
+                    folders = folders.DistinctBy(d => d.Date).ToList();
+                    folders = folders.OrderBy(s => s.Date).ToList();
+                    listBoxTimeLine.ItemsSource = folders;
                 }
                 else
                 {
-                    listBoxDatePins.Visibility = Visibility.Collapsed;
-                    textBlockDatePins.Visibility = Visibility.Collapsed;
+                    listBoxTimeLine.Visibility = Visibility.Collapsed;
                 }
 
-                if (fewDays.Count() > 0)
+                listBoxAllReminder.ItemsSource = all;
+                
+                if (month.Count() > 0)
                 {
-                    textBlockDateFewDays.Visibility = Visibility.Visible;
-                    listBoxDateFewDays.Visibility = Visibility.Visible;
-                    listBoxDateFewDays.ItemsSource = fewDays;
+                    buttonThisMonth.Visibility = Visibility.Visible;
+                    listBoxThisMonth.ItemsSource = month;
                 }
                 else
                 {
-                    textBlockDateFewDays.Visibility = Visibility.Collapsed;
-                    listBoxDateFewDays.Visibility = Visibility.Collapsed;
+                    buttonThisMonth.Visibility = Visibility.Collapsed;
+                    listBoxThisMonth.Visibility = Visibility.Collapsed;
+
+                    listBoxAllReminder.Visibility = Visibility.Visible;
+                    buttonAllReminder.IsEnabled = false;
+                    buttonThisMonth.IsEnabled = true;
+                    buttonThisWeek.IsEnabled = true;
+                    buttonExpiredReminder.IsEnabled = true;
+                    buttonPinReminder.IsEnabled = true;
+                    textBlockFilterTitle.Text = "همه یادآور ها";
                 }
 
                 if (week.Count() > 0)
                 {
-                    textBlockDateCurrentWeek.Visibility = Visibility.Visible;
-                    listBoxDateWeek.Visibility = Visibility.Visible;
-                    listBoxDateWeek.ItemsSource = week;
+                    buttonThisWeek.Visibility = Visibility.Visible;
+                    listBoxThisWeek.ItemsSource = week;
                 }
                 else
                 {
-                    textBlockDateCurrentWeek.Visibility = Visibility.Collapsed;
-                    listBoxDateWeek.Visibility = Visibility.Collapsed;
+                    buttonThisWeek.Visibility = Visibility.Collapsed;
+                    listBoxThisWeek.Visibility = Visibility.Collapsed;
+
+                    listBoxAllReminder.Visibility = Visibility.Visible;
+                    buttonAllReminder.IsEnabled = false;
+                    buttonThisMonth.IsEnabled = true;
+                    buttonThisWeek.IsEnabled = true;
+                    buttonExpiredReminder.IsEnabled = true;
+                    buttonPinReminder.IsEnabled = true;
+                    textBlockFilterTitle.Text = "همه یادآور ها";
                 }
 
-                if (month.Count() > 0)
+                if (expired.Count() > 0)
                 {
-                    textBlockDateCurrentMonth.Visibility = Visibility.Visible;
-                    listBoxDateMonth.Visibility = Visibility.Visible;
-                    listBoxDateMonth.ItemsSource = month;
+                    buttonExpiredReminder.Visibility = Visibility.Visible;
+                    listBoxExpiredReminder.ItemsSource = expired;
                 }
                 else
                 {
-                    textBlockDateCurrentMonth.Visibility = Visibility.Collapsed;
-                    listBoxDateMonth.Visibility = Visibility.Collapsed;
+                    buttonExpiredReminder.Visibility = Visibility.Collapsed;
+                    listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+
+                    listBoxAllReminder.Visibility = Visibility.Visible;
+                    buttonAllReminder.IsEnabled = false;
+                    buttonThisMonth.IsEnabled = true;
+                    buttonThisWeek.IsEnabled = true;
+                    buttonExpiredReminder.IsEnabled = true;
+                    buttonPinReminder.IsEnabled = true;
+                    textBlockFilterTitle.Text = "همه یادآور ها";
+                }
+
+                if (pin.Count() > 0)
+                {
+                    buttonPinReminder.Visibility = Visibility.Visible;
+                    listBoxPins.ItemsSource = pin;
+                }
+                else
+                {
+                    buttonPinReminder.Visibility = Visibility.Collapsed;
+                    listBoxPins.Visibility = Visibility.Collapsed;
+
+                    listBoxAllReminder.Visibility = Visibility.Visible;
+                    buttonAllReminder.IsEnabled = false;
+                    buttonThisMonth.IsEnabled = true;
+                    buttonThisWeek.IsEnabled = true;
+                    buttonExpiredReminder.IsEnabled = true;
+                    buttonPinReminder.IsEnabled = true;
+                    textBlockFilterTitle.Text = "همه یادآور ها";
                 }
             }
             else
             {
-                scrollViewerRoot.Visibility = Visibility.Collapsed;
+                gridTimes.Visibility = Visibility.Collapsed;
                 textBlockNoReminder.Visibility = Visibility.Visible;
                 imageNoReminder.Visibility = Visibility.Visible;
                 textBlockNoReminderComment.Visibility = Visibility.Visible;
+                buttonThisWeek.Visibility = Visibility.Collapsed;
+                buttonThisMonth.Visibility = Visibility.Collapsed;
+                buttonExpiredReminder.Visibility = Visibility.Collapsed;
+                buttonPinReminder.Visibility = Visibility.Collapsed;
+                listBoxTimeLine.Visibility = Visibility.Collapsed;
             }
 
+            if (Settings.Default.FolderWatch)
+            {
+                storyListOpenWithFolder.Begin();
+            }
+            else
+            {
+                storyListOpen.Begin();
+            }
         }
 
         public void RecalculateYears()
@@ -323,7 +445,7 @@ namespace melakify.Do
 
             for (int i = 0; i < 11; i++)
             {
-                ((Button)wrapPanelCalendarYear.Children[i]).Content = (currentYear + i).ToString();
+                ((System.Windows.Controls.Button)wrapPanelCalendarYear.Children[i]).Content = (currentYear + i).ToString();
             }
         }
 
@@ -334,7 +456,7 @@ namespace melakify.Do
             Successful
         }
 
-        public const string Path = @"C:\melakify\+Do\DOs.sqlite";
+        public const string Path = @"C:\emtudio\+Do\base.sqlite";
         public object ListSelected = null;
         SQLiteConnection connection = new SQLiteConnection($"DataSource={Path}; Version=3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
@@ -361,11 +483,32 @@ namespace melakify.Do
         Storyboard storyOnStartupDisable = new Storyboard();
         Storyboard storyReminderFirstEnable = new Storyboard();
         Storyboard storyReminderFirstDisable = new Storyboard();
+        Storyboard storyBackupEnable = new Storyboard();
+        Storyboard storyBackupDisable = new Storyboard();
+        Storyboard storyAllowTransEnable = new Storyboard();
+        Storyboard storyAllowTransDisable = new Storyboard();
         Storyboard storyMessageDialogOpen = new Storyboard();
         Storyboard storyMessageDialogClose = new Storyboard();
+        Storyboard storySettingsPerformanceOpen = new Storyboard();
+        Storyboard storySettingsPerformanceClose = new Storyboard();
+        Storyboard storySettingsUserOpen = new Storyboard();
+        Storyboard storySettingsUserClose = new Storyboard();
+        Storyboard storySettingsPersonalizeOpen = new Storyboard();
+        Storyboard storySettingsPersonalizeClose = new Storyboard();
+        Storyboard storySettingsDatabaseOpen = new Storyboard();
+        Storyboard storySettingsDatabaseClose = new Storyboard();
+        Storyboard storySettingsOptionsOpen = new Storyboard();
+        Storyboard storySettingsOptionsClose = new Storyboard();
+        Storyboard storyListOpenWithFolder = new Storyboard();
+        Storyboard storyListCloseWithFolder = new Storyboard();
+        Storyboard storyListOpen = new Storyboard();
+        Storyboard storyListClose = new Storyboard();
+        Storyboard storyListFolderOpen = new Storyboard();
+        Storyboard storyListFolderClose = new Storyboard();
         Reminder newReminder = new Reminder();
         Reminder selectedReminder = new Reminder();
         List<Reminder> reminders = new List<Reminder>();
+        List<Folder> folders = new List<Folder>();
         PersianCalendar persian = new PersianCalendar();
         public string DescriptionPreview { get; set; }
         public int DaysBefore { get; set; }
@@ -373,12 +516,19 @@ namespace melakify.Do
         public int Month { get; set; }
         public int Year { get; set; }
         public bool Acceptable { get; set; } = false;
+
+        public System.Windows.Media.SolidColorBrush CurrentPalette
+        {
+            get
+            {
+                return Settings.Default.ColorPalette;
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
-            Background = Brushes.Transparent;
-            this.DataContext = gridContent;
-
+            this.DataContext = this;
+            
             storyBoardExpandAI = (Storyboard)this.Resources["storyExpandAI"];
             storyBoardExpandAIClose = (Storyboard)this.Resources["storyExpandAIClose"];
             storyPreviewOpen = (Storyboard)this.Resources["storyPreviewOpen"];
@@ -400,10 +550,28 @@ namespace melakify.Do
             storyOnStartupDisable = (Storyboard)Resources["storyOnStartupDisable"];
             storyReminderFirstEnable = (Storyboard)Resources["storyReminderFirstEnable"];
             storyReminderFirstDisable = (Storyboard)Resources["storyReminderFirstDisable"];
+            storyBackupEnable = (Storyboard)Resources["storyBackupEnable"];
+            storyBackupDisable = (Storyboard)Resources["storyBackupDisable"];
+            storyAllowTransEnable = (Storyboard)Resources["storyAllowTransEnable"];
+            storyAllowTransDisable = (Storyboard)Resources["storyAllowTransDisable"];
             storyMessageDialogClose = (Storyboard)Resources["storyMessageDialogClose"];
             storyMessageDialogOpen = (Storyboard)Resources["storyMessageDialogOpen"];
-
-
+            storySettingsOptionsOpen = (Storyboard)Resources["storySettingsOptionsOpen"];
+            storySettingsOptionsClose = (Storyboard)Resources["storySettingsOptionsClose"];
+            storySettingsPerformanceOpen = (Storyboard)Resources["storySettingsPerformanceOpen"];
+            storySettingsPerformanceClose = (Storyboard)Resources["storySettingsPerformanceClose"];
+            storySettingsUserOpen = (Storyboard)Resources["storySettingsUserOpen"];
+            storySettingsUserClose = (Storyboard)Resources["storySettingsUserClose"];
+            storySettingsPersonalizeOpen = (Storyboard)Resources["storySettingsPersonalizeOpen"];
+            storySettingsPersonalizeClose = (Storyboard)Resources["storySettingsPersonalizeClose"];
+            storySettingsDatabaseOpen = (Storyboard)Resources["storySettingsDatabaseOpen"];
+            storySettingsDatabaseClose = (Storyboard)Resources["storySettingsDatabaseClose"];
+            storyListOpenWithFolder = (Storyboard)Resources["storyListOpenWithFolder"];
+            storyListCloseWithFolder = (Storyboard)Resources["storyListCloseWithFolder"];
+            storyListOpen = (Storyboard)Resources["storyListOpen"];
+            storyListClose = (Storyboard)Resources["storyListClose"];
+            storyListFolderOpen = (Storyboard)Resources["storyListFolderOpen"];
+            storyListFolderClose = (Storyboard)Resources["storyListFolderClose"];
             storyPreviewClose.Completed += StoryPreviewClose_Completed;
             storyMessageClose.Completed += StoryMessageClose_Completed;
             storyMessageOpen.Completed += StoryMessageOpen_Completed;
@@ -413,7 +581,68 @@ namespace melakify.Do
             storyBoardExpandAIClose.Completed += StoryBoardExpandAIClose_Completed;
             storyAddClose.Completed += StoryAddClose_Completed;
             storyMessageDialogClose.Completed += StoryMessageDialogClose_Completed;
+            storySettingsOptionsClose.Completed += StorySettingsOptionsClose_Completed;
+            storySettingsPerformanceClose.Completed += StorySettingsPerformanceClose_Completed;
+            storySettingsUserClose.Completed += StorySettingsUserClose_Completed;
+            storySettingsPersonalizeClose.Completed += StorySettingsPersonalizeClose_Completed;
+            storySettingsDatabaseClose.Completed += StorySettingsDatabaseClose_Completed;
 
+        }
+
+        private void StorySettingsDatabaseClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsDatabase.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        private void StorySettingsPersonalizeClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsPersonalize.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        private void StorySettingsUserClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsUser.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        private void StorySettingsPerformanceClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsPerformance.Visibility = Visibility.Collapsed;
+            gridSettingsOptions.Visibility = Visibility.Visible;
+            storySettingsOptionsOpen.Begin();
+        }
+
+        System.Windows.Controls.Button buttonSelectedCatagorySettings;
+
+        private void StorySettingsOptionsClose_Completed(object? sender, EventArgs e)
+        {
+            gridSettingsOptions.Visibility = Visibility.Collapsed;
+
+            if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            {
+                gridSettingsPerformance.Visibility = Visibility.Visible;
+                storySettingsPerformanceOpen.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+            {
+                gridSettingsDatabase.Visibility = Visibility.Visible;
+                storySettingsDatabaseOpen.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+            {
+                gridSettingsPersonalize.Visibility = Visibility.Visible;
+                storySettingsPersonalizeOpen.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+            {
+                gridSettingsUser.Visibility = Visibility.Visible;
+                storySettingsUserOpen.Begin();
+            }
         }
 
         private void StoryMessageDialogClose_Completed(object? sender, EventArgs e)
@@ -507,7 +736,57 @@ namespace melakify.Do
 
         private void windowRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            BackDrop.UseNewMica(this);
+            comboBoxColorPalette.Text = Settings.Default.ColorName;
+
+            if ((System.Environment.OSVersion.Version.Major == 10) && (Environment.OSVersion.Version.Build >= 22621))
+            {
+                if (Settings.Default.IsTranslucent)
+                {
+                    if (Settings.Default.TranslucentMode == "میکا")
+                    {
+                        BackDrop.UseNewMica(this);
+                        borderBack.Visibility = Visibility.Collapsed;
+                        comboBoxChooseBackDrop.Text = "میکا";
+                    }
+                    else if (Settings.Default.TranslucentMode == "اکلیل")
+                    {
+                        BackDrop.UseAcrylic(this);
+                        borderBack.Visibility = Visibility.Visible;
+                        borderBack.Background = new SolidColorBrush(new System.Windows.Media.Color() { A = 160, R = 255, B = 255, G = 255 });
+                        comboBoxChooseBackDrop.Text = "اکلیل";
+                    }
+
+                    windowChrome.UseAeroCaptionButtons = true;
+                    buttonClose.Visibility = Visibility.Collapsed;
+                    buttonMinimize.Visibility = Visibility.Collapsed;
+                    buttonMaximize.Visibility = Visibility.Collapsed;
+                    borderColorPalette.Opacity = 0.56;
+                    borderColorPalette.IsEnabled = false;
+                    Background = System.Windows.Media.Brushes.Transparent;
+                }
+                else
+                {
+                    BackDrop.Disable(this);
+                    comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
+                    windowChrome.UseAeroCaptionButtons = false;
+                    buttonClose.Visibility = Visibility.Visible;
+                    buttonMinimize.Visibility = Visibility.Visible;
+                    buttonMaximize.Visibility = Visibility.Visible;
+                    borderColorPalette.Opacity = 1;
+                    borderColorPalette.IsEnabled = true;
+                    System.Windows.Media.Color backColor = new System.Windows.Media.Color();
+                    borderBack.Visibility = Visibility.Collapsed;
+                    Background = Settings.Default.ColorBackground;
+                }
+            }
+            else
+            {
+                borderAllowTrans.Visibility = Visibility.Collapsed;
+                borderBack.Visibility = Visibility.Collapsed;
+                windowChrome.UseAeroCaptionButtons = false;
+            }
+
+            borderAddReminder.Background = Settings.Default.ColorBackground;
 
             MonthConnection.Add(("فروردین", 1));
             MonthConnection.Add(("اردیبهشت", 2));
@@ -543,6 +822,24 @@ namespace melakify.Do
             else
             {
                 storyReminderFirstDisable.Begin();
+            }
+
+            if (Settings.Default.AutoBackup)
+            {
+                storyBackupEnable.Begin();
+            }
+            else
+            {
+                storyBackupDisable.Begin();
+            }
+
+            if (Settings.Default.IsTranslucent)
+            {
+                storyAllowTransEnable.Begin();
+            }
+            else
+            {
+                storyAllowTransDisable.Begin();
             }
 
             RecalculateYears();
@@ -586,6 +883,9 @@ namespace melakify.Do
             imageBetweenNevigation.Visibility = Visibility.Visible;
             textBlockNevigationBackDrop.Visibility = Visibility.Visible;
             textBlockNavigationHome.IsEnabled = true;
+            textBlockNevigationBackDrop.Text = "تنظیمات";
+            textBlockNavigationHome.Opacity = 0.64;
+            textBlockNevigationBackDrop.Opacity = 1;
         }
 
         private void buttonMessageAIClose_Click(object sender, RoutedEventArgs e)
@@ -596,21 +896,61 @@ namespace melakify.Do
 
         private void buttonBackToHome_Click(object sender, RoutedEventArgs e)
         {
-            storySettingsClose.Begin();
-            borderSearch.Visibility = Visibility.Visible;
+            if (gridSettings.Visibility == Visibility.Visible)
+            {
+                storySettingsClose.Begin();
+                borderSearch.Visibility = Visibility.Visible;
 
-            textBlockNavigationHome.IsEnabled = false;
-            textBlockNavigationHome.Opacity = 1;
-            imageBetweenNevigation.Visibility = Visibility.Collapsed;
-            textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+
+                imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+                textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.IsEnabled = false;
+
+                if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+                {
+                    storySettingsDatabaseClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+                {
+                    storySettingsPerformanceClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+                {
+                    storySettingsPersonalizeClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+                {
+                    storySettingsUserClose.Begin();
+                }
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
+                gridTimes.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
+                gridTimes.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
+            }
         }
 
-        private void borderMessageAI_MouseEnter(object sender, MouseEventArgs e)
+        private void borderMessageAI_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             storyMessageClose.Pause();
         }
 
-        private void borderMessageAI_MouseLeave(object sender, MouseEventArgs e)
+        private void borderMessageAI_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             storyMessageClose.Resume();
         }
@@ -738,44 +1078,52 @@ namespace melakify.Do
                         command.Parameters.AddWithValue("@ShowMonth", showMonth);
                         command.Parameters.AddWithValue("@ShowYear", showYear);
 
-                        if (textBlockIsImportantContent.Foreground == Brushes.Black)
+                        if (imageNotImportant.Visibility == Visibility.Visible)
                         {
                             isImportant = "";
                         }
-                        else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
+                        else if (imageImportant.Visibility == Visibility.Visible)
                         {
                             isImportant = "مهم";
                         }
 
                         command.Parameters.AddWithValue("@IsImportant", isImportant);
 
-                        try
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                        storyAddClose.Begin();
+                        borderSmoke.Visibility = Visibility.Collapsed;
+
+                        Reminder reminder = new Reminder();
+                        reminder.Description = textBoxDescription.Text;
+                        reminder.Day = day;
+                        reminder.Month = month;
+                        reminder.Year = year;
+                        reminder.DaysBefore = daysBefore;
+                        reminder.ShowYear = showYear;
+                        reminder.ShowMonth = showMonth;
+                        reminder.ShowDay = showDay;
+                        reminder.IsImportant = isImportant;
+
+                        reminders.Add(reminder);
+
+                        Refresh();
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+
+                    if (Settings.Default.AutoBackup)
+                    {
+                        if (Settings.Default.BackupPath != "None")
                         {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            connection.Close();
-                            storyAddClose.Begin();
-                            borderSmoke.Visibility = Visibility.Collapsed;
-
-                            Reminder reminder = new Reminder();
-                            reminder.Description = textBoxDescription.Text;
-                            reminder.Day = day;
-                            reminder.Month = month;
-                            reminder.Year = year;
-                            reminder.DaysBefore = daysBefore;
-                            reminder.ShowYear = showYear;
-                            reminder.ShowMonth = showMonth;
-                            reminder.ShowDay = showDay;
-                            reminder.IsImportant = isImportant;
-
-                            reminders.Add(reminder);
-
-                            Refresh();
+                            File.Copy(Path, Settings.Default.BackupPath + @"base.sqlite", true);
                         }
-                        finally
-                        {
-                            connection.Close();
-                        }
+                    }                    
                 }
                 else
                 {
@@ -790,9 +1138,9 @@ namespace melakify.Do
 
         private void textBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
-            melakify.Automation.UI.Automation.PlaceHolderAI((TextBox)sender, "توضیحات مربوط به یادآور");
+            melakify.Automation.UI.Automation.PlaceHolderAI((System.Windows.Controls.TextBox)sender, "توضیحات مربوط به یادآور");
 
-            if (((TextBox)sender).Text != "")
+            if (((System.Windows.Controls.TextBox)sender).Text != "")
             {
                 buttonAddReminderKey.IsEnabled = true;
             }
@@ -804,13 +1152,15 @@ namespace melakify.Do
 
         private void buttonAddReminder_Click(object sender, RoutedEventArgs e)
         {
+            borderAddReminder.Background = Settings.Default.ColorBackground;
             DateTime firstTime = DateTime.Now;
             textBoxDaysBefore.Text = "1";
             firstTime.AddDays(Convert.ToInt32(textBoxDaysBefore.Text));
             textBoxDateTime.Text = string.Format($"{new PersianCalendar().GetYear(firstTime):0000}/{new PersianCalendar().GetMonth(firstTime):00}/{new PersianCalendar().GetDayOfMonth(firstTime):00}");
             buttonAddReminderKey.Content = "اضافه کردن";
             textBoxDescription.Text = "";
-            textBlockIsImportantContent.Foreground = Brushes.Black;
+            imageImportant.Visibility = Visibility.Collapsed;
+            imageNotImportant.Visibility = Visibility.Visible;
             buttonAddReminderDelete.Visibility = Visibility.Collapsed;
             borderAddReminder.Visibility = Visibility.Visible;
             borderSmoke.Visibility = Visibility.Visible;
@@ -825,13 +1175,16 @@ namespace melakify.Do
 
         private void buttonIsImportant_Click(object sender, RoutedEventArgs e)
         {
-            if (textBlockIsImportantContent.Foreground == Brushes.Black)
+            buttonAddReminderKey.IsEnabled = true;
+            if (imageNotImportant.Visibility == Visibility.Visible)
             {
-                textBlockIsImportantContent.Foreground = Brushes.IndianRed;
+                imageImportant.Visibility = Visibility.Visible;
+                imageNotImportant.Visibility = Visibility.Collapsed;
             }
-            else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
+            else if (imageImportant.Visibility == Visibility.Visible)
             {
-                textBlockIsImportantContent.Foreground = Brushes.Black;
+                imageNotImportant.Visibility = Visibility.Visible;
+                imageImportant.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -860,6 +1213,19 @@ namespace melakify.Do
 
                 reminders.Remove(selectedReminder);
                 Refresh();
+
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
+                gridTimes.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
+            }
+            catch
+            {
+                System.Windows.MessageBox.Show("Hell");
             }
             finally
             {
@@ -869,7 +1235,13 @@ namespace melakify.Do
 
         private void windowRoot_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+            if (Settings.Default.AutoBackup)
+            {
+                if (Settings.Default.BackupPath != "None")
+                {
+                    File.Copy(Path, Settings.Default.BackupPath + @"\base.sqlite", true);
+                }
+            }
         }
 
         private void menuItemDeleteList_Click(object sender, RoutedEventArgs e)
@@ -1024,126 +1396,141 @@ namespace melakify.Do
             RefreshCalendarDays();
         }
 
-        private void textBoxDescription_PreviewKeyUp(object sender, KeyEventArgs e)
+        private void textBoxDescription_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 if (textBoxDescription.Text != "")
                 {
-                    string[] date = textBoxDateTime.Text.Split('/');
-
-                    int showDay = 0;
-                    int showMonth = 0;
-                    int showYear = 0;
-
-                    int day = 0;
-                    int month = 0;
-                    int year = 0;
-                    int daysBefore = 0;
-                    string isImportant = "";
-
-                    day = Convert.ToInt32(date[2]);
-                    month = Convert.ToInt32(date[1]);
-                    year = Convert.ToInt32(date[0]);
-                    daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
-
-                    if (buttonAddReminderKey.Content == "ویرایش کردن")
+                    if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                     {
-                        command.CommandText = "UPDATE TblReminder SET Description=@Description, DaysBefore=@DaysBefore, Day=@Day, Month=@Month, Year=@Year, ShowDay=@ShowDay, ShowMonth=@ShowMonth, ShowYear=@ShowYear, IsImportant=@IsImportant WHERE Description=@Desc AND DaysBefore=@OldBefore AND Day=@OldDay AND Month=@OldMonth AND Year=@OldYear";
-                    }
-                    else if (buttonAddReminderKey.Content == "اضافه کردن")
-                    {
-                        command.CommandText = "INSERT INTO TblReminder VALUES (@Description, @DaysBefore, @Day, @Month, @Year, @ShowDay, @ShowMonth, @ShowYear, @IsImportant)";
-                    }
+                        string[] date = textBoxDateTime.Text.Split('/');
 
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
-                    command.Parameters.AddWithValue("@DaysBefore", daysBefore);
-                    command.Parameters.AddWithValue("@Day", day);
-                    command.Parameters.AddWithValue("@Month", month);
-                    command.Parameters.AddWithValue("@Year", year);
-                    command.Parameters.AddWithValue("@Desc", selectedReminder.Description);
-                    command.Parameters.AddWithValue("@OldBefore", selectedReminder.DaysBefore);
-                    command.Parameters.AddWithValue("@OldDay", selectedReminder.Day);
-                    command.Parameters.AddWithValue("@OldMonth", selectedReminder.Month);
-                    command.Parameters.AddWithValue("@OldYear", selectedReminder.Year);
+                        int showDay = 0;
+                        int showMonth = 0;
+                        int showYear = 0;
 
-                    if ((day - daysBefore) < 1)
-                    {
-                        if (month == 1)
+                        int day = 0;
+                        int month = 0;
+                        int year = 0;
+                        int daysBefore = 0;
+                        string isImportant = "";
+
+                        day = Convert.ToInt32(date[2]);
+                        month = Convert.ToInt32(date[1]);
+                        year = Convert.ToInt32(date[0]);
+                        daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
+
+                        if (buttonAddReminderKey.Content == "ویرایش کردن")
                         {
-                            if (new PersianCalendar().IsLeapYear(year - 1))
+                            command.CommandText = "UPDATE TblReminder SET Description=@Description, DaysBefore=@DaysBefore, Day=@Day, Month=@Month, Year=@Year, ShowDay=@ShowDay, ShowMonth=@ShowMonth, ShowYear=@ShowYear, IsImportant=@IsImportant WHERE Description=@Desc AND DaysBefore=@OldBefore AND Day=@OldDay AND Month=@OldMonth AND Year=@OldYear";
+                        }
+                        else if (buttonAddReminderKey.Content == "اضافه کردن")
+                        {
+                            command.CommandText = "INSERT INTO TblReminder VALUES (@Description, @DaysBefore, @Day, @Month, @Year, @ShowDay, @ShowMonth, @ShowYear, @IsImportant)";
+                        }
+
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
+                        command.Parameters.AddWithValue("@DaysBefore", daysBefore);
+                        command.Parameters.AddWithValue("@Day", day);
+                        command.Parameters.AddWithValue("@Month", month);
+                        command.Parameters.AddWithValue("@Year", year);
+                        command.Parameters.AddWithValue("@Desc", selectedReminder.Description);
+                        command.Parameters.AddWithValue("@OldBefore", selectedReminder.DaysBefore);
+                        command.Parameters.AddWithValue("@OldDay", selectedReminder.Day);
+                        command.Parameters.AddWithValue("@OldMonth", selectedReminder.Month);
+                        command.Parameters.AddWithValue("@OldYear", selectedReminder.Year);
+
+                        if ((day - daysBefore) < 1)
+                        {
+                            if (month == 1)
                             {
-                                showDay = 29 + (day - daysBefore);
+                                if (new PersianCalendar().IsLeapYear(year - 1))
+                                {
+                                    showDay = 29 + (day - daysBefore);
+                                }
+                                else
+                                {
+                                    showDay = 30 + (day - daysBefore);
+                                }
+                                showYear = year - 1;
+                                showMonth = 12;
                             }
-                            else
+                            else if (month > 1 && month <= 6)
+                            {
+                                showDay = 31 + (day - daysBefore);
+                                showMonth = month - 1;
+                                showYear = year;
+                            }
+                            else if (month > 6 && month <= 12)
                             {
                                 showDay = 30 + (day - daysBefore);
+                                showMonth = month - 1;
+                                showYear = year;
                             }
-                            showYear = year - 1;
-                            showMonth = 12;
                         }
-                        else if (month > 1 && month <= 6)
+                        else
                         {
-                            showDay = 31 + (day - daysBefore);
-                            showMonth = month - 1;
                             showYear = year;
+                            showMonth = month;
+                            showDay = day - daysBefore;
                         }
-                        else if (month > 6 && month <= 12)
+
+                        command.Parameters.AddWithValue("@ShowDay", showDay);
+                        command.Parameters.AddWithValue("@ShowMonth", showMonth);
+                        command.Parameters.AddWithValue("@ShowYear", showYear);
+
+                        if (imageNotImportant.Visibility == Visibility.Visible)
                         {
-                            showDay = 30 + (day - daysBefore);
-                            showMonth = month - 1;
-                            showYear = year;
+                            isImportant = "";
+                        }
+                        else if (imageImportant.Visibility == Visibility.Visible)
+                        {
+                            isImportant = "مهم";
+                        }
+
+                        command.Parameters.AddWithValue("@IsImportant", isImportant);
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            connection.Close();
+                            storyAddClose.Begin();
+                            borderSmoke.Visibility = Visibility.Collapsed;
+
+                            Reminder reminder = new Reminder();
+                            reminder.Description = textBoxDescription.Text;
+                            reminder.Day = day;
+                            reminder.Month = month;
+                            reminder.Year = year;
+                            reminder.DaysBefore = daysBefore;
+                            reminder.ShowYear = showYear;
+                            reminder.ShowMonth = showMonth;
+                            reminder.ShowDay = showDay;
+                            reminder.IsImportant = isImportant;
+
+                            reminders.Add(reminder);
+
+                            Refresh();
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
+
+                        if (Settings.Default.AutoBackup)
+                        {
+                            if (Settings.Default.BackupPath != "None")
+                            {
+                                File.Copy(Path, Settings.Default.BackupPath + @"base.sqlite", true);
+                            }
                         }
                     }
                     else
                     {
-                        showYear = year;
-                        showMonth = month;
-                        showDay = day - daysBefore;
-                    }
-
-                    command.Parameters.AddWithValue("@ShowDay", showDay);
-                    command.Parameters.AddWithValue("@ShowMonth", showMonth);
-                    command.Parameters.AddWithValue("@ShowYear", showYear);
-
-                    if (textBlockIsImportantContent.Foreground == Brushes.Black)
-                    {
-                        isImportant = "";
-                    }
-                    else if (textBlockIsImportantContent.Foreground == Brushes.IndianRed)
-                    {
-                        isImportant = "مهم";
-                    }
-
-                    command.Parameters.AddWithValue("@IsImportant", isImportant);
-
-                    try
-                    {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                        storyAddClose.Begin();
-                        borderSmoke.Visibility = Visibility.Collapsed;
-
-                        Reminder reminder = new Reminder();
-                        reminder.Description = textBoxDescription.Text;
-                        reminder.Day = day;
-                        reminder.Month = month;
-                        reminder.Year = year;
-                        reminder.DaysBefore = daysBefore;
-                        reminder.ShowYear = showYear;
-                        reminder.ShowMonth = showMonth;
-                        reminder.ShowDay = showDay;
-                        reminder.IsImportant = isImportant;
-
-                        reminders.Add(reminder);
-
-                        Refresh();
-                    }
-                    finally
-                    {
-                        connection.Close();
+                        ShowMessage("تاریخی که وارد کرده اید از لحاظ منطقی صحیح نمی باشد.", "تاریخ صحیح نیست!");
                     }
                 }
             }
@@ -1151,7 +1538,7 @@ namespace melakify.Do
 
         private void YearCalendarButton_Click(object sender, RoutedEventArgs e)
         {
-            int year = Convert.ToInt32(((Button)sender).Content.ToString());
+            int year = Convert.ToInt32(((System.Windows.Controls.Button)sender).Content.ToString());
             YearNumber = year;
 
             if (YearNumber > new PersianCalendar().GetYear(DateTime.Now))
@@ -1186,13 +1573,58 @@ namespace melakify.Do
 
         private void textBlockSettingsTitle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            storySettingsClose.Begin();
-            borderSearch.Visibility = Visibility.Visible;
+            if (gridSettings.Visibility == Visibility.Visible)
+            {
+                storySettingsClose.Begin();
+                borderSearch.Visibility = Visibility.Visible;
 
-            textBlockNavigationHome.IsEnabled = false;
-            textBlockNavigationHome.Opacity = 1;
-            imageBetweenNevigation.Visibility = Visibility.Collapsed;
-            textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+
+                imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+                textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+                textBlockNevigationBackDrop.IsEnabled = false;
+
+                if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+                {
+                    storySettingsDatabaseClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+                {
+                    storySettingsPerformanceClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+                {
+                    storySettingsPersonalizeClose.Begin();
+                }
+                else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+                {
+                    storySettingsUserClose.Begin();
+                }
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
+                gridTimes.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                textBlockNevigationBackDrop.Visibility = Visibility.Collapsed;
+                imageBetweenNevigation.Visibility = Visibility.Collapsed;
+                textBlockNavigationHome.Opacity = 1;
+                textBlockNevigationBackDrop.Opacity = 1;
+                textBlockNavigationHome.IsEnabled = false;
+                listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
+                gridTimes.Visibility = Visibility.Visible;
+                listBoxTimeLine.Visibility = Visibility.Visible;
+            }
+            Refresh();
+            listBoxAllReminder.Visibility = Visibility.Visible;
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Collapsed;
         }
 
         
@@ -1212,7 +1644,7 @@ namespace melakify.Do
                 Settings.Default.OnStartup = true;
 
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
-                key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"melakify +Do.exe"));
+                key.SetValue("PlusDoOnStartup", System.IO.Path.GetFullPath(@"emtudio +Do.exe"));
 
                 storyReminderFirstEnable.Begin();
                 Settings.Default.FirstReminder = true;
@@ -1247,7 +1679,7 @@ namespace melakify.Do
         {
             int year, month, day = 0;
 
-            day = Convert.ToInt32(((Button)sender).Content);
+            day = Convert.ToInt32(((System.Windows.Controls.Button)sender).Content);
             month = Convert.ToInt32(AutoBack.DateTime.Convert.ToMonthNumber(textBlockCalendarMonthYear.Text.Split(' ')[0]));
             year = Convert.ToInt32(textBlockCalendarMonthYear.Text.Split(' ')[1]);
 
@@ -1255,6 +1687,7 @@ namespace melakify.Do
 
             borderCalendarBack.Visibility = Visibility.Collapsed;
             borderCalendar.Visibility = Visibility.Collapsed;
+            buttonAddReminderKey.IsEnabled = true;
         }
 
         private void buttonMessageOK_Click(object sender, RoutedEventArgs e)
@@ -1264,12 +1697,12 @@ namespace melakify.Do
 
         private void buttonMMS_Click(object sender, RoutedEventArgs e)
         {
-            ShowMessage("بعضی وقت ها این ارور داده می شود، ها ها", "سلام چطوری","باشه");
+            
         }
 
         private void listBoxItemUIMain_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            selectedReminder = (Reminder)((ListBox)ListSelected).SelectedItem;
+            selectedReminder = (Reminder)((System.Windows.Controls.ListBox)ListSelected).SelectedItem;
             try
             {
                 textBoxDescription.Text = selectedReminder.Description;
@@ -1278,11 +1711,13 @@ namespace melakify.Do
 
                 if (selectedReminder.IsImportant == "")
                 {
-                    textBlockIsImportantContent.Foreground = Brushes.Black;
+                    imageImportant.Visibility = Visibility.Collapsed;
+                    imageNotImportant.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    textBlockIsImportantContent.Foreground = Brushes.IndianRed;
+                    imageImportant.Visibility = Visibility.Visible;
+                    imageNotImportant.Visibility = Visibility.Collapsed;
                 }
 
                 buttonAddReminderKey.Content = "ویرایش کردن";
@@ -1295,6 +1730,533 @@ namespace melakify.Do
             catch
             {
 
+            }
+        }
+
+        private void textBoxDaysBefore_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Convert.ToInt32(textBoxDaysBefore.Text) < 1)
+            {
+                textBoxDaysBefore.Text = "1";
+            }
+        }
+
+        private void borderBackupActivator_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Settings.Default.AutoBackup)
+            {
+                storyBackupDisable.Begin();
+                Settings.Default.AutoBackup = false;
+            }
+            else
+            {
+                if (Settings.Default.BackupPath != "None")
+                {
+                    storyBackupEnable.Begin();
+                    Settings.Default.AutoBackup = true;
+                }
+                else
+                {
+                    storyBackupDisable.Begin();
+                    Settings.Default.AutoBackup = false;
+                    ShowMessage("شما می بایست یک مسیر را برای ذخیره فایل پشتیبان وارد کنید.", "مسیر ذخیره پشتیبان تعیین نشده!");
+                }
+            }
+            Settings.Default.Save();
+        }
+
+        private void buttonSelectBackupPath_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.BackupPath = dialog.SelectedPath;
+                Settings.Default.Save();
+            }
+        }
+
+        private void buttonReturnBackup_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.Filter = "SQLite files|*.sqlite";
+            ofd.Title = "وارد کردن فایل پشتیبانی...";
+            if (ofd.ShowDialog() == true)
+            {
+                File.Copy(ofd.FileName, Path, true);
+            }
+        }
+
+        private void borderAllowTransActivator_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Settings.Default.IsTranslucent)
+            {
+                storyAllowTransDisable.Begin();
+                Settings.Default.IsTranslucent = false;
+                BackDrop.Disable(this);
+                comboBoxChooseBackDrop.Visibility = Visibility.Collapsed;
+                windowChrome.UseAeroCaptionButtons = false;
+                buttonClose.Visibility = Visibility.Visible;
+                buttonMaximize.Visibility = Visibility.Visible;
+                buttonMinimize.Visibility = Visibility.Visible;
+                System.Windows.Media.Color color = new System.Windows.Media.Color();
+                System.Windows.Media.Color backColor = new System.Windows.Media.Color();
+                comboBoxColorPalette.IsEnabled = true;
+                borderBack.Visibility = Visibility.Collapsed;
+                Background = Settings.Default.ColorBackground;
+                borderColorPalette.Opacity = 1;
+                borderColorPalette.IsEnabled = true;
+            }
+            else
+            {
+                storyAllowTransEnable.Begin();
+                Settings.Default.IsTranslucent = true;
+                Background = System.Windows.Media.Brushes.Transparent;
+                windowChrome.UseAeroCaptionButtons = true;
+                buttonClose.Visibility = Visibility.Collapsed;
+                buttonMinimize.Visibility = Visibility.Collapsed;
+                buttonMaximize.Visibility = Visibility.Collapsed;
+                comboBoxChooseBackDrop.Visibility = Visibility.Visible;
+                comboBoxChooseBackDrop.Text = Settings.Default.TranslucentMode;
+                borderColorPalette.Opacity = 0.56;
+                borderColorPalette.IsEnabled = false;
+
+                if (Settings.Default.TranslucentMode == "اکلیل")
+                {
+                    borderBack.Visibility = Visibility.Visible;
+                    borderBack.Background = new SolidColorBrush(new System.Windows.Media.Color() { A = 160, R = 255, B = 255, G = 255 });
+                    BackDrop.UseAcrylic(this);
+                }
+                else if (Settings.Default.TranslucentMode == "میکا")
+                {
+                    borderBack.Visibility = Visibility.Collapsed;
+                    BackDrop.UseNewMica(this);
+                }
+            }
+            Settings.Default.Save();
+        }
+
+        private void buttonSettingsPerformance_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "عملکرد برنامه";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void buttonSettingsUser_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "حساب شما";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void buttonSettingsPersonalize_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "شخصی سازی";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void buttonSettingsDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            buttonSelectedCatagorySettings = sender as System.Windows.Controls.Button;
+            storySettingsOptionsClose.Begin();
+            imageBetweenNevigation2.Visibility = Visibility.Visible;
+            textBlockNevigationSubBackDrop.Text = "پایگاه داده";
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = true;
+            textBlockNevigationBackDrop.Opacity = 0.64;
+        }
+
+        private void textBlockNevigationBackDrop_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+            imageBetweenNevigation2.Visibility = Visibility.Collapsed;
+            textBlockNevigationSubBackDrop.Visibility = Visibility.Collapsed;
+            textBlockNevigationBackDrop.IsEnabled = false;
+
+            if (buttonSelectedCatagorySettings == buttonSettingsDatabase)
+            {
+                storySettingsDatabaseClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPerformance)
+            {
+                storySettingsPerformanceClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsPersonalize)
+            {
+                storySettingsPersonalizeClose.Begin();
+            }
+            else if (buttonSelectedCatagorySettings == buttonSettingsUser)
+            {
+                storySettingsUserClose.Begin();
+            }
+        }
+
+        private void textBlockNavigationHome_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            textBlockNavigationHome.Opacity = 1;
+        }
+
+        private void textBlockNavigationHome_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (textBlockNevigationBackDrop.IsVisible)
+            {
+                textBlockNavigationHome.Opacity = 0.64;
+            }
+            else
+            {
+                textBlockNavigationHome.Opacity = 1;
+            }
+        }
+
+        private void textBlockNavigationHome_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            textBlockNavigationHome.Opacity = 0.48;
+        }
+
+        private void textBlockNevigationBackDrop_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            textBlockNevigationBackDrop.Opacity = 1;
+        }
+
+        private void textBlockNevigationBackDrop_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (textBlockNevigationSubBackDrop.IsVisible)
+            {
+                textBlockNevigationBackDrop.Opacity = 0.64;
+            }
+            else
+            {
+                textBlockNevigationBackDrop.Opacity = 1;
+            }
+        }
+
+        private void textBlockNevigationBackDrop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            textBlockNevigationBackDrop.Opacity = 0.48;
+        }
+
+        private void comboBoxChooseBackDrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                ComboBoxItem item = (ComboBoxItem)comboBoxChooseBackDrop.SelectedItem;
+                if (item.Content.ToString() == "میکا")
+                {
+                    BackDrop.UseNewMica(this);
+                    borderBack.Visibility = Visibility.Collapsed;
+                    Settings.Default.TranslucentMode = "میکا";
+                }
+                else if (item.Content.ToString() == "اکلیل")
+                {
+                    BackDrop.UseAcrylic(this);
+                    borderBack.Visibility = Visibility.Visible;
+                    Settings.Default.TranslucentMode = "اکلیل";
+                }
+                Settings.Default.Save();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void comboBoxColorPalette_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = (ComboBoxItem)comboBoxColorPalette.SelectedItem;
+
+            if (item.Content.ToString() == "نارنجی")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 236, G = 228, B = 224 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Orange;
+                Settings.Default.ColorName = "Orange";
+            }
+            else if (item.Content.ToString() == "سبز")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 226, G = 228, B = 224 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Green;
+                Settings.Default.ColorName = "Green";
+            }
+            else if (item.Content.ToString() == "آبی")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 207, G = 220, B = 235 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Blue;
+                Settings.Default.ColorName = "Blue";
+            }
+            else if (item.Content.ToString() == "بنفش")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 230, G = 224, B = 236 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Purple;
+                Settings.Default.ColorName = "Purple";
+            }
+            Settings.Default.Save();
+            Background = Settings.Default.ColorBackground;
+            selectedPalette = Settings.Default.ColorPalette;
+        }
+
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown(0);
+        }
+
+        private void buttonMaximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                gridRoot.Margin = new Thickness(0);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                gridRoot.Margin = new Thickness(8);
+            }
+        }
+
+        private void ButtonMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void listBoxItemUIMain_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        {
+            Folder folder = (Folder)listBoxTimeLine.SelectedItem;
+
+            listBoxTimeLineReminders.Visibility = Visibility.Visible;
+            gridTimes.Visibility = Visibility.Collapsed;
+            listBoxTimeLine.Visibility = Visibility.Collapsed;
+            imageBetweenNevigation.Visibility = Visibility.Visible;
+            storyListFolderOpen.Begin();
+            textBlockNavigationHome.Opacity = 0.64;
+            textBlockNavigationHome.IsEnabled = true;
+            textBlockNevigationBackDrop.Visibility = Visibility.Visible;
+            textBlockNevigationBackDrop.IsEnabled = false;
+            textBlockNevigationBackDrop.Text = $"{folder.Date}";
+
+            listBoxTimeLineReminders.ItemsSource = folder.Reminders;
+        }
+
+        private void listBoxItemUIMain_MouseLeftButtonUp_2(object sender, MouseButtonEventArgs e)
+        {
+            selectedReminder = (Reminder)((System.Windows.Controls.ListBox)listBoxTimeLineReminders).SelectedItem;
+            try
+            {
+                textBoxDescription.Text = selectedReminder.Description;
+                textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
+                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
+
+                if (selectedReminder.IsImportant == "")
+                {
+                    imageImportant.Visibility = Visibility.Collapsed;
+                    imageNotImportant.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    imageImportant.Visibility = Visibility.Visible;
+                    imageNotImportant.Visibility = Visibility.Collapsed;
+                }
+
+                buttonAddReminderKey.Content = "ویرایش کردن";
+                buttonAddReminderKey.IsEnabled = false;
+                buttonAddReminderDelete.Visibility = Visibility.Visible;
+                borderSmoke.Visibility = Visibility.Visible;
+                borderAddReminder.Visibility = Visibility.Visible;
+                storyAddOpen.Begin();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void buttonAllReminder_Click(object sender, RoutedEventArgs e)
+        {
+            buttonAllReminder.IsEnabled = false;
+            buttonThisMonth.IsEnabled = true;
+            buttonThisWeek.IsEnabled = true;
+            buttonExpiredReminder.IsEnabled = true;
+            buttonPinReminder.IsEnabled = true;
+            listBoxAllReminder.Visibility = Visibility.Visible;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Collapsed;
+            textBlockFilterTitle.Text = "همه یادآور ها";
+            
+            if (Settings.Default.FolderWatch)
+            {
+                storyListOpenWithFolder.Begin();
+            }
+            else
+            {
+                storyListOpen.Begin();
+            }
+        }
+
+        private void buttonThisWeek_Click(object sender, RoutedEventArgs e)
+        {
+            buttonAllReminder.IsEnabled = true;
+            buttonThisMonth.IsEnabled = true;
+            buttonThisWeek.IsEnabled = false;
+            buttonExpiredReminder.IsEnabled = true;
+            buttonPinReminder.IsEnabled = true;
+            listBoxAllReminder.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxThisWeek.Visibility = Visibility.Visible;
+            listBoxPins.Visibility = Visibility.Collapsed;
+            textBlockFilterTitle.Text = "این هفته";
+
+            if (Settings.Default.FolderWatch)
+            {
+                storyListOpenWithFolder.Begin();
+            }
+            else
+            {
+                storyListOpen.Begin();
+            }
+        }
+
+        private void buttonThisMonth_Click(object sender, RoutedEventArgs e)
+        {
+            buttonAllReminder.IsEnabled = true;
+            buttonThisMonth.IsEnabled = false;
+            buttonThisWeek.IsEnabled = true;
+            buttonExpiredReminder.IsEnabled = true;
+            buttonPinReminder.IsEnabled = true;
+            listBoxAllReminder.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Visible;
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Collapsed;
+            textBlockFilterTitle.Text = "این ماه";
+
+            if (Settings.Default.FolderWatch)
+            {
+                storyListOpenWithFolder.Begin();
+            }
+            else
+            {
+                storyListOpen.Begin();
+            }
+        }
+
+        private void buttonExpiredReminder_Click(object sender, RoutedEventArgs e)
+        {
+            buttonAllReminder.IsEnabled = true;
+            buttonThisMonth.IsEnabled = true;
+            buttonThisWeek.IsEnabled = true;
+            buttonExpiredReminder.IsEnabled = false;
+            buttonPinReminder.IsEnabled = true;
+            listBoxAllReminder.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Visible;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Collapsed;
+            textBlockFilterTitle.Text = "یادآور های تاریخ گذشته";
+
+            if (Settings.Default.FolderWatch)
+            {
+                storyListOpenWithFolder.Begin();
+            }
+            else
+            {
+                storyListOpen.Begin();
+            }
+        }
+
+        private void buttonPinReminder_Click(object sender, RoutedEventArgs e)
+        {
+            buttonAllReminder.IsEnabled = true;
+            buttonThisMonth.IsEnabled = true;
+            buttonThisWeek.IsEnabled = true;
+            buttonExpiredReminder.IsEnabled = true;
+            buttonPinReminder.IsEnabled = false;
+            listBoxAllReminder.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Visible;
+            textBlockFilterTitle.Text = "مهم ها";
+
+            if (Settings.Default.FolderWatch)
+            {
+                storyListOpenWithFolder.Begin();
+            }
+            else
+            {
+                storyListOpen.Begin();
+            }
+        }
+
+        private void listBoxAllReminder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListSelected = sender as System.Windows.Controls.ListBox;
+        }
+
+        private void listBoxThisWeek_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListSelected = sender as System.Windows.Controls.ListBox;
+        }
+
+        private void listBoxThisMonth_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListSelected = sender as System.Windows.Controls.ListBox;
+        }
+
+        private void listBoxExpiredReminder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListSelected = sender as System.Windows.Controls.ListBox;
+        }
+
+        private void listBoxPins_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListSelected = sender as System.Windows.Controls.ListBox;
+        }
+
+        private void textBoxDateTime_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            buttonAddReminderKey.IsEnabled = true;
+        }
+
+        private void textBoxDaysBefore_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                buttonAddReminderKey.IsEnabled = true;
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void buttonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void buttonChooseCustomColor_Click(object sender, RoutedEventArgs e)
+        {
+            ColorDialog dialogColor = new ColorDialog();
+            if (dialogColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(dialogColor.Color.A, dialogColor.Color.R, dialogColor.Color.G, dialogColor.Color.B));
+                Background = Settings.Default.ColorBackground;
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Orange;
+                Settings.Default.Save();
             }
         }
     }

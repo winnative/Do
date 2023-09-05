@@ -17,7 +17,7 @@ namespace melakify.UI.BackDrop
         {
             IntPtr mainWindowPtr = new WindowInteropHelper(window).Handle;
             HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
-            mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 0, 0, 0);
+            mainWindowSrc.CompositionTarget.BackgroundColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
 
             MARGINS margins = new MARGINS();
             margins.cxLeftWidth = -1;

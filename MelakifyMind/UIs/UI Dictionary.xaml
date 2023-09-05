@@ -925,10 +925,11 @@
     <Style TargetType="ToolTip">
         <Setter Property="Foreground" Value="#FF292929"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Fonts/#IRANSansX Regular"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
-                    <Border Padding="8,8" Width="{Binding ElementName=toolTipContent , Path=Width}" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
+                    <Border Padding="8,8" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="32" Direction="270" Opacity="0.24" ShadowDepth="10"/>
                         </Border.Effect>
@@ -939,7 +940,6 @@
         </Setter>
     </Style>
     <Style TargetType="Popup">
-        <Setter Property="MinWidth" Value="200"/>
         <Setter Property="AllowsTransparency" Value="True"/>
     </Style>
     <Style TargetType="ListView">
@@ -1636,20 +1636,20 @@
                                 </VisualState>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ColorAnimation To="#72FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1">
+                                        <ColorAnimation To="#66FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1">
 
                                         </ColorAnimation>
-                                        <ColorAnimation To="#10000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.1">
+                                        <ColorAnimation To="#F4FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.1">
 
                                         </ColorAnimation>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation To="#00FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.05">
+                                        <ColorAnimation To="#8EFFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.05">
 
                                         </ColorAnimation>
-                                        <ColorAnimation To="#00000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.05">
+                                        <ColorAnimation To="#F4FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.05">
 
                                         </ColorAnimation>
                                         <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.05">
@@ -1662,7 +1662,7 @@
                                         <ColorAnimation To="#56FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.05">
 
                                         </ColorAnimation>
-                                        <ColorAnimation To="#00000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.05">
+                                        <ColorAnimation To="#F4FFFFFF" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.05">
 
                                         </ColorAnimation>
                                         <DoubleAnimation To="0.64" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.04">
