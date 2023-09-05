@@ -19,7 +19,6 @@ namespace melakify.Entities.Behind
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-        public bool IsChecked { get; set; }
         public int ShowDay { get; set; }
         public int ShowMonth { get; set; }
         public int ShowYear { get; set; }
@@ -96,51 +95,6 @@ namespace melakify.Entities.Behind
                     return "یادآور مهم ندارد";
                 }
             }
-        }
-
-        public Reminder() { }
-        public Reminder(string description, int daysBefore, int day, int month, int year, bool isChecked)
-        {
-            Description = description;
-            DaysBefore = daysBefore;
-            Day = day;
-            Month = month;
-            Year = year;
-            IsChecked = isChecked;
-        }
-
-        public static void Read(System.Windows.Controls.ListBox listBox)
-        {
-            List<Reminder> list = new List<Reminder>();
-
-            SQLiteConnection connection = new SQLiteConnection("DataSource=DOs.sqlite;Version=3;");
-            SQLiteCommand command = new SQLiteCommand("SELECT * FROM TblReminder", connection);
-
-            connection.Open();
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Reminder reminder = new Reminder();
-                reminder.Description = (string)reader["Description"];
-                reminder.DaysBefore = (int)reader["DaysBefore"];
-                reminder.Day = (int)reader["Day"];
-                reminder.Month = (int)reader["Month"];
-                reminder.Year = (int)reader["Year"];
-                reminder.ShowDay = (int)reader["ShowDay"];
-                reminder.ShowMonth = (int)reader["ShowMonth"];
-                reminder.ShowYear = (int)reader["ShowYear"];
-                reminder.IsImportant = (string)reader["IsImportant"];
-
-                list.Add(reminder);
-            }
-
-            listBox.ItemsSource = list;
-        }
-
-        public static void Delete(Reminder reminder)
-        {
-
         }
     }
 }
