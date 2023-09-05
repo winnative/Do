@@ -264,6 +264,9 @@ namespace melakify.Do
                 textBlockNoReminderComment.Visibility = Visibility.Collapsed;
 
                 var all = from a in reminders
+                          orderby a.Year
+                          orderby a.Month
+                          orderby a.Day
                           select a;
 
                 var fewDays = from f in reminders
@@ -271,6 +274,9 @@ namespace melakify.Do
                               where f.Month == new PersianCalendar().GetMonth(DateTime.Now)
                               where f.Year == new PersianCalendar().GetYear(DateTime.Now)
                               where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                              orderby f.Year
+                              orderby f.Month
+                              orderby f.Day
                               select f;
 
                 var week = from w in reminders
@@ -278,20 +284,32 @@ namespace melakify.Do
                            where w.Month == new PersianCalendar().GetMonth(DateTime.Now)
                            where w.Year == new PersianCalendar().GetYear(DateTime.Now)
                            where $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                           orderby w.Year
+                           orderby w.Month
+                           orderby w.Day
                            select w;
 
                 var month = from m in reminders
                             where m.Month == new PersianCalendar().GetMonth(DateTime.Now)
                             where m.Year == new PersianCalendar().GetYear(DateTime.Now)
                             where $"{m.Year:0000}/{m.Month:00}/{m.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
+                            orderby m.Year
+                            orderby m.Month
+                            orderby m.Day
                             select m;
 
                 var pin = from p in reminders
                           where p.IsImportant == "مهم"
+                          orderby p.Year
+                          orderby p.Month
+                          orderby p.Day
                           select p;
 
                 var expired = from exp in reminders
                               where $"{exp.Year:0000}/{exp.Month:00}/{exp.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days < 0
+                              orderby exp.Year
+                              orderby exp.Month
+                              orderby exp.Day
                               select exp;
 
                 var dateShortcut = (from ds in reminders
@@ -312,7 +330,7 @@ namespace melakify.Do
                     }
 
                     folders = folders.DistinctBy(d => d.Date).ToList();
-
+                    folders = folders.OrderBy(s => s.Date).ToList();
                     listBoxTimeLine.ItemsSource = folders;
                 }
                 else
@@ -498,6 +516,14 @@ namespace melakify.Do
         public int Month { get; set; }
         public int Year { get; set; }
         public bool Acceptable { get; set; } = false;
+
+        public System.Windows.Media.SolidColorBrush CurrentPalette
+        {
+            get
+            {
+                return Settings.Default.ColorPalette;
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -734,7 +760,8 @@ namespace melakify.Do
                     buttonClose.Visibility = Visibility.Collapsed;
                     buttonMinimize.Visibility = Visibility.Collapsed;
                     buttonMaximize.Visibility = Visibility.Collapsed;
-                    comboBoxColorPalette.IsEnabled = false;
+                    borderColorPalette.Opacity = 0.56;
+                    borderColorPalette.IsEnabled = false;
                     Background = System.Windows.Media.Brushes.Transparent;
                 }
                 else
@@ -745,7 +772,8 @@ namespace melakify.Do
                     buttonClose.Visibility = Visibility.Visible;
                     buttonMinimize.Visibility = Visibility.Visible;
                     buttonMaximize.Visibility = Visibility.Visible;
-                    comboBoxColorPalette.IsEnabled = true;
+                    borderColorPalette.Opacity = 1;
+                    borderColorPalette.IsEnabled = true;
                     System.Windows.Media.Color backColor = new System.Windows.Media.Color();
                     borderBack.Visibility = Visibility.Collapsed;
                     Background = Settings.Default.ColorBackground;
@@ -757,6 +785,8 @@ namespace melakify.Do
                 borderBack.Visibility = Visibility.Collapsed;
                 windowChrome.UseAeroCaptionButtons = false;
             }
+
+            borderAddReminder.Background = Settings.Default.ColorBackground;
 
             MonthConnection.Add(("فروردین", 1));
             MonthConnection.Add(("اردیبهشت", 2));
@@ -1122,6 +1152,7 @@ namespace melakify.Do
 
         private void buttonAddReminder_Click(object sender, RoutedEventArgs e)
         {
+            borderAddReminder.Background = Settings.Default.ColorBackground;
             DateTime firstTime = DateTime.Now;
             textBoxDaysBefore.Text = "1";
             firstTime.AddDays(Convert.ToInt32(textBoxDaysBefore.Text));
@@ -1772,6 +1803,8 @@ namespace melakify.Do
                 comboBoxColorPalette.IsEnabled = true;
                 borderBack.Visibility = Visibility.Collapsed;
                 Background = Settings.Default.ColorBackground;
+                borderColorPalette.Opacity = 1;
+                borderColorPalette.IsEnabled = true;
             }
             else
             {
@@ -1784,7 +1817,8 @@ namespace melakify.Do
                 buttonMaximize.Visibility = Visibility.Collapsed;
                 comboBoxChooseBackDrop.Visibility = Visibility.Visible;
                 comboBoxChooseBackDrop.Text = Settings.Default.TranslucentMode;
-                comboBoxColorPalette.IsEnabled = false;
+                borderColorPalette.Opacity = 0.56;
+                borderColorPalette.IsEnabled = false;
 
                 if (Settings.Default.TranslucentMode == "اکلیل")
                 {
@@ -1945,13 +1979,13 @@ namespace melakify.Do
 
             if (item.Content.ToString() == "نارنجی")
             {
-                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 236, G = 211, B = 203 });
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 236, G = 228, B = 224 });
                 Settings.Default.ColorPalette = System.Windows.Media.Brushes.Orange;
                 Settings.Default.ColorName = "Orange";
             }
             else if (item.Content.ToString() == "سبز")
             {
-                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 211, G = 223, B = 208 });
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 226, G = 228, B = 224 });
                 Settings.Default.ColorPalette = System.Windows.Media.Brushes.Green;
                 Settings.Default.ColorName = "Green";
             }
@@ -1960,6 +1994,12 @@ namespace melakify.Do
                 Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 207, G = 220, B = 235 });
                 Settings.Default.ColorPalette = System.Windows.Media.Brushes.Blue;
                 Settings.Default.ColorName = "Blue";
+            }
+            else if (item.Content.ToString() == "بنفش")
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(new System.Windows.Media.Color() { A = 255, R = 230, G = 224, B = 236 });
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Purple;
+                Settings.Default.ColorName = "Purple";
             }
             Settings.Default.Save();
             Background = Settings.Default.ColorBackground;
@@ -2206,6 +2246,18 @@ namespace melakify.Do
         private void buttonRefresh_Click(object sender, RoutedEventArgs e)
         {
             Refresh();
+        }
+
+        private void buttonChooseCustomColor_Click(object sender, RoutedEventArgs e)
+        {
+            ColorDialog dialogColor = new ColorDialog();
+            if (dialogColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.ColorBackground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(dialogColor.Color.A, dialogColor.Color.R, dialogColor.Color.G, dialogColor.Color.B));
+                Background = Settings.Default.ColorBackground;
+                Settings.Default.ColorPalette = System.Windows.Media.Brushes.Orange;
+                Settings.Default.Save();
+            }
         }
     }
 }

@@ -5,15 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MelakifyMind"
         mc:Ignorable="d"
-        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" Height="256" Top="0" Left="0" Loaded="Window_Loaded" Background="{x:Null}" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" ResizeMode="NoResize">
+        Title="Melakify +Toast" x:Name="windowApp" WindowStyle="None" Height="180" Top="0" Left="0" Loaded="Window_Loaded" Background="{x:Null}" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" ResizeMode="NoResize">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1" CaptionHeight="0" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="Foreground" Value="#FF292929"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Fonts/#IRANSansX Regular"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                        <Border UseLayoutRounding="True" Padding="8,8" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="32" Direction="270" Opacity="0.24" ShadowDepth="10"/>
+                            </Border.Effect>
+                            <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center" Name="toolTipContent" Content="{TemplateBinding Content}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Storyboard x:Key="storyClose">
             <DoubleAnimation To="400" Storyboard.TargetName="translateTransform" Storyboard.TargetProperty="(TranslateTransform.X)" Duration="0:0:0.4">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="storyToastNext">
+            <DoubleAnimation From="100" To="0" Storyboard.TargetName="translateToastContent" Storyboard.TargetProperty="(TranslateTransform.X)" Duration="0:0:0.56">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="storyToastPre">
+            <DoubleAnimation From="-100" To="0" Storyboard.TargetName="translateToastContent" Storyboard.TargetProperty="(TranslateTransform.X)" Duration="0:0:0.56">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
@@ -35,10 +66,31 @@
         <Grid.RenderTransform>
             <TranslateTransform x:Name="translateTransform" X="400" Y="0"/>
         </Grid.RenderTransform>
-        <VirtualizingStackPanel Orientation="Vertical">
-            <Border Name="borderToast" CornerRadius="12" Margin="0,4" Height="248" Background="#FFE2E2E2" BorderBrush="#14000000" BorderThickness="1">
-                <Grid>
-                    <Image SnapsToDevicePixels="False" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" OpacityMask="Black" Margin="25,22,0,0">
+        <Border Name="borderToast" CornerRadius="12" Margin="0" Background="#FFE2E2E2" BorderBrush="#14000000" BorderThickness="1">
+            <Grid>
+                <Image SnapsToDevicePixels="False" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" OpacityMask="Black" Margin="25,22,0,0">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Brush>
+                                        <VisualBrush Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xF4A5;" FontSize="16" Foreground="#FF8B1BAD"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </GeometryDrawing.Brush>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry Rect="20,20,20,20"/>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+                <TextBlock Text="درک جادویی" Name="textBlockTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="52,22,0,0" FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Foreground="#FF8B1BAD"/>
+                <Button Name="buttonCloseJustNow" ToolTip="بستن" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="32" Margin="16" Click="buttonCloseJustNow_Click">
+                    <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
                         <Image.Source>
                             <DrawingImage>
                                 <DrawingImage.Drawing>
@@ -46,7 +98,7 @@
                                         <GeometryDrawing.Brush>
                                             <VisualBrush Stretch="None">
                                                 <VisualBrush.Visual>
-                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xF4A5;" FontSize="16" Foreground="#FF8B1BAD"/>
+                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE711;" FontSize="16" Foreground="#F4000000"/>
                                                 </VisualBrush.Visual>
                                             </VisualBrush>
                                         </GeometryDrawing.Brush>
@@ -58,34 +110,87 @@
                             </DrawingImage>
                         </Image.Source>
                     </Image>
-                    <TextBlock Text="درک جادویی" Name="textBlockTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="58,22,0,0" FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Foreground="#FF8B1BAD"/>
-                    <Button Name="buttonCloseNow" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="32" Margin="16" Click="buttonCloseNow_Click">
-                        <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
-                            <Image.Source>
-                                <DrawingImage>
-                                    <DrawingImage.Drawing>
-                                        <GeometryDrawing>
-                                            <GeometryDrawing.Brush>
-                                                <VisualBrush Stretch="None">
-                                                    <VisualBrush.Visual>
-                                                        <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE8A7;" FontSize="16" Foreground="#E0000000"/>
-                                                    </VisualBrush.Visual>
-                                                </VisualBrush>
-                                            </GeometryDrawing.Brush>
-                                            <GeometryDrawing.Geometry>
-                                                <RectangleGeometry Rect="20,20,20,20"/>
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                    </DrawingImage.Drawing>
-                                </DrawingImage>
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                    <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" Style="{StaticResource TextBoxFlat}" ContextMenu="{x:Null}" SelectionBrush="Transparent" CaretBrush="Transparent" Name="textBoxDescription" VerticalAlignment="Top" Margin="32,64,32,0" FontFamily="Fonts/#IRANSansX Regular" Text="" FontSize="18" Height="110"/>
-                    <Button HorizontalContentAlignment="Center" Name="buttonDismiss" Content="فهمیدم" FontFamily="Fonts/#IRANSansX Regular" Margin="32,190,204,24" Click="buttonDismiss_Click"/>
-                    <Button HorizontalContentAlignment="Center" Name="buttonSnooze" Visibility="Collapsed" Content="بعداً" FontFamily="Fonts/#IRANSansX Regular" Margin="204,190,32,24"/>
-                </Grid>
-            </Border>
-        </VirtualizingStackPanel>
+                </Button>
+                <Button Name="buttonCloseNow" ToolTip="رفتن به صفحه اصلی" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="32" Margin="0,16,53,0" Click="buttonCloseNow_Click">
+                    <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Brush>
+                                            <VisualBrush Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE8A7;" FontSize="16" Foreground="#F4000000"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </GeometryDrawing.Brush>
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="20,20,20,20"/>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button>
+                <Border HorizontalAlignment="Right" Margin="0,24,90,0" Height="16" VerticalAlignment="Top" Name="borderSeprator" BorderThickness="1,0,0,0" BorderBrush="White">
+                    <Border.Effect>
+                        <DropShadowEffect Direction="270" Opacity="0.32" ShadowDepth="2" BlurRadius="4"/>
+                    </Border.Effect>
+                </Border>
+                <Button ToolTip="مورد بعدی" ToolTipService.ShowOnDisabled="True" Name="buttonNextReminder" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="32" Margin="0,16,96,0" Click="buttonNextReminder_Click">
+                    <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Brush>
+                                            <VisualBrush Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xEDD9;" FontSize="14" Foreground="#CC000000"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </GeometryDrawing.Brush>
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="20,20,20,20"/>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button>
+                <Button ToolTip="مورد قبلی" ToolTipService.ShowOnDisabled="True" Name="buttonPreviousReminder" Style="{StaticResource buttonFlat}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32" Width="32" Margin="0,16,133,0" IsEnabled="False" Click="buttonPreviousReminder_Click">
+                    <Image SnapsToDevicePixels="False" Stretch="None" OpacityMask="Black">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Brush>
+                                            <VisualBrush Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xEDDA;" FontSize="14" Foreground="#CC000000"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </GeometryDrawing.Brush>
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="20,20,20,20"/>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button>
+                <TextBlock Name="textBlockReminderCount" FontSize="14" HorizontalAlignment="Left" Text="" FontFamily="Fonts/#IRANSansX Regular" VerticalAlignment="Top" Margin="132,21,0,0"/>
+                <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" Style="{StaticResource TextBoxFlat}" ContextMenu="{x:Null}" SelectionBrush="Transparent" CaretBrush="Transparent" Name="textBoxDescription" Margin="32,64,32,61" FontFamily="Fonts/#IRANSansX Regular" Text="" TextWrapping="Wrap" FontSize="18">
+                    <TextBox.RenderTransform>
+                        <TranslateTransform x:Name="translateToastContent" X="0" Y="0"/>
+                    </TextBox.RenderTransform>
+                </TextBox>
+                <Button HorizontalContentAlignment="Center" Name="buttonDismiss" Content="فهمیدم" FontFamily="Fonts/#IRANSansX Regular" Margin="32,0,0,24" Click="buttonDismiss_Click" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="162"/>
+                <Button HorizontalContentAlignment="Center" Name="buttonSnooze" Visibility="Collapsed" Content="بعداً" FontFamily="Fonts/#IRANSansX Regular" Margin="204,190,32,24"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

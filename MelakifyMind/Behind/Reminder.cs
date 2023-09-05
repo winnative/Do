@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DNTPersianUtils;
 using System.Windows.Controls;
 using DNTPersianUtils.Core;
+using System.Windows.Media;
 
 namespace melakify.Entities.Behind
 {
@@ -23,6 +24,21 @@ namespace melakify.Entities.Behind
         public int ShowMonth { get; set; }
         public int ShowYear { get; set; }
         public string IsImportant { get; set; }
+
+        public SolidColorBrush ImportantColor
+        {
+            get
+            {
+                if (IsImportant == "مهم")
+                {
+                    return System.Windows.Media.Brushes.DarkGoldenrod;
+                }
+                else
+                {
+                    return System.Windows.Media.Brushes.DarkGray;
+                }
+            }
+        }
 
         public string DateFolder
         {
@@ -62,7 +78,7 @@ namespace melakify.Entities.Behind
                 }
                 else
                 {
-                    return ($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1).ToString() + " روز مانده";
+                    return ($"{Year:0000}/{Month:00}/{Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days + 1).ToString() + " روز دیگر";
                 }
             }
         }

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MelakifyMind"
         mc:Ignorable="d"
-        Title="emtudio +Do" Name="windowRoot" FontFamily="Fonts/#IRANSansX Regular" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Loaded="windowRoot_Loaded" Background="#FFD3DFD0" WindowStartupLocation="CenterScreen" Icon="/Images/Melak +Mind.ico" Closing="windowRoot_Closing">
+        Title="emtudio +Do" Name="windowRoot" FontFamily="Fonts/#IRANSansX Regular" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Loaded="windowRoot_Loaded" Background="#FFE6E0EC" WindowStartupLocation="CenterScreen" Icon="/Images/Melak +Mind.ico" Closing="windowRoot_Closing">
     <WindowChrome.WindowChrome>
         <WindowChrome x:Name="windowChrome" GlassFrameThickness="-1" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Style TargetType="ComboBoxItem">
-            <Setter Property="BorderBrush" Value="Orange"/>
+            <Setter Property="BorderBrush" Value="{Binding CurrentPalette, UpdateSourceTrigger=PropertyChanged}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBoxItem">
@@ -203,7 +203,7 @@
             </Setter>
         </Style>
         <Storyboard x:Key="storyListOpenWithFolder">
-            <ThicknessAnimation From="64,400,64,0" To="64,277,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+            <ThicknessAnimation From="64,400,64,88" To="64,277,64,088" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
                 <ThicknessAnimation.EasingFunction>
                     <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </ThicknessAnimation.EasingFunction>
@@ -211,7 +211,7 @@
             <DoubleAnimation From="0" To="1" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
         </Storyboard>
         <Storyboard x:Key="storyListCloseWithFolder">
-            <ThicknessAnimation To="64,400,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+            <ThicknessAnimation To="64,400,64,88" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
                 <ThicknessAnimation.EasingFunction>
                     <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </ThicknessAnimation.EasingFunction>
@@ -219,7 +219,7 @@
             <DoubleAnimation From="1" To="0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
         </Storyboard>
         <Storyboard x:Key="storyListOpen">
-            <ThicknessAnimation From="64,400,64,0" To="64,144,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+            <ThicknessAnimation From="64,400,64,88" To="64,144,64,88" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
                 <ThicknessAnimation.EasingFunction>
                     <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </ThicknessAnimation.EasingFunction>
@@ -227,7 +227,7 @@
             <DoubleAnimation From="0" To="1" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
         </Storyboard>
         <Storyboard x:Key="storyListClose">
-            <ThicknessAnimation To="64,400,64,0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
+            <ThicknessAnimation To="64,400,64,88" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Margin" Duration="0:0:0.56">
                 <ThicknessAnimation.EasingFunction>
                     <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </ThicknessAnimation.EasingFunction>
@@ -235,7 +235,7 @@
             <DoubleAnimation From="1" To="0" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
         </Storyboard>
         <Storyboard x:Key="storyListFolderOpen">
-            <ThicknessAnimation From="64,400,64,0" To="64,144,64,0" Storyboard.TargetName="listBoxTimeLineReminders" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
+            <ThicknessAnimation From="64,400,64,48" To="64,144,64,48" Storyboard.TargetName="listBoxTimeLineReminders" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
                 <ThicknessAnimation.EasingFunction>
                     <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </ThicknessAnimation.EasingFunction>
@@ -243,7 +243,7 @@
             <DoubleAnimation From="0" To="1" Storyboard.TargetName="gridTimes" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"/>
         </Storyboard>
         <Storyboard x:Key="storyListFolderClose">
-            <ThicknessAnimation To="64,400,64,0" Storyboard.TargetName="listBoxTimeLineReminders" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
+            <ThicknessAnimation To="64,400,64,48" Storyboard.TargetName="listBoxTimeLineReminders" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
                 <ThicknessAnimation.EasingFunction>
                     <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                 </ThicknessAnimation.EasingFunction>
@@ -337,7 +337,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToolTip}">
-                        <Border Padding="12,8" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
+                        <Border UseLayoutRounding="True" Padding="12,8" Margin="30" Name="toolTipUIMain" BorderBrush="#28B4B4B4" BorderThickness="1" Background="#F2FBFBFB" CornerRadius="8">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="16" Direction="270" Opacity="0.12" ShadowDepth="8"/>
                             </Border.Effect>
@@ -1212,12 +1212,14 @@
                         </Image>
                         <VirtualizingStackPanel Name="stackPanelColorPaletteContent">
                             <TextBlock Name="textBlockColorPaletteTitle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="64,12,64,0" FontSize="14" FontFamily="Fonts/#IRANSansX DemiBold">پالت رنگی</TextBlock>
-                            <TextBlock Name="textBlockColorPaletteComment" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="64,0,0,0" FontSize="12" FontFamily="Fonts/#IRANSansX Regular" Foreground="#E0000000" Width="430">رنگ پس‌زمینه را مشخص می کند. زمانی که شفافیت فعال باشد، این تنظیم تاثیر ندارد.</TextBlock>
+                            <TextBlock Name="textBlockColorPaletteComment" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="64,0,0,0" FontSize="12" FontFamily="Fonts/#IRANSansX Regular" Foreground="#E0000000" Width="430">انتخاب رنگ پس زمینه. زمانی که شفافیت فعال باشد، تاثیر ندارد.</TextBlock>
                         </VirtualizingStackPanel>
+                        <Button Name="buttonChooseCustomColor" Content="انتخاب دستی" Width="96" HorizontalContentAlignment="Center" FontFamily="Fonts/#IRANSansX Regular" VerticalAlignment="Center" Height="34" HorizontalAlignment="Right" Click="buttonChooseCustomColor_Click"/>
                         <ComboBox Grid.Column="1" Margin="8,14" Name="comboBoxColorPalette" SelectionChanged="comboBoxColorPalette_SelectionChanged">
                             <ComboBoxItem>نارنجی</ComboBoxItem>
                             <ComboBoxItem>سبز</ComboBoxItem>
                             <ComboBoxItem>آبی</ComboBoxItem>
+                            <ComboBoxItem>بنفش</ComboBoxItem>
                         </ComboBox>
                     </Grid>
                 </Border>
@@ -1854,6 +1856,57 @@
                 </Grid>
             </Border>
             <Border FlowDirection="RightToLeft" Height="40" UseLayoutRounding="True" Margin="0,0,40,40" Name="borderToolBar" BorderThickness="1" CornerRadius="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#90FFFFFF" BorderBrush="White">
+                <Border.Resources>
+                    <Style x:Key="buttonFlat" TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Padding="{TemplateBinding Padding}" x:Name="buttonUIMainMini" CornerRadius="8" Background="#00000000">
+                                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Name="borderContentMini"/>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <ColorAnimation To="#06000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.05">
+
+                                                        </ColorAnimation>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="MouseOver">
+                                                    <Storyboard>
+                                                        <ColorAnimation To="#09000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.1">
+
+                                                        </ColorAnimation>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Normal">
+                                                    <Storyboard>
+                                                        <ColorAnimation To="#00000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.05">
+
+                                                        </ColorAnimation>
+                                                        <DoubleAnimation To="1" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4">
+
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <ColorAnimation To="#06000000" Storyboard.TargetName="buttonUIMainMini" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.05">
+
+                                                        </ColorAnimation>
+                                                        <DoubleAnimation To="0.5" Storyboard.TargetName="borderContentMini" Storyboard.TargetProperty="Opacity" Duration="0:0:0.05">
+
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Border.Resources>
                 <VirtualizingStackPanel Margin="4,5" Orientation="Horizontal">
                     <Button ToolTip="ایجاد یادآور جدید" Name="buttonAddReminder" Style="{StaticResource buttonFlat}" Width="36" Margin="0,0,4,0" Click="buttonAddReminder_Click">
                         <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
@@ -1884,9 +1937,42 @@
                             <DropShadowEffect Direction="270" Opacity="0.32" ShadowDepth="2" BlurRadius="4"/>
                         </Border.Effect>
                     </Border>
-                    <Button ToolTip="همه یادآور ها" Margin="4,0,0,0" IsEnabled="False" Name="buttonAllReminder" Width="36" Style="{StaticResource buttonFlat}" Click="buttonAllReminder_Click">
-                        <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
-                            <Image SnapsToDevicePixels="True" Stretch="None">
+                    <Button ToolTipService.ShowOnDisabled="True" ToolTip="همه یادآور ها" Margin="4,0,0,0" IsEnabled="False" Name="buttonAllReminder" Width="36" Style="{StaticResource buttonFlat}" Click="buttonAllReminder_Click">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="16" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderWeekSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderMonthSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderExpiredSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderPinSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Grid>
+                            <Image SnapsToDevicePixels="True" Margin="0,0,0,0" Stretch="None">
                                 <Image.Source>
                                     <DrawingImage>
                                         <DrawingImage.Drawing>
@@ -1906,10 +1992,44 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                        </VirtualizingStackPanel>
+                            <Border CornerRadius="2" Margin="0,0,0,-6" Name="borderAllSelector" VerticalAlignment="Bottom" Width="16" Height="3" Background="{Binding CurrentPalette}"/>
+                        </Grid>
                     </Button>
-                    <Button ToolTip="یادآور های این هفته" Margin="4,0,0,0" Name="buttonThisWeek" Width="36" Style="{StaticResource buttonFlat}" Click="buttonThisWeek_Click">
-                        <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
+                    <Button ToolTipService.ShowOnDisabled="True" ToolTip="یادآور های این هفته" Margin="4,0,0,0" Name="buttonThisWeek" Width="36" Style="{StaticResource buttonFlat}" Click="buttonThisWeek_Click">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="16" Storyboard.TargetName="borderWeekSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderMonthSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderExpiredSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderPinSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Grid>
                             <Image SnapsToDevicePixels="True" Stretch="None">
                                 <Image.Source>
                                     <DrawingImage>
@@ -1930,10 +2050,44 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                        </VirtualizingStackPanel>
+                            <Border CornerRadius="1" Margin="0,0,0,-6" Name="borderWeekSelector" VerticalAlignment="Bottom" Width="0" Height="3" Background="{Binding CurrentPalette}"/>
+                        </Grid>
                     </Button>
-                    <Button ToolTip="یادآور های این ماه" Margin="4,0,0,0" Name="buttonThisMonth" Width="36" Style="{StaticResource buttonFlat}" Click="buttonThisMonth_Click">
-                        <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
+                    <Button ToolTipService.ShowOnDisabled="True" ToolTip="یادآور های این ماه" Margin="4,0,0,0" Name="buttonThisMonth" Width="36" Style="{StaticResource buttonFlat}" Click="buttonThisMonth_Click">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderWeekSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="16" Storyboard.TargetName="borderMonthSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderExpiredSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderPinSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Grid>
                             <Image SnapsToDevicePixels="True" Stretch="None">
                                 <Image.Source>
                                     <DrawingImage>
@@ -1954,10 +2108,44 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                        </VirtualizingStackPanel>
+                            <Border CornerRadius="2" Margin="0,0,0,-6" Name="borderMonthSelector" VerticalAlignment="Bottom" Width="0" Height="3" Background="{Binding CurrentPalette}"/>
+                        </Grid>
                     </Button>
-                    <Button ToolTip="یادآور های تاریخ گذشته" Margin="4,0,0,0" Name="buttonExpiredReminder" Width="36" Style="{StaticResource buttonFlat}" Click="buttonExpiredReminder_Click">
-                        <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
+                    <Button ToolTipService.ShowOnDisabled="True" ToolTip="یادآور های تاریخ گذشته" Margin="4,0,0,0" Name="buttonExpiredReminder" Width="36" Style="{StaticResource buttonFlat}" Click="buttonExpiredReminder_Click">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderWeekSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderMonthSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="16" Storyboard.TargetName="borderExpiredSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderPinSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Grid>
                             <Image SnapsToDevicePixels="True" Stretch="None">
                                 <Image.Source>
                                     <DrawingImage>
@@ -1978,10 +2166,44 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                        </VirtualizingStackPanel>
+                            <Border CornerRadius="1" Margin="0,0,0,-6" Name="borderExpiredSelector" VerticalAlignment="Bottom" Width="0" Height="3" Background="{Binding CurrentPalette}"/>
+                        </Grid>
                     </Button>
-                    <Button ToolTip="یادآور های مهم" Margin="4,0,0,0" Name="buttonPinReminder" Width="36" Style="{StaticResource buttonFlat}" Click="buttonPinReminder_Click">
-                        <VirtualizingStackPanel Margin="8,0" Orientation="Horizontal">
+                    <Button ToolTipService.ShowOnDisabled="True" ToolTip="یادآور های مهم" Margin="4,0,0,0" Name="buttonPinReminder" Width="36" Style="{StaticResource buttonFlat}" Click="buttonPinReminder_Click">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderWeekSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderMonthSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="borderExpiredSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="16" Storyboard.TargetName="borderPinSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Grid>
                             <Image SnapsToDevicePixels="True" Stretch="None">
                                 <Image.Source>
                                     <DrawingImage>
@@ -2002,7 +2224,8 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
-                        </VirtualizingStackPanel>
+                            <Border CornerRadius="2" Margin="0,0,0,-6" Name="borderPinSelector" VerticalAlignment="Bottom" Width="0" Height="3" Background="{Binding CurrentPalette}"/>
+                        </Grid>
                     </Button>
                 </VirtualizingStackPanel>
             </Border>
@@ -2184,7 +2407,7 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <Grid Name="gridTimes" VerticalAlignment="Top" Margin="64,277,64,0" Height="322">
+            <Grid Name="gridTimes" Margin="64,277,64,88">
                 <Grid.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -2219,6 +2442,26 @@
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <VirtualizingStackPanel Margin="4,0,0,0" Orientation="Horizontal">
+                                                <Image Margin="0,0,8,0" SnapsToDevicePixels="True" Stretch="None">
+                                                    <Image.Source>
+                                                        <DrawingImage>
+                                                            <DrawingImage.Drawing>
+                                                                <GeometryDrawing>
+                                                                    <GeometryDrawing.Brush>
+                                                                        <VisualBrush Stretch="None">
+                                                                            <VisualBrush.Visual>
+                                                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xEDAC;" Foreground="{Binding ImportantColor}" FontSize="16"/>
+                                                                            </VisualBrush.Visual>
+                                                                        </VisualBrush>
+                                                                    </GeometryDrawing.Brush>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <RectangleGeometry Rect="16,16,16,16"/>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                            </DrawingImage.Drawing>
+                                                        </DrawingImage>
+                                                    </Image.Source>
+                                                </Image>
                                                 <TextBlock FontFamily="Fonts/#IRANSansX Regular" VerticalAlignment="Center" FontSize="14" Text="{Binding DaysDistance}"></TextBlock>
                                             </VirtualizingStackPanel>
                                             <VirtualizingStackPanel Orientation="Horizontal" Grid.Column="1">
@@ -2350,7 +2593,7 @@
                 <ListBox Margin="0,32,0,0" FlowDirection="RightToLeft" BorderBrush="{x:Null}" Background="{x:Null}" Name="listBoxExpiredReminder" Visibility="Collapsed" SelectionChanged="listBoxExpiredReminder_SelectionChanged"/>
                 <ListBox Margin="0,32,0,0" FlowDirection="RightToLeft" Visibility="Collapsed" BorderBrush="{x:Null}" Background="{x:Null}" Name="listBoxPins" SelectionChanged="listBoxPins_SelectionChanged"/>
             </Grid>
-            <ListBox Visibility="Collapsed" FlowDirection="RightToLeft" Name="listBoxTimeLineReminders" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="455" Margin="64,144,64,0">
+            <ListBox Visibility="Collapsed" FlowDirection="RightToLeft" Name="listBoxTimeLineReminders" Background="{x:Null}" BorderBrush="{x:Null}" Margin="64,144,64,48">
                 <ListBox.Resources>
                     <Style TargetType="ListBox">
                         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
@@ -2385,6 +2628,26 @@
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <VirtualizingStackPanel Margin="4,0,0,0" Orientation="Horizontal">
+                                                <Image Margin="0,0,8,0" SnapsToDevicePixels="True" Stretch="None">
+                                                    <Image.Source>
+                                                        <DrawingImage>
+                                                            <DrawingImage.Drawing>
+                                                                <GeometryDrawing>
+                                                                    <GeometryDrawing.Brush>
+                                                                        <VisualBrush Stretch="None">
+                                                                            <VisualBrush.Visual>
+                                                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xEDAC;" Foreground="{Binding ImportantColor}" FontSize="16"/>
+                                                                            </VisualBrush.Visual>
+                                                                        </VisualBrush>
+                                                                    </GeometryDrawing.Brush>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <RectangleGeometry Rect="16,16,16,16"/>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                            </DrawingImage.Drawing>
+                                                        </DrawingImage>
+                                                    </Image.Source>
+                                                </Image>
                                                 <TextBlock FontFamily="Fonts/#IRANSansX Regular" VerticalAlignment="Center" FontSize="14" Text="{Binding DaysDistance}"></TextBlock>
                                             </VirtualizingStackPanel>
                                             <VirtualizingStackPanel Orientation="Horizontal" Grid.Column="1">
@@ -2512,7 +2775,7 @@
             </ListBox>
         </Grid>
         <Border Visibility="Collapsed" Name="borderSmoke" Background="#40000000"/>
-        <Border Opacity="0" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" UseLayoutRounding="True" Height="10" Name="borderAddReminder" CornerRadius="8" BorderThickness="1" BorderBrush="#F4FFFFFF" Background="#FFE8E8E8">
+        <Border Opacity="0" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" UseLayoutRounding="True" Height="10" Name="borderAddReminder" CornerRadius="8" BorderThickness="1" BorderBrush="#B7FFFFFF" Background="#FFE8E8E8">
             <Border.Effect>
                 <DropShadowEffect Direction="270" Opacity="0.08" ShadowDepth="12" BlurRadius="24"/>
             </Border.Effect>
