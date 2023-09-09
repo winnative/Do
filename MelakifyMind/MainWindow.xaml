@@ -10,6 +10,33 @@
         <WindowChrome x:Name="windowChrome" GlassFrameThickness="-1" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
+        <Storyboard x:Key="storySelectDefault">
+            <DoubleAnimation To="16" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation To="0" Storyboard.TargetName="borderWeekSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation To="0" Storyboard.TargetName="borderMonthSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation To="0" Storyboard.TargetName="borderExpiredSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation To="0" Storyboard.TargetName="borderPinSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
         <Style TargetType="ComboBoxItem">
             <Setter Property="BorderBrush" Value="{Binding CurrentPalette, UpdateSourceTrigger=PropertyChanged}"/>
             <Setter Property="Template">

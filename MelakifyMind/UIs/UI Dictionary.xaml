@@ -682,14 +682,62 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style TargetType="ProgressBar">
+    <Style x:Key="{x:Type ProgressBar}"
+       TargetType="{x:Type ProgressBar}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Border BorderThickness="0" CornerRadius="5" Background="{TemplateBinding Background}">
-                        <Grid Name="PART_Track">
-                            <Border Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}"/>
-                        </Grid>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Border UseLayoutRounding="True" CornerRadius="4" MinHeight="4"
+              
+              Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Determinate" />
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="00:00:00"
+                                                 Storyboard.TargetName="PART_Indicator"
+                                                 Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush>Transparent</SolidColorBrush>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border ClipToBounds="True" CornerRadius="4">
+                            <Grid ClipToBounds="False" Margin="0,0">
+                                <Border CornerRadius="4" UseLayoutRounding="True" x:Name="PART_Track"
+>
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
+                                    </Border.BorderBrush>
+                                </Border>
+                                <Border CornerRadius="4" ClipToBounds="True">
+                                    <Border x:Name="PART_Indicator"
+CornerRadius="4"
+HorizontalAlignment="Left"
+Background="{TemplateBinding Foreground}"
+Margin="0,0,0,0">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource BorderLightColor}"/>
+                                        </Border.BorderBrush>
+                                        <Border x:Name="Animator" ClipToBounds="True" CornerRadius="4"
+>
+                                            <Border CornerRadius="4" UseLayoutRounding="True" x:Name="PART_GlowRect"
+       Width="50"
+       HorizontalAlignment="Left"
+       Background="{TemplateBinding Foreground}"
+       Margin="0,0,0,0" />
+                                        </Border>
+                                    </Border>
+                                </Border>
+                            </Grid>
+                        </Border>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -970,23 +1018,23 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border Height="32" Name="menuItemUIMain" Margin="0,2.5" CornerRadius="6" Background="Transparent">
+                    <Border Height="36" Name="menuItemUIMain" Margin="0,2.5" CornerRadius="6" Background="Transparent">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <ColorAnimation To="#06000000" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                        <ColorAnimation To="#04000000" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                         <DoubleAnimation To="0.4" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.05"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ColorAnimation To="#10000000" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                        <ColorAnimation To="#06000000" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation To="Transparent" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                        <ColorAnimation To="{Binding ElementName=menuItemUIMain, Path=Background}" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                         <DoubleAnimation To="1" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.05"/>
                                     </Storyboard>
                                 </VisualState>
@@ -994,48 +1042,58 @@
                             <VisualStateGroup x:Name="SelectionStates">
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
+                                        <ColorAnimation To="#08000000" Storyboard.TargetName="borderSelector" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                         <DoubleAnimation To="1" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1">
                                             <DoubleAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
-                                        <DoubleAnimation To="16" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Height" Duration="0:0:0.3">
-                                            <DoubleAnimation.EasingFunction>
+                                        <ThicknessAnimation To="0,10,5,10" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Margin" Duration="0:0:0.4">
+                                            <ThicknessAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                            </ThicknessAnimation.EasingFunction>
+                                        </ThicknessAnimation>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unselected">
                                     <Storyboard>
-                                        <DoubleAnimation To="0" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1">
+                                        <ColorAnimation To="#00000000" Storyboard.TargetName="borderSelector" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Opacity" Duration="0:0:0.16">
                                             <DoubleAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
-                                        <DoubleAnimation To="4" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Height" Duration="0:0:0.3">
-                                            <DoubleAnimation.EasingFunction>
+                                        <ThicknessAnimation To="0,16,5,16" Storyboard.TargetName="menuItemFocus" Storyboard.TargetProperty="Margin" Duration="0:0:0.3">
+                                            <ThicknessAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                            </ThicknessAnimation.EasingFunction>
+                                        </ThicknessAnimation>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border.Triggers>
-                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                            <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation To="#09000000" Duration="0:0:0.05" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
-                                        <DoubleAnimation To="0.5" Storyboard.TargetName="menuItemContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.05"/>
+                                        <ColorAnimation To="#00000000" Duration="0:0:0.01" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#00000000" Duration="0:0:0.01" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Border.Triggers>
-                        <VirtualizingStackPanel Orientation="Horizontal">
-                            <Border Opacity="0" HorizontalAlignment="Left" Height="4" Margin="0,0,5,0" VerticalAlignment="Center" Width="4" Name="menuItemFocus" CornerRadius="2" Background="#FFFF634A"/>
-                            <ContentPresenter Name="menuItemContent" Content="{TemplateBinding Content}" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </VirtualizingStackPanel>
+                        <Border CornerRadius="6" UseLayoutRounding="True" Name="borderSelector" Background="Transparent">
+                            <VirtualizingStackPanel Orientation="Horizontal">
+                                <Border Opacity="0" UseLayoutRounding="True" HorizontalAlignment="Left" Margin="0,16,5,16" Width="3" Name="menuItemFocus" CornerRadius="1.5" Background="#FFFF8A53"/>
+                                <ContentPresenter Name="menuItemContent" Content="{TemplateBinding Content}" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            </VirtualizingStackPanel>
+                        </Border>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -1307,19 +1365,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Border Name="textBoxUIMain" BorderThickness="1" BorderBrush="sc#0.12, 0, 0, 0" Background="sc#0.5, 0.9646863, 0.9646863, 0.9646863" CornerRadius="8">
+                    <Border Name="textBoxUIMain" BorderThickness="1" BorderBrush="sc#0.12, 0, 0, 0" Background="sc#0.5, 0.9646863, 0.9646863, 0.9646863" CornerRadius="6">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
-                                        <ColorAnimation To="#FFFF634A" Duration="0:0:0.5" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
-
+                                        <ColorAnimation To="#A31269A0" Duration="0:0:0.5" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <ColorAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </ColorAnimation.EasingFunction>
                                         </ColorAnimation>
                                         <ColorAnimation To="White" Duration="0:0:0.5" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-
+                                            <ColorAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </ColorAnimation.EasingFunction>
                                         </ColorAnimation>
                                         <ThicknessAnimation To="2" Storyboard.TargetName="textBoxUIMain" Storyboard.TargetProperty="BorderThickness" Duration="0:0:0.5">
-
+                                            <ThicknessAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                            </ThicknessAnimation.EasingFunction>
                                         </ThicknessAnimation>
                                     </Storyboard>
                                 </VisualState>
@@ -1491,15 +1555,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Padding="{TemplateBinding Padding}" Name="buttonUI" UseLayoutRounding="True" RenderTransformOrigin="0.5,0.5" CornerRadius="6" BorderThickness="1" BorderBrush="#28B4B4B4" Background="sc#0.95, 1, 1, 1">
+                    <Border Padding="{TemplateBinding Padding}" Name="buttonUI" UseLayoutRounding="True" RenderTransformOrigin="0.5,0.5" CornerRadius="6" BorderThickness="1" BorderBrush="#28B4B4B4" Background="#FFFFFFFF">
                         <Border.Effect>
-                            <DropShadowEffect x:Name="buttonUIEffect" Opacity="0.16" ShadowDepth="1.6" Direction="270" BlurRadius="2"/>
+                            <DropShadowEffect x:Name="buttonUIEffect" Opacity="0.2" ShadowDepth="1" Direction="270" BlurRadius="0"/>
                         </Border.Effect>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="buttonUI" To="sc#0.85, 1, 1, 1" Duration="0:0:0.06" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                        <ColorAnimation Storyboard.TargetName="buttonUI" To="#FFF9F9F9" Duration="0:0:0.06" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                         <DoubleAnimation To="1" Storyboard.TargetName="buttonUIEffect" Storyboard.TargetProperty="ShadowDepth" Duration="0:0:0.06"/>
                                     </Storyboard>
                                 </VisualState>
@@ -1507,7 +1571,7 @@
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="buttonUI" To="{Binding ElementName=buttonUI, Path=Background}" Duration="0:0:0.06" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                         <ColorAnimation To="Black" Storyboard.TargetName="buttonContent" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.02"/>
-                                        <DoubleAnimation To="1.6" Storyboard.TargetName="buttonUIEffect" Storyboard.TargetProperty="ShadowDepth" Duration="0:0:0.06"/>
+                                        <DoubleAnimation To="1" Storyboard.TargetName="buttonUIEffect" Storyboard.TargetProperty="ShadowDepth" Duration="0:0:0.06"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -1518,21 +1582,11 @@
                                         <DoubleAnimation To="0.6" Storyboard.TargetName="buttonContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.06"/>
                                         <DoubleAnimation To="0" Storyboard.TargetName="buttonUIEffect" Storyboard.TargetProperty="ShadowDepth" Duration="0:0:0.06"/>
                                         <DoubleAnimation To="0" Storyboard.TargetName="buttonUIEffect" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
-                                        <DoubleAnimation To="0.98" Storyboard.TargetName="buttonUITransform" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Duration="0:0:0.1">
-                                            <DoubleAnimation.EasingFunction>
-                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                        <DoubleAnimation To="0.98" Storyboard.TargetName="buttonUITransform" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" Duration="0:0:0.1">
-                                            <DoubleAnimation.EasingFunction>
-                                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="buttonUI" To="sc#0.5, 1, 1, 1" Duration="0:0:0.02" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                        <ColorAnimation Storyboard.TargetName="buttonUI" To="#FFF8F8F8" Duration="0:0:0.02" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
                                         <ColorAnimation To="DarkGray" Storyboard.TargetName="buttonContent" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.02"/>
                                         <DoubleAnimation To="0" Storyboard.TargetName="buttonUIEffect" Storyboard.TargetProperty="Opacity" Duration="0:0:0.02"/>
                                     </Storyboard>
@@ -1559,7 +1613,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-
                     <Border UseLayoutRounding="True" Padding="{TemplateBinding Padding}" Name="buttonUI" RenderTransformOrigin="0.5,0.5" CornerRadius="6" BorderThickness="1" BorderBrush="#28B4B4B4" Background="sc#0.95, 1, 1, 1">
                         <Border.Effect>
                             <DropShadowEffect x:Name="buttonUIEffect" Opacity="0.16" ShadowDepth="1" Direction="270" BlurRadius="0"/>
@@ -1620,7 +1673,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="buttonUIMainMini" CornerRadius="8" BorderThickness="1" BorderBrush="#00000000" Background="#00FFFFFF">
+                    <Border x:Name="buttonUIMainMini" UseLayoutRounding="True" CornerRadius="6" BorderThickness="1" BorderBrush="#00000000" Background="#00FFFFFF">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Name="borderContentMini"/>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -1681,7 +1734,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Padding="{TemplateBinding Padding}" x:Name="buttonUIMainMini" CornerRadius="8" Background="#00000000">
+                    <Border Padding="{TemplateBinding Padding}" UseLayoutRounding="True" x:Name="buttonUIMainMini" CornerRadius="6" Background="#00000000">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Name="borderContentMini"/>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">

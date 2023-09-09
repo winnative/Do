@@ -339,7 +339,7 @@ namespace melakify.Do
                 }
 
                 listBoxAllReminder.ItemsSource = all;
-                
+
                 if (month.Count() > 0)
                 {
                     buttonThisMonth.Visibility = Visibility.Visible;
@@ -429,14 +429,22 @@ namespace melakify.Do
                 listBoxTimeLine.Visibility = Visibility.Collapsed;
             }
 
-            if (Settings.Default.FolderWatch)
+            if (listBoxTimeLine.Visibility == Visibility.Visible)
             {
-                storyListOpenWithFolder.Begin();
+                if (Settings.Default.FolderWatch)
+                {
+                    storyListOpenWithFolder.Begin();
+                }
+                else
+                {
+                    storyListOpen.Begin();
+                }
             }
             else
             {
                 storyListOpen.Begin();
             }
+            storySelectDefault.Begin();
         }
 
         public void RecalculateYears()
@@ -505,6 +513,7 @@ namespace melakify.Do
         Storyboard storyListClose = new Storyboard();
         Storyboard storyListFolderOpen = new Storyboard();
         Storyboard storyListFolderClose = new Storyboard();
+        Storyboard storySelectDefault = new Storyboard();
         Reminder newReminder = new Reminder();
         Reminder selectedReminder = new Reminder();
         List<Reminder> reminders = new List<Reminder>();
@@ -572,6 +581,7 @@ namespace melakify.Do
             storyListClose = (Storyboard)Resources["storyListClose"];
             storyListFolderOpen = (Storyboard)Resources["storyListFolderOpen"];
             storyListFolderClose = (Storyboard)Resources["storyListFolderClose"];
+            storySelectDefault = (Storyboard)Resources["storySelectDefault"];
             storyPreviewClose.Completed += StoryPreviewClose_Completed;
             storyMessageClose.Completed += StoryMessageClose_Completed;
             storyMessageOpen.Completed += StoryMessageOpen_Completed;
@@ -930,7 +940,6 @@ namespace melakify.Do
                 textBlockNevigationBackDrop.Opacity = 1;
                 listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
                 gridTimes.Visibility = Visibility.Visible;
-                listBoxTimeLine.Visibility = Visibility.Visible;
             }
             else
             {
@@ -943,6 +952,12 @@ namespace melakify.Do
                 gridTimes.Visibility = Visibility.Visible;
                 listBoxTimeLine.Visibility = Visibility.Visible;
             }
+            Refresh();
+            listBoxAllReminder.Visibility = Visibility.Visible;
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Collapsed;
         }
 
         private void borderMessageAI_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -2095,9 +2110,16 @@ namespace melakify.Do
             listBoxPins.Visibility = Visibility.Collapsed;
             textBlockFilterTitle.Text = "همه یادآور ها";
             
-            if (Settings.Default.FolderWatch)
+            if (listBoxTimeLine.Visibility == Visibility.Visible)
             {
-                storyListOpenWithFolder.Begin();
+                if (Settings.Default.FolderWatch)
+                {
+                    storyListOpenWithFolder.Begin();
+                }
+                else
+                {
+                    storyListOpen.Begin();
+                }
             }
             else
             {
@@ -2119,9 +2141,16 @@ namespace melakify.Do
             listBoxPins.Visibility = Visibility.Collapsed;
             textBlockFilterTitle.Text = "این هفته";
 
-            if (Settings.Default.FolderWatch)
+            if (listBoxTimeLine.Visibility == Visibility.Visible)
             {
-                storyListOpenWithFolder.Begin();
+                if (Settings.Default.FolderWatch)
+                {
+                    storyListOpenWithFolder.Begin();
+                }
+                else
+                {
+                    storyListOpen.Begin();
+                }
             }
             else
             {
@@ -2143,9 +2172,16 @@ namespace melakify.Do
             listBoxPins.Visibility = Visibility.Collapsed;
             textBlockFilterTitle.Text = "این ماه";
 
-            if (Settings.Default.FolderWatch)
+            if (listBoxTimeLine.Visibility == Visibility.Visible)
             {
-                storyListOpenWithFolder.Begin();
+                if (Settings.Default.FolderWatch)
+                {
+                    storyListOpenWithFolder.Begin();
+                }
+                else
+                {
+                    storyListOpen.Begin();
+                }
             }
             else
             {
@@ -2167,9 +2203,16 @@ namespace melakify.Do
             listBoxPins.Visibility = Visibility.Collapsed;
             textBlockFilterTitle.Text = "یادآور های تاریخ گذشته";
 
-            if (Settings.Default.FolderWatch)
+            if (listBoxTimeLine.Visibility == Visibility.Visible)
             {
-                storyListOpenWithFolder.Begin();
+                if (Settings.Default.FolderWatch)
+                {
+                    storyListOpenWithFolder.Begin();
+                }
+                else
+                {
+                    storyListOpen.Begin();
+                }
             }
             else
             {
@@ -2191,9 +2234,16 @@ namespace melakify.Do
             listBoxPins.Visibility = Visibility.Visible;
             textBlockFilterTitle.Text = "مهم ها";
 
-            if (Settings.Default.FolderWatch)
+            if (listBoxTimeLine.Visibility == Visibility.Visible)
             {
-                storyListOpenWithFolder.Begin();
+                if (Settings.Default.FolderWatch)
+                {
+                    storyListOpenWithFolder.Begin();
+                }
+                else
+                {
+                    storyListOpen.Begin();
+                }
             }
             else
             {
