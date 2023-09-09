@@ -338,8 +338,6 @@ namespace melakify.Do
                     listBoxTimeLine.Visibility = Visibility.Collapsed;
                 }
 
-                listBoxAllReminder.ItemsSource = all;
-
                 if (month.Count() > 0)
                 {
                     buttonThisMonth.Visibility = Visibility.Visible;
@@ -415,6 +413,20 @@ namespace melakify.Do
                     buttonPinReminder.IsEnabled = true;
                     textBlockFilterTitle.Text = "همه یادآور ها";
                 }
+
+
+                if (all.Count() > 0)
+                {
+                    listBoxAllReminder.Visibility = Visibility.Visible;
+                    listBoxAllReminder.ItemsSource = all;
+                    buttonAllReminder.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    listBoxAllReminder.Visibility = Visibility.Collapsed;
+                    buttonAllReminder.Visibility = Visibility.Collapsed;
+                }
+
             }
             else
             {
@@ -427,6 +439,7 @@ namespace melakify.Do
                 buttonExpiredReminder.Visibility = Visibility.Collapsed;
                 buttonPinReminder.Visibility = Visibility.Collapsed;
                 listBoxTimeLine.Visibility = Visibility.Collapsed;
+                buttonAllReminder.Visibility = Visibility.Collapsed;
             }
 
             if (listBoxTimeLine.Visibility == Visibility.Visible)
@@ -464,7 +477,7 @@ namespace melakify.Do
             Successful
         }
 
-        public const string Path = @"C:\emtudio\+Do\base.sqlite";
+        public const string Path = @"C:\emtudio\361\+Do\base.sqlite";
         public object ListSelected = null;
         SQLiteConnection connection = new SQLiteConnection($"DataSource={Path}; Version=3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");

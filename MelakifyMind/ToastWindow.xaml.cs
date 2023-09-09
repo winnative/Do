@@ -38,14 +38,14 @@ namespace melakify.Do
         Storyboard storyToastContentBack = new Storyboard();
         List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
-        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\emtudio\+Do\base.sqlite; Version = 3;");
+        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\emtudio\361\+Do\base.sqlite; Version = 3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
 
-        public const string Path = @"C:\emtudio\+Do\base.sqlite";
+        public const string Path = @"C:\emtudio\361\+Do\base.sqlite";
         public ToastWindow()
         {
             try
@@ -74,9 +74,9 @@ namespace melakify.Do
         {
             try
             {
-                if (!Directory.Exists(@"C:\emtudio\+Do"))
+                if (!Directory.Exists(@"C:\emtudio\361\+Do"))
                 {
-                    Directory.CreateDirectory(@"C:\emtudio\+Do");
+                    Directory.CreateDirectory(@"C:\emtudio\361\+Do");
                 }
 
                 Topmost = true;
