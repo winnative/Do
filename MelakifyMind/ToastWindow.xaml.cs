@@ -14,7 +14,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
-using melakify.Entities.Behind;
 using System.IO;
 using System.Globalization;
 using MelakifyMind.Properties;
@@ -24,6 +23,8 @@ using System.Data.SQLite;
 using System.Net;
 using System.Drawing;
 using System.Windows.Forms;
+using Emtudio.Systems.Controllers;
+using Emtudio.Systems.Entities;
 
 namespace melakify.Do
 {
@@ -32,26 +33,27 @@ namespace melakify.Do
     /// </summary>
     public partial class ToastWindow : Window
     {
+        ReminderContext context = new ReminderContext();
         bool hasData = false;
         Storyboard storyToastClose = new Storyboard();
         Storyboard storyToastContent = new Storyboard();
         Storyboard storyToastContentBack = new Storyboard();
         List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
-        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\emtudio\361\+Do\base.sqlite; Version = 3;");
+        SQLiteConnection connection = new SQLiteConnection($@"DataSource = {DataPathChecker.Path}; Version = 3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
 
-        public const string Path = @"C:\emtudio\361\+Do\base.sqlite";
         public ToastWindow()
         {
             try
             {
                 InitializeComponent();
                 borderToast.Background = Settings.Default.ColorBackground;
+                context.OnModelOpening();
                 if (!Settings.Default.FirstReminder)
                 {
                     MainWindow win = new MainWindow();
@@ -74,10 +76,7 @@ namespace melakify.Do
         {
             try
             {
-                if (!Directory.Exists(@"C:\emtudio\361\+Do"))
-                {
-                    Directory.CreateDirectory(@"C:\emtudio\361\+Do");
-                }
+                DataPathChecker.PathChecker();
 
                 Topmost = true;
                 DataContext = this;
@@ -89,37 +88,10 @@ namespace melakify.Do
 
                 try
                 {
-                    command.Connection = connection;
-                    if (File.Exists(Path))
+                    if (File.Exists(DataPathChecker.Path))
                     {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                        command.CommandText = "SELECT * FROM TblReminder";
-                        connection.Open();
-                        reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            Reminder reminder = new Reminder();
-                            reminder.Description = (string)reader["Description"];
-                            reminder.DaysBefore = (int)reader["DaysBefore"];
-                            reminder.Day = (int)reader["Day"];
-                            reminder.Month = (int)reader["Month"];
-                            reminder.Year = (int)reader["Year"];
-                            reminder.ShowDay = (int)reader["ShowDay"];
-                            reminder.ShowMonth = (int)reader["ShowMonth"];
-                            reminder.ShowYear = (int)reader["ShowYear"];
-                            reminder.IsImportant = (string)reader["IsImportant"];
-
-                            reminders.Add(reminder);
-                        }
-                        connection.Close();
-
-                        var result = from remind in reminders
-                                     where remind.ShowDay == new PersianCalendar().GetDayOfMonth(DateTime.Now)
-                                     where remind.ShowMonth == new PersianCalendar().GetMonth(DateTime.Now)
-                                     where remind.ShowYear == new PersianCalendar().GetYear(DateTime.Now)
+                        var result = from remind in context.Reminders
+                                     where remind.Time.Date == DateTime.Today
                                      select remind;
 
                         if (result.Count() > 0)
@@ -156,11 +128,6 @@ namespace melakify.Do
                     }
                     else
                     {
-                        SQLiteConnection.CreateFile(Path);
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-
                         textBoxDescription.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
                     }
                 }
@@ -197,7 +164,7 @@ namespace melakify.Do
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                throw ex;
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using melakify.Automation.UI;
-using melakify.Entities.Behind;
 using melakify.UI.BackDrop;
 using System.Text;
 using System.Windows;
@@ -27,8 +26,10 @@ using melakify.Automation.Behind;
 using MelakifyMind.Properties;
 using DNTPersianUtils.Core;
 using Microsoft.Win32;
-using MelakifyMind.Behind;
 using System.Linq.Expressions;
+using Emtudio.Systems.Controllers;
+using Emtudio.Systems.Entities;
+using Emtudio.Systems.Operations;
 
 namespace melakify.Do
 {
@@ -38,6 +39,7 @@ namespace melakify.Do
     public partial class MainWindow : Window
     {
         public SolidColorBrush selectedPalette { get; set; }
+        ReminderContext context = new ReminderContext();
         public void ShowMessage(string message, string title, string primaryText = "باشه")
         {
             borderMessage.Visibility = Visibility.Visible;
@@ -194,128 +196,66 @@ namespace melakify.Do
 
         public int GetLastDayOfWeek()
         {
-            int dayOfWeek = DateTime.Now.GetPersianWeekDayNumber();
-            int result = new PersianCalendar().GetDayOfMonth(DateTime.Now) + (7 - dayOfWeek);
-            return result;
+            int dayOfWeek = DateTime.Now.GetPersianWeekStartAndEndDates().EndDate.Day;
+            return dayOfWeek;
         }
 
         public int GetFirstDayOfWeek()
         {
-            int dayOfWeek = DateTime.Now.GetPersianWeekDayNumber();
-            int result = new PersianCalendar().GetDayOfMonth(DateTime.Now) - (dayOfWeek - 1);
-            return result;
+            int dayOfWeek = DateTime.Now.GetPersianWeekStartAndEndDates().StartDate.Day;
+            return dayOfWeek;
         }
 
         public void Refresh()
         {
-            try
-            {
-                command.Connection = connection;
-                if (File.Exists(Path))
-                {
-                    command.CommandText = "CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))";
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                    command.CommandText = "SELECT * FROM TblReminder";
-                    connection.Open();
-                    reader = command.ExecuteReader();
-                    reminders.Clear();
-                    while (reader.Read())
-                    {
-                        Reminder reminder = new Reminder();
-                        reminder.Description = (string)reader["Description"];
-                        reminder.DaysBefore = (int)reader["DaysBefore"];
-                        reminder.Day = (int)reader["Day"];
-                        reminder.Month = (int)reader["Month"];
-                        reminder.Year = (int)reader["Year"];
-                        reminder.ShowDay = (int)reader["ShowDay"];
-                        reminder.ShowMonth = (int)reader["ShowMonth"];
-                        reminder.ShowYear = (int)reader["ShowYear"];
-                        reminder.IsImportant = (string)reader["IsImportant"];
-
-                        reminders.Add(reminder);
-                    }
-                    reader.Close();
-                    connection.Close();
-                }
-                else
-                {
-                    SQLiteConnection.CreateFile(Path);
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-            catch
-            {
-                
-            }
-            finally
-            {
-                connection.Close();
-            }
-
-            if (reminders.Count > 0)
+            if (context.Reminders.ToList().Count > 0)
             {
                 gridTimes.Visibility = Visibility.Visible;
                 textBlockNoReminder.Visibility = Visibility.Collapsed;
                 imageNoReminder.Visibility = Visibility.Collapsed;
                 textBlockNoReminderComment.Visibility = Visibility.Collapsed;
 
-                var all = from a in reminders
-                          orderby a.Year
-                          orderby a.Month
-                          orderby a.Day
+                var all = from a in context.Reminders.ToList()
+                          orderby a.Time.Date.ToShortDateString()
                           select a;
 
-                var fewDays = from f in reminders
-                              where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 1 && $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days <= 3
-                              where f.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                              where f.Year == new PersianCalendar().GetYear(DateTime.Now)
-                              where $"{f.Year:0000}/{f.Month:00}/{f.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
-                              orderby f.Year
-                              orderby f.Month
-                              orderby f.Day
+                var fewDays = from f in context.Reminders.ToList()
+                              where f.Time.Subtract(DateTime.Now).Days >= 1 && f.Time.Subtract(DateTime.Now).Days <= 3
+                              where f.Time.Month == DateTime.Now.Month
+                              where f.Time.Year == DateTime.Now.Year
+                              where f.Time.Subtract(DateTime.Now).Days >= 0
+                              orderby f.Time.Date.ToShortDateString()
                               select f;
 
-                var week = from w in reminders
-                           where (w.Day <= GetLastDayOfWeek()) && (w.Day >= GetFirstDayOfWeek())
-                           where w.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                           where w.Year == new PersianCalendar().GetYear(DateTime.Now)
-                           where $"{w.Year:0000}/{w.Month:00}/{w.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
-                           orderby w.Year
-                           orderby w.Month
-                           orderby w.Day
+                var week = from w in context.Reminders.ToList()
+                           where (w.Time.Day <= GetLastDayOfWeek()) && (w.Time.Day >= GetFirstDayOfWeek())
+                           where w.Time.Month == DateTime.Now.Month
+                           where w.Time.Year == DateTime.Now.Year
+                           where w.Time.Subtract(DateTime.Now).Days >= 0
+                           orderby w.Time.Date.ToShortDateString()
                            select w;
 
-                var month = from m in reminders
-                            where m.Month == new PersianCalendar().GetMonth(DateTime.Now)
-                            where m.Year == new PersianCalendar().GetYear(DateTime.Now)
-                            where $"{m.Year:0000}/{m.Month:00}/{m.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
-                            orderby m.Year
-                            orderby m.Month
-                            orderby m.Day
+                var month = from m in context.Reminders.ToList()
+                            where m.Time.Month == DateTime.Now.Month
+                            where m.Time.Year == DateTime.Now.Year
+                            where m.Time.Subtract(DateTime.Now).Days >= 0
+                            orderby m.Time.Date.ToShortDateString()
                             select m;
 
-                var pin = from p in reminders
-                          where p.IsImportant == "مهم"
-                          orderby p.Year
-                          orderby p.Month
-                          orderby p.Day
+                var pin = from p in context.Reminders.ToList()
+                          where p.IsImportant
+                          orderby p.Time.Date.ToShortDateString()
                           select p;
 
-                var expired = from exp in reminders
-                              where $"{exp.Year:0000}/{exp.Month:00}/{exp.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days < 0
-                              orderby exp.Year
-                              orderby exp.Month
-                              orderby exp.Day
+                var expired = from exp in context.Reminders.ToList()
+                              where exp.Time.Subtract(DateTime.Now).Days < 0
+                              orderby exp.Time.Date.ToShortDateString()
                               select exp;
 
-                var dateShortcut = (from ds in reminders
-                                    where $"{ds.Year:0000}/{ds.Month:00}/{ds.Day:00}".ToGregorianDateTime().Value.Subtract(DateTime.Now).Days >= 0
-                                    group ds by ds.DateFolder into folder
-                                    select new { Reminders = folder, Title = folder.Key.ToString() }).ToList();
+                var dateShortcut = (from ds in context.Reminders.ToList()
+                                    where ds.Time.Subtract(DateTime.Now).Days >= 0
+                                    group ds by ds.Time into folder
+                                    select new { Reminders = folder, Title = folder.Key.ToShortPersianDateString() }).ToList();
 
                 if (dateShortcut.Count() > 0)
                 {
@@ -477,9 +417,8 @@ namespace melakify.Do
             Successful
         }
 
-        public const string Path = @"C:\emtudio\361\+Do\base.sqlite";
         public object ListSelected = null;
-        SQLiteConnection connection = new SQLiteConnection($"DataSource={Path}; Version=3;");
+        SQLiteConnection connection = new SQLiteConnection($"DataSource={DataPathChecker.Path}; Version=3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
         List<(string monthName, int monthNumber)> MonthConnection = new List<(string monthName, int monthNumber)>();
@@ -888,7 +827,7 @@ namespace melakify.Do
             try
             {
                 reminders.Add(newReminder);
-                File.WriteAllText(Path, JsonConvert.SerializeObject(reminders));
+                File.WriteAllText(DataPathChecker.Path, JsonConvert.SerializeObject(reminders));
                 Acceptable = true;
                 storyPreviewClose.Begin();
             }
@@ -1029,127 +968,56 @@ namespace melakify.Do
             {
                 if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                 {
-                        string[] date = textBoxDateTime.Text.Split('/');
+                    string[] date = textBoxDateTime.Text.Split('/');
 
-                        int showDay = 0;
-                        int showMonth = 0;
-                        int showYear = 0;
+                    int showDay = 0;
+                    int showMonth = 0;
+                    int showYear = 0;
 
-                        int day = 0;
-                        int month = 0;
-                        int year = 0;
-                        int daysBefore = 0;
-                        string isImportant = "";
+                    int day = 0;
+                    int month = 0;
+                    int year = 0;
+                    int daysBefore = 0;
+                    bool isImportant = false;
 
-                        day = Convert.ToInt32(date[2]);
-                        month = Convert.ToInt32(date[1]);
-                        year = Convert.ToInt32(date[0]);
-                        daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
-
-                        if (buttonAddReminderKey.Content == "ویرایش کردن")
-                        {
-                            command.CommandText = "UPDATE TblReminder SET Description=@Description, DaysBefore=@DaysBefore, Day=@Day, Month=@Month, Year=@Year, ShowDay=@ShowDay, ShowMonth=@ShowMonth, ShowYear=@ShowYear, IsImportant=@IsImportant WHERE Description=@Desc AND DaysBefore=@OldBefore AND Day=@OldDay AND Month=@OldMonth AND Year=@OldYear";
-                        }
-                        else if (buttonAddReminderKey.Content == "اضافه کردن")
-                        {
-                            command.CommandText = "INSERT INTO TblReminder VALUES (@Description, @DaysBefore, @Day, @Month, @Year, @ShowDay, @ShowMonth, @ShowYear, @IsImportant)";
-                        }
-
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
-                        command.Parameters.AddWithValue("@DaysBefore", daysBefore);
-                        command.Parameters.AddWithValue("@Day", day);
-                        command.Parameters.AddWithValue("@Month", month);
-                        command.Parameters.AddWithValue("@Year", year);
-                        command.Parameters.AddWithValue("@Desc", selectedReminder.Description);
-                        command.Parameters.AddWithValue("@OldBefore", selectedReminder.DaysBefore);
-                        command.Parameters.AddWithValue("@OldDay", selectedReminder.Day);
-                        command.Parameters.AddWithValue("@OldMonth", selectedReminder.Month);
-                        command.Parameters.AddWithValue("@OldYear", selectedReminder.Year);
-
-                        if ((day - daysBefore) < 1)
-                        {
-                            if (month == 1)
-                            {
-                                if (new PersianCalendar().IsLeapYear(year - 1))
-                                {
-                                    showDay = 29 + (day - daysBefore);
-                                }
-                                else
-                                {
-                                    showDay = 30 + (day - daysBefore);
-                                }
-                                showYear = year - 1;
-                                showMonth = 12;
-                            }
-                            else if (month > 1 && month <= 6)
-                            {
-                                showDay = 31 + (day - daysBefore);
-                                showMonth = month - 1;
-                                showYear = year;
-                            }
-                            else if (month > 6 && month <= 12)
-                            {
-                                showDay = 30 + (day - daysBefore);
-                                showMonth = month - 1;
-                                showYear = year;
-                            }
-                        }
-                        else
-                        {
-                            showYear = year;
-                            showMonth = month;
-                            showDay = day - daysBefore;
-                        }
-
-                        command.Parameters.AddWithValue("@ShowDay", showDay);
-                        command.Parameters.AddWithValue("@ShowMonth", showMonth);
-                        command.Parameters.AddWithValue("@ShowYear", showYear);
-
-                        if (imageNotImportant.Visibility == Visibility.Visible)
-                        {
-                            isImportant = "";
-                        }
-                        else if (imageImportant.Visibility == Visibility.Visible)
-                        {
-                            isImportant = "مهم";
-                        }
-
-                        command.Parameters.AddWithValue("@IsImportant", isImportant);
-
-                    try
+                    if (imageNotImportant.Visibility == Visibility.Visible)
                     {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                        storyAddClose.Begin();
-                        borderSmoke.Visibility = Visibility.Collapsed;
-
-                        Reminder reminder = new Reminder();
-                        reminder.Description = textBoxDescription.Text;
-                        reminder.Day = day;
-                        reminder.Month = month;
-                        reminder.Year = year;
-                        reminder.DaysBefore = daysBefore;
-                        reminder.ShowYear = showYear;
-                        reminder.ShowMonth = showMonth;
-                        reminder.ShowDay = showDay;
-                        reminder.IsImportant = isImportant;
-
-                        reminders.Add(reminder);
-
-                        Refresh();
+                        isImportant = false;
                     }
-                    finally
+                    else if (imageImportant.Visibility == Visibility.Visible)
                     {
-                        connection.Close();
+                        isImportant = true;
                     }
 
+                    day = Convert.ToInt32(date[2]);
+                    month = Convert.ToInt32(date[1]);
+                    year = Convert.ToInt32(date[0]);
+                    daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
+
+                    if (buttonAddReminderKey.Content == "ویرایش کردن")
+                    {
+                        foreach (var item in context.Reminders)
+                        {
+                            if ((item.Description == textBoxDescription.Text) && (item.Time == textBoxDateTime.Text.ToGregorianDateTime().Value) && (item.DaysBefore == Convert.ToInt32(textBoxDaysBefore.Text)) && (item.IsImportant == isImportant))
+                            {
+                                DataUpdater.Update(item);
+                            }
+                        }
+                    }
+                    else if (buttonAddReminderKey.Content == "اضافه کردن")
+                    {
+                        DataSaver.Save(textBoxDescription.Text, textBoxDateTime.Text.ToGregorianDateTime().Value, isImportant, daysBefore);
+                    }
+
+                    storyAddClose.Begin();
+                    Refresh();
+
+                    
                     if (Settings.Default.AutoBackup)
                     {
                         if (Settings.Default.BackupPath != "None")
                         {
-                            File.Copy(Path, Settings.Default.BackupPath + @"base.sqlite", true);
+                            File.Copy(DataPathChecker.Path, Settings.Default.BackupPath + @"base.emlite", true);
                         }
                     }                    
                 }
@@ -1223,18 +1091,25 @@ namespace melakify.Do
 
         private void buttonAddReminderDelete_Click(object sender, RoutedEventArgs e)
         {
+            bool isImportant = false;
             try
             {
-                command.CommandText = "DELETE FROM TblReminder WHERE Description=@Description AND DaysBefore=@DaysBefore AND Day=@Day AND Month=@Month AND Year=@Year";
-                command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
-                command.Parameters.AddWithValue("@DaysBefore", Convert.ToInt32(textBoxDaysBefore.Text));
-                command.Parameters.AddWithValue("@Day", Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]));
-                command.Parameters.AddWithValue("@Month", Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]));
-                command.Parameters.AddWithValue("@Year", Convert.ToInt32(textBoxDateTime.Text.Split('/')[0]));
+                if (imageNotImportant.Visibility == Visibility.Visible)
+                {
+                    isImportant = false;
+                } 
+                else if (imageImportant.Visibility == Visibility.Visible)
+                {
+                    isImportant = true;
+                }
 
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+                foreach(var item in context.Reminders)
+                {
+                    if (item.Description == textBoxDescription.Text && item.Time == textBoxDateTime.Text.ToGregorianDateTime().Value && item.DaysBefore == Convert.ToInt32(textBoxDaysBefore.Text) && item.IsImportant == isImportant)
+                    {
+                        DataDeleter.Delete(item);
+                    }
+                }
 
                 storyAddClose.Begin();
                 borderSmoke.Visibility = Visibility.Collapsed;
@@ -1267,7 +1142,7 @@ namespace melakify.Do
             {
                 if (Settings.Default.BackupPath != "None")
                 {
-                    File.Copy(Path, Settings.Default.BackupPath + @"\base.sqlite", true);
+                    File.Copy(DataPathChecker.Path, Settings.Default.BackupPath + @"\base.emlite", true);
                 }
             }
         }
@@ -1442,7 +1317,16 @@ namespace melakify.Do
                         int month = 0;
                         int year = 0;
                         int daysBefore = 0;
-                        string isImportant = "";
+                        bool isImportant = false;
+
+                        if (imageNotImportant.Visibility == Visibility.Visible)
+                        {
+                            isImportant = false;
+                        }
+                        else if (imageImportant.Visibility == Visibility.Visible)
+                        {
+                            isImportant = true;
+                        }
 
                         day = Convert.ToInt32(date[2]);
                         month = Convert.ToInt32(date[1]);
@@ -1451,108 +1335,29 @@ namespace melakify.Do
 
                         if (buttonAddReminderKey.Content == "ویرایش کردن")
                         {
-                            command.CommandText = "UPDATE TblReminder SET Description=@Description, DaysBefore=@DaysBefore, Day=@Day, Month=@Month, Year=@Year, ShowDay=@ShowDay, ShowMonth=@ShowMonth, ShowYear=@ShowYear, IsImportant=@IsImportant WHERE Description=@Desc AND DaysBefore=@OldBefore AND Day=@OldDay AND Month=@OldMonth AND Year=@OldYear";
+                            foreach (var item in context.Reminders)
+                            {
+                                if ((item.Description == textBoxDescription.Text) && (item.Time == textBoxDateTime.Text.ToGregorianDateTime().Value) && (item.DaysBefore == Convert.ToInt32(textBoxDaysBefore.Text)) && (item.IsImportant == isImportant))
+                                {
+                                    DataUpdater.Update(item);
+                                }
+                            }
+                            
                         }
                         else if (buttonAddReminderKey.Content == "اضافه کردن")
                         {
-                            command.CommandText = "INSERT INTO TblReminder VALUES (@Description, @DaysBefore, @Day, @Month, @Year, @ShowDay, @ShowMonth, @ShowYear, @IsImportant)";
+                            DataSaver.Save(textBoxDescription.Text, textBoxDateTime.Text.ToGregorianDateTime().Value, isImportant, daysBefore);
                         }
 
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@Description", textBoxDescription.Text);
-                        command.Parameters.AddWithValue("@DaysBefore", daysBefore);
-                        command.Parameters.AddWithValue("@Day", day);
-                        command.Parameters.AddWithValue("@Month", month);
-                        command.Parameters.AddWithValue("@Year", year);
-                        command.Parameters.AddWithValue("@Desc", selectedReminder.Description);
-                        command.Parameters.AddWithValue("@OldBefore", selectedReminder.DaysBefore);
-                        command.Parameters.AddWithValue("@OldDay", selectedReminder.Day);
-                        command.Parameters.AddWithValue("@OldMonth", selectedReminder.Month);
-                        command.Parameters.AddWithValue("@OldYear", selectedReminder.Year);
+                        storyAddClose.Begin();
+                        Refresh();
 
-                        if ((day - daysBefore) < 1)
-                        {
-                            if (month == 1)
-                            {
-                                if (new PersianCalendar().IsLeapYear(year - 1))
-                                {
-                                    showDay = 29 + (day - daysBefore);
-                                }
-                                else
-                                {
-                                    showDay = 30 + (day - daysBefore);
-                                }
-                                showYear = year - 1;
-                                showMonth = 12;
-                            }
-                            else if (month > 1 && month <= 6)
-                            {
-                                showDay = 31 + (day - daysBefore);
-                                showMonth = month - 1;
-                                showYear = year;
-                            }
-                            else if (month > 6 && month <= 12)
-                            {
-                                showDay = 30 + (day - daysBefore);
-                                showMonth = month - 1;
-                                showYear = year;
-                            }
-                        }
-                        else
-                        {
-                            showYear = year;
-                            showMonth = month;
-                            showDay = day - daysBefore;
-                        }
-
-                        command.Parameters.AddWithValue("@ShowDay", showDay);
-                        command.Parameters.AddWithValue("@ShowMonth", showMonth);
-                        command.Parameters.AddWithValue("@ShowYear", showYear);
-
-                        if (imageNotImportant.Visibility == Visibility.Visible)
-                        {
-                            isImportant = "";
-                        }
-                        else if (imageImportant.Visibility == Visibility.Visible)
-                        {
-                            isImportant = "مهم";
-                        }
-
-                        command.Parameters.AddWithValue("@IsImportant", isImportant);
-
-                        try
-                        {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            connection.Close();
-                            storyAddClose.Begin();
-                            borderSmoke.Visibility = Visibility.Collapsed;
-
-                            Reminder reminder = new Reminder();
-                            reminder.Description = textBoxDescription.Text;
-                            reminder.Day = day;
-                            reminder.Month = month;
-                            reminder.Year = year;
-                            reminder.DaysBefore = daysBefore;
-                            reminder.ShowYear = showYear;
-                            reminder.ShowMonth = showMonth;
-                            reminder.ShowDay = showDay;
-                            reminder.IsImportant = isImportant;
-
-                            reminders.Add(reminder);
-
-                            Refresh();
-                        }
-                        finally
-                        {
-                            connection.Close();
-                        }
 
                         if (Settings.Default.AutoBackup)
                         {
                             if (Settings.Default.BackupPath != "None")
                             {
-                                File.Copy(Path, Settings.Default.BackupPath + @"base.sqlite", true);
+                                File.Copy(DataPathChecker.Path, Settings.Default.BackupPath + @"base.emlite", true);
                             }
                         }
                     }
@@ -1735,9 +1540,9 @@ namespace melakify.Do
             {
                 textBoxDescription.Text = selectedReminder.Description;
                 textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
-                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
+                textBoxDateTime.Text = selectedReminder.Time.ToShortPersianDateString();
 
-                if (selectedReminder.IsImportant == "")
+                if (selectedReminder.IsImportant == false)
                 {
                     imageImportant.Visibility = Visibility.Collapsed;
                     imageNotImportant.Visibility = Visibility.Visible;
@@ -1810,7 +1615,7 @@ namespace melakify.Do
             ofd.Title = "وارد کردن فایل پشتیبانی...";
             if (ofd.ShowDialog() == true)
             {
-                File.Copy(ofd.FileName, Path, true);
+                File.Copy(ofd.FileName, DataPathChecker.Path, true);
             }
         }
 
@@ -2083,9 +1888,9 @@ namespace melakify.Do
             {
                 textBoxDescription.Text = selectedReminder.Description;
                 textBoxDaysBefore.Text = selectedReminder.DaysBefore.ToString();
-                textBoxDateTime.Text = string.Format($"{selectedReminder.Year:0000}/{selectedReminder.Month:00}/{selectedReminder.Day:00}");
+                textBoxDateTime.Text = selectedReminder.Time.ToShortPersianDateString();
 
-                if (selectedReminder.IsImportant == "")
+                if (selectedReminder.IsImportant == false)
                 {
                     imageImportant.Visibility = Visibility.Collapsed;
                     imageNotImportant.Visibility = Visibility.Visible;
