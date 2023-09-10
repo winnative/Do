@@ -398,6 +398,10 @@ namespace melakify.Do
                 storyListOpen.Begin();
             }
             storySelectDefault.Begin();
+            listBoxThisWeek.Visibility = Visibility.Collapsed;
+            listBoxThisMonth.Visibility = Visibility.Collapsed;
+            listBoxExpiredReminder.Visibility = Visibility.Collapsed;
+            listBoxPins.Visibility = Visibility.Collapsed;
         }
 
         public void RecalculateYears()
@@ -968,58 +972,7 @@ namespace melakify.Do
             {
                 if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                 {
-                    string[] date = textBoxDateTime.Text.Split('/');
-
-                    int showDay = 0;
-                    int showMonth = 0;
-                    int showYear = 0;
-
-                    int day = 0;
-                    int month = 0;
-                    int year = 0;
-                    int daysBefore = 0;
-                    bool isImportant = false;
-
-                    if (imageNotImportant.Visibility == Visibility.Visible)
-                    {
-                        isImportant = false;
-                    }
-                    else if (imageImportant.Visibility == Visibility.Visible)
-                    {
-                        isImportant = true;
-                    }
-
-                    day = Convert.ToInt32(date[2]);
-                    month = Convert.ToInt32(date[1]);
-                    year = Convert.ToInt32(date[0]);
-                    daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
-
-                    if (buttonAddReminderKey.Content == "ویرایش کردن")
-                    {
-                        foreach (var item in context.Reminders)
-                        {
-                            if ((item.Description == textBoxDescription.Text) && (item.Time == textBoxDateTime.Text.ToGregorianDateTime().Value) && (item.DaysBefore == Convert.ToInt32(textBoxDaysBefore.Text)) && (item.IsImportant == isImportant))
-                            {
-                                DataUpdater.Update(item);
-                            }
-                        }
-                    }
-                    else if (buttonAddReminderKey.Content == "اضافه کردن")
-                    {
-                        DataSaver.Save(textBoxDescription.Text, textBoxDateTime.Text.ToGregorianDateTime().Value, isImportant, daysBefore);
-                    }
-
-                    storyAddClose.Begin();
-                    Refresh();
-
-                    
-                    if (Settings.Default.AutoBackup)
-                    {
-                        if (Settings.Default.BackupPath != "None")
-                        {
-                            File.Copy(DataPathChecker.Path, Settings.Default.BackupPath + @"base.emlite", true);
-                        }
-                    }                    
+                    SaveOperation();        
                 }
                 else
                 {
@@ -1307,64 +1260,68 @@ namespace melakify.Do
                 {
                     if ((Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 31 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) <= 6) || (Convert.ToInt32(textBoxDateTime.Text.Split('/')[2]) <= 30 && Convert.ToInt32(textBoxDateTime.Text.Split('/')[1]) >= 7))
                     {
-                        string[] date = textBoxDateTime.Text.Split('/');
-
-                        int showDay = 0;
-                        int showMonth = 0;
-                        int showYear = 0;
-
-                        int day = 0;
-                        int month = 0;
-                        int year = 0;
-                        int daysBefore = 0;
-                        bool isImportant = false;
-
-                        if (imageNotImportant.Visibility == Visibility.Visible)
-                        {
-                            isImportant = false;
-                        }
-                        else if (imageImportant.Visibility == Visibility.Visible)
-                        {
-                            isImportant = true;
-                        }
-
-                        day = Convert.ToInt32(date[2]);
-                        month = Convert.ToInt32(date[1]);
-                        year = Convert.ToInt32(date[0]);
-                        daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
-
-                        if (buttonAddReminderKey.Content == "ویرایش کردن")
-                        {
-                            foreach (var item in context.Reminders)
-                            {
-                                if ((item.Description == textBoxDescription.Text) && (item.Time == textBoxDateTime.Text.ToGregorianDateTime().Value) && (item.DaysBefore == Convert.ToInt32(textBoxDaysBefore.Text)) && (item.IsImportant == isImportant))
-                                {
-                                    DataUpdater.Update(item);
-                                }
-                            }
-                            
-                        }
-                        else if (buttonAddReminderKey.Content == "اضافه کردن")
-                        {
-                            DataSaver.Save(textBoxDescription.Text, textBoxDateTime.Text.ToGregorianDateTime().Value, isImportant, daysBefore);
-                        }
-
-                        storyAddClose.Begin();
-                        Refresh();
-
-
-                        if (Settings.Default.AutoBackup)
-                        {
-                            if (Settings.Default.BackupPath != "None")
-                            {
-                                File.Copy(DataPathChecker.Path, Settings.Default.BackupPath + @"base.emlite", true);
-                            }
-                        }
+                        SaveOperation();
                     }
                     else
                     {
                         ShowMessage("تاریخی که وارد کرده اید از لحاظ منطقی صحیح نمی باشد.", "تاریخ صحیح نیست!");
                     }
+                }
+            }
+        }
+
+        public void SaveOperation()
+        {
+            string[] date = textBoxDateTime.Text.Split('/');
+
+            int showDay = 0;
+            int showMonth = 0;
+            int showYear = 0;
+
+            int day = 0;
+            int month = 0;
+            int year = 0;
+            int daysBefore = 0;
+            bool isImportant = false;
+
+            if (imageNotImportant.Visibility == Visibility.Visible)
+            {
+                isImportant = false;
+            }
+            else if (imageImportant.Visibility == Visibility.Visible)
+            {
+                isImportant = true;
+            }
+
+            day = Convert.ToInt32(date[2]);
+            month = Convert.ToInt32(date[1]);
+            year = Convert.ToInt32(date[0]);
+            daysBefore = Convert.ToInt32(textBoxDaysBefore.Text);
+
+            if (buttonAddReminderKey.Content == "ویرایش کردن")
+            {
+                Reminder reminder = (Reminder)((System.Windows.Controls.ListBox)ListSelected).SelectedItem;
+                reminder.Description = textBoxDescription.Text;
+                reminder.DaysBefore = Convert.ToInt32(daysBefore);
+                reminder.IsImportant = isImportant;
+                reminder.Time = textBoxDateTime.Text.ToGregorianDateTime().Value;
+                DataUpdater.Update(reminder);
+            }
+            else if (buttonAddReminderKey.Content == "اضافه کردن")
+            {
+                DataSaver.Save(textBoxDescription.Text, textBoxDateTime.Text.ToGregorianDateTime().Value, isImportant, daysBefore);
+            }
+
+            borderSmoke.Visibility = Visibility.Collapsed;
+            storyAddClose.Begin();
+            Refresh();
+
+
+            if (Settings.Default.AutoBackup)
+            {
+                if (Settings.Default.BackupPath != "None")
+                {
+                    File.Copy(DataPathChecker.Path, Settings.Default.BackupPath + @"base.emlite", true);
                 }
             }
         }

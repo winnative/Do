@@ -22,6 +22,7 @@ namespace Emtudio.Systems.Entities
             modelBuilder.Entity<Reminder>().HasKey(x => x.ID);
             modelBuilder.Entity<Reminder>().Property(x => x.Description).IsRequired();
             modelBuilder.Entity<Reminder>().Ignore(x => x.DaysDistance);
+            modelBuilder.Entity<Reminder>().Ignore(x => x.ImportantColor);
         }
 
         public void OnModelOpening()

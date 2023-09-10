@@ -38,8 +38,8 @@ namespace melakify.Do
         Storyboard storyToastClose = new Storyboard();
         Storyboard storyToastContent = new Storyboard();
         Storyboard storyToastContentBack = new Storyboard();
-        List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
+        List<Reminder> Reminders = new List<Reminder>();
         SQLiteConnection connection = new SQLiteConnection($@"DataSource = {DataPathChecker.Path}; Version = 3;");
         SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
         SQLiteDataReader reader;
@@ -90,17 +90,19 @@ namespace melakify.Do
                 {
                     if (File.Exists(DataPathChecker.Path))
                     {
-                        var result = from remind in context.Reminders
-                                     where remind.Time.Date == DateTime.Today
-                                     select remind;
+                        var result = (from remind in context.Reminders.ToList()
+                                     where remind.Time.Date.AddDays(-remind.DaysBefore) == DateTime.Now.Date
+                                     select remind).ToList();
+
+                        Reminders = result;
 
                         if (result.Count() > 0)
                         {
-                            textBoxDescription.Text = $"{reminders[0].Description} برای {reminders[0].DaysDistance}";
+                            textBoxDescription.Text = $"{Reminders[0].Description} برای {Reminders[0].DaysDistance}";
                             buttonDismiss.Visibility = Visibility.Visible;
                             hasData = true;
                             textBlockReminderCount.Visibility = Visibility.Visible;
-                            textBlockReminderCount.Text = $"({1} از {reminders.Count})";
+                            textBlockReminderCount.Text = $"({1} از {Reminders.Count})";
                         }
                         else
                         {
@@ -164,7 +166,7 @@ namespace melakify.Do
             }
             catch (Exception ex)
             {
-                throw ex;
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -187,15 +189,15 @@ namespace melakify.Do
         {
             if (hasData)
             {
-                if (reminders.Count > 1)
+                if (Reminders.Count > 1)
                 {
-                    if (iToast != (reminders.Count))
+                    if (iToast != (Reminders.Count))
                     {
                         storyToastContent.Begin();
-                        textBoxDescription.Text = $"{reminders[iToast].Description} برای {reminders[iToast].DaysDistance}";
+                        textBoxDescription.Text = $"{Reminders[iToast].Description} برای {Reminders[iToast].DaysDistance}";
                         iToast = iToast + 1;
-                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
-                        if (iToast != (reminders.Count))
+                        textBlockReminderCount.Text = $"({iToast} از {Reminders.Count})";
+                        if (iToast != (Reminders.Count))
                         {
                             buttonDismiss.Content = "بعدی";
                         }
@@ -230,15 +232,15 @@ namespace melakify.Do
         {
             if (hasData)
             {
-                if (reminders.Count > 1)
+                if (Reminders.Count > 1)
                 {
-                    if (iToast != (reminders.Count))
+                    if (iToast != (Reminders.Count))
                     {
                         storyToastContent.Begin();
-                        textBoxDescription.Text = $"{reminders[iToast].Description} برای {reminders[iToast].DaysDistance}";
+                        textBoxDescription.Text = $"{Reminders[iToast].Description} برای {Reminders[iToast].DaysDistance}";
                         iToast = iToast + 1;
-                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
-                        if (iToast != (reminders.Count))
+                        textBlockReminderCount.Text = $"({iToast} از {Reminders.Count})";
+                        if (iToast != (Reminders.Count))
                         {
                             buttonDismiss.Content = "بعدی";
                         }
@@ -269,16 +271,16 @@ namespace melakify.Do
         {
             if (hasData)
             {
-                if (reminders.Count > 1)
+                if (Reminders.Count > 1)
                 {
                     if (iToast != 1)
                     {
                         storyToastContentBack.Begin();
                         iToast = iToast - 1;
-                        textBoxDescription.Text = $"{reminders[iToast - 1].Description} برای {reminders[iToast - 1].DaysDistance}";
-                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
+                        textBoxDescription.Text = $"{Reminders[iToast - 1].Description} برای {Reminders[iToast - 1].DaysDistance}";
+                        textBlockReminderCount.Text = $"({iToast} از {Reminders.Count})";
 
-                        if (iToast != (reminders.Count))
+                        if (iToast != (Reminders.Count))
                         {
                             buttonDismiss.Content = "بعدی";
                         }
