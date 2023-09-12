@@ -470,6 +470,8 @@ namespace melakify.Do
         Storyboard storyListFolderOpen = new Storyboard();
         Storyboard storyListFolderClose = new Storyboard();
         Storyboard storySelectDefault = new Storyboard();
+        Storyboard storyCalendarOpen = new Storyboard();
+        Storyboard storyCalendarClose = new Storyboard();
         Reminder newReminder = new Reminder();
         Reminder selectedReminder = new Reminder();
         List<Reminder> reminders = new List<Reminder>();
@@ -538,6 +540,8 @@ namespace melakify.Do
             storyListFolderOpen = (Storyboard)Resources["storyListFolderOpen"];
             storyListFolderClose = (Storyboard)Resources["storyListFolderClose"];
             storySelectDefault = (Storyboard)Resources["storySelectDefault"];
+            storyCalendarClose = (Storyboard)Resources["storyCalendarClose"];
+            storyCalendarOpen = (Storyboard)Resources["storyCalendarOpen"];
             storyPreviewClose.Completed += StoryPreviewClose_Completed;
             storyMessageClose.Completed += StoryMessageClose_Completed;
             storyMessageOpen.Completed += StoryMessageOpen_Completed;
@@ -552,7 +556,14 @@ namespace melakify.Do
             storySettingsUserClose.Completed += StorySettingsUserClose_Completed;
             storySettingsPersonalizeClose.Completed += StorySettingsPersonalizeClose_Completed;
             storySettingsDatabaseClose.Completed += StorySettingsDatabaseClose_Completed;
+            storyCalendarClose.Completed += StoryCalendarClose_Completed;
 
+        }
+
+        private void StoryCalendarClose_Completed(object? sender, EventArgs e)
+        {
+            borderCalendar.Visibility = Visibility.Collapsed;
+            borderCalendarBack.Visibility = Visibility.Collapsed;
         }
 
         private void StorySettingsDatabaseClose_Completed(object? sender, EventArgs e)
@@ -1076,8 +1087,16 @@ namespace melakify.Do
                 textBlockNevigationBackDrop.Opacity = 1;
                 textBlockNavigationHome.IsEnabled = false;
                 listBoxTimeLineReminders.Visibility = Visibility.Collapsed;
-                gridTimes.Visibility = Visibility.Visible;
-                listBoxTimeLine.Visibility = Visibility.Visible;
+                if (context.Reminders.Count() > 0)
+                {
+                    gridTimes.Visibility = Visibility.Visible;
+                    listBoxTimeLine.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    gridTimes.Visibility = Visibility.Collapsed;
+                    listBoxTimeLine.Visibility = Visibility.Collapsed;
+                }
             }
             catch
             {
@@ -1107,14 +1126,14 @@ namespace melakify.Do
 
         private void borderCalendarBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            borderCalendar.Visibility = Visibility.Collapsed;
-            borderCalendarBack.Visibility = Visibility.Collapsed;
+            storyCalendarClose.Begin();
         }
 
         private void buttonCalendar_Click(object sender, RoutedEventArgs e)
         {
             borderCalendar.Visibility = Visibility.Visible;
             borderCalendarBack.Visibility = Visibility.Visible;
+            storyCalendarOpen.Begin();
 
             MonthNumber = Convert.ToInt32(textBoxDateTime.Text.Split('/')[1].ToString());
             YearNumber = Convert.ToInt32(textBoxDateTime.Text.Split('/')[0].ToString());
@@ -1475,8 +1494,7 @@ namespace melakify.Do
 
             textBoxDateTime.Text = $"{year:0000}/{month:00}/{day:00}";
 
-            borderCalendarBack.Visibility = Visibility.Collapsed;
-            borderCalendar.Visibility = Visibility.Collapsed;
+            storyCalendarClose.Begin();
             buttonAddReminderKey.IsEnabled = true;
         }
 

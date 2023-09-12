@@ -12,7 +12,7 @@ namespace Emtudio.Systems.Controllers
     public static class DataPathChecker
     {
         static ReminderContext context = new ReminderContext();
-        public static string Path { get { return @"AppData\base.emlite"; } }
+        public static string Path { get { return $@"AppData\base.emlite"; } }
         public async static void PathChecker()
         {
             if (!File.Exists(Path))

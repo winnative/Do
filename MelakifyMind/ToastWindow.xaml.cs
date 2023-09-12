@@ -40,9 +40,6 @@ namespace melakify.Do
         Storyboard storyToastContentBack = new Storyboard();
         PersianCalendar persian = new PersianCalendar();
         List<Reminder> Reminders = new List<Reminder>();
-        SQLiteConnection connection = new SQLiteConnection($@"DataSource = {DataPathChecker.Path}; Version = 3;");
-        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
-        SQLiteDataReader reader;
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
@@ -53,6 +50,7 @@ namespace melakify.Do
             {
                 InitializeComponent();
                 borderToast.Background = Settings.Default.ColorBackground;
+                DataPathChecker.PathChecker();
                 context.OnModelOpening();
                 if (!Settings.Default.FirstReminder)
                 {
@@ -135,7 +133,7 @@ namespace melakify.Do
                 }
                 finally
                 {
-                    connection.Close();
+                    
                 }
 
                 Left = SystemParameters.PrimaryScreenWidth - Width;
