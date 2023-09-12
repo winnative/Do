@@ -10,6 +10,17 @@
         <WindowChrome x:Name="windowChrome" GlassFrameThickness="-1" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
+        <Storyboard x:Key="storyCalendarOpen">
+            <DoubleAnimation From="-12" To="0" Storyboard.TargetName="translateCalendar" Storyboard.TargetProperty="(TranslateTransform.Y)" Duration="0:0:0.64">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase Exponent="8" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation From="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="borderCalendar" Duration="0:0:0.16"/>
+        </Storyboard>
+        <Storyboard x:Key="storyCalendarClose">
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="borderCalendar" Duration="0:0:0.064"/>
+        </Storyboard>
         <Storyboard x:Key="storySelectDefault">
             <DoubleAnimation To="16" Storyboard.TargetName="borderAllSelector" Storyboard.TargetProperty="Width" Duration="0:0:0.4">
                 <DoubleAnimation.EasingFunction>
@@ -188,7 +199,7 @@
                                         </ControlTemplate.Triggers>
                                         <Border Name="comboBoxUI" CornerRadius="6" BorderThickness="1" BorderBrush="#28B4B4B4" Background="#FFFFFFFF">
                                             <Border.Effect>
-                                                <DropShadowEffect x:Name="comboBoxUIEffect" Opacity="0.16" ShadowDepth="1" Direction="270" BlurRadius="2"/>
+                                                <DropShadowEffect x:Name="comboBoxUIEffect" Opacity="0.16" ShadowDepth="1" Direction="270" BlurRadius="0"/>
                                             </Border.Effect>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -850,11 +861,11 @@
                 <TextBlock Margin="16" TextWrapping="Wrap" FlowDirection="LeftToRight" FontSize="16" Name="textBlockAbout">
                 <Span FontWeight="SemiBold" FontSize="18">درباره این برنامه</Span>
                 <LineBreak/><LineBreak/>
-                Version 2308
+                Version 1.3.300.10
                 <LineBreak/>
-                emtudio MagicFlow[UI] version : 1.1
+                emtudio MagicFlow[UI] version : 1.2
 <LineBreak/>
-                emtudio MagicSense[AI] version: 0.3 (Experimental)
+                emtudio MagicSense[AI] version: 0.4
                 <LineBreak/><LineBreak/><LineBreak/>Copyrights 2023 emtudio. All rights reserved.
                 </TextBlock>
             </Border>
@@ -2306,7 +2317,30 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Margin="4,8,4,0" FontFamily="Fonts/#IRANSansX DemiBold" TextAlignment="Left" TextTrimming="WordEllipsis" VerticalAlignment="Top" TextWrapping="Wrap" Text="{Binding Date}" FontSize="16"/>
+                                        <Image Margin="8,10" HorizontalAlignment="Left" VerticalAlignment="Top" SnapsToDevicePixels="True" Stretch="None">
+                                            <Image.Effect>
+                                                <DropShadowEffect Direction="270" Opacity="0.08" ShadowDepth="2" BlurRadius="4"/>
+                                            </Image.Effect>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Brush>
+                                                                <VisualBrush Stretch="None">
+                                                                    <VisualBrush.Visual>
+                                                                        <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE8D5;" Foreground="#FFEDB900" FontSize="16"/>
+                                                                    </VisualBrush.Visual>
+                                                                </VisualBrush>
+                                                            </GeometryDrawing.Brush>
+                                                            <GeometryDrawing.Geometry>
+                                                                <RectangleGeometry Rect="16,16,16,16"/>
+                                                            </GeometryDrawing.Geometry>
+                                                        </GeometryDrawing>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                        <TextBlock Margin="36,8,4,0" FontFamily="Fonts/#IRANSansX DemiBold" TextAlignment="Left" TextTrimming="WordEllipsis" VerticalAlignment="Top" TextWrapping="Wrap" Text="{Binding Date}" FontSize="16"/>
                                         <Grid Grid.Row="1" Margin="4,0,4,0">
                                             <TextBlock FontFamily="Fonts/#IRANSansX Regular" Margin="32,0,0,0" VerticalAlignment="Center" FontSize="14" Text="{Binding ReminderCount}"></TextBlock>
                                             <Border ToolTip="{Binding ReminderImportant}" Height="16" BorderThickness="1" BorderBrush="#08000000" Width="16" CornerRadius="16" HorizontalAlignment="Left" Margin="4,4,4,4" Background="{Binding ImportantColor}" VerticalAlignment="Center">
@@ -2507,7 +2541,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
-                                    <Border ToolTip="{Binding Description}" Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="12" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000" MouseLeftButtonUp="listBoxItemUIMain_MouseLeftButtonUp">
+                                    <Border ToolTip="{Binding Description}" Name="listBoxItemUIMain" Padding="0,5" Margin="5" CornerRadius="10" UseLayoutRounding="True" Background="#A3FFFFFF" BorderThickness="1" BorderBrush="#08000000" MouseLeftButtonUp="listBoxItemUIMain_MouseLeftButtonUp">
                                         <Border.Effect>
                                             <DropShadowEffect x:Name="dropShadowEffectItem" Direction="270" Opacity="0" BlurRadius="8" ShadowDepth="4"/>
                                         </Border.Effect>
@@ -2831,14 +2865,14 @@
                                 </Image.Source>
                             </Image>
                         </Button>
-                        <Border Name="borderDaysBefore" Width="134" BorderThickness="1" UseLayoutRounding="True" CornerRadius="8" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,57,0,0" Background="#A3FFFFFF" BorderBrush="#14000000">
+                        <Border Name="borderDaysBefore" Width="134" Height="36" BorderThickness="1" UseLayoutRounding="True" CornerRadius="6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,57,0,0" Background="#A3FFFFFF" BorderBrush="#12000000">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Margin="4" Style="{StaticResource buttonFlat}" Name="buttonAddDaysBefore" Click="buttonAddDaysBefore_Click">
+                                <Button Margin="4" Grid.Column="1" Style="{StaticResource buttonFlat}" Name="buttonAddDaysBefore" Click="buttonAddDaysBefore_Click">
                                     <Image SnapsToDevicePixels="True" Stretch="None">
                                         <Image.Source>
                                             <DrawingImage>
@@ -2847,12 +2881,12 @@
                                                         <GeometryDrawing.Brush>
                                                             <VisualBrush Stretch="None">
                                                                 <VisualBrush.Visual>
-                                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE76C;" FontSize="16"/>
+                                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE70E;" FontSize="14"/>
                                                                 </VisualBrush.Visual>
                                                             </VisualBrush>
                                                         </GeometryDrawing.Brush>
                                                         <GeometryDrawing.Geometry>
-                                                            <RectangleGeometry Rect="16,16,16,16"/>
+                                                            <RectangleGeometry Rect="16,16,14,14"/>
                                                         </GeometryDrawing.Geometry>
                                                     </GeometryDrawing>
                                                 </DrawingImage.Drawing>
@@ -2860,7 +2894,7 @@
                                         </Image.Source>
                                     </Image>
                                 </Button>
-                                <TextBox Text="1" FontFamily="Fonts/#IRANSansX Regular" Padding="0,4" TextAlignment="Center" FontSize="16" Margin="4" Grid.Column="1" Style="{StaticResource TextBoxFlat}" Name="textBoxDaysBefore" LostFocus="textBoxDaysBefore_LostFocus" TextChanged="textBoxDaysBefore_TextChanged">
+                                <TextBox Text="1" FontFamily="Fonts/#IRANSansX Regular" Padding="0,4" TextAlignment="Center" FontSize="14" Margin="4" Style="{StaticResource TextBoxFlat}" Name="textBoxDaysBefore" LostFocus="textBoxDaysBefore_LostFocus" TextChanged="textBoxDaysBefore_TextChanged">
 
                                 </TextBox>
                                 <Button IsEnabled="False" Margin="4" Grid.Column="2" Style="{StaticResource buttonFlat}" Name="buttonRemoveDaysBefore" Click="buttonRemoveDaysBefore_Click">
@@ -2872,39 +2906,7 @@
                                                         <GeometryDrawing.Brush>
                                                             <VisualBrush Stretch="None">
                                                                 <VisualBrush.Visual>
-                                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE76B;" FontSize="16"/>
-                                                                </VisualBrush.Visual>
-                                                            </VisualBrush>
-                                                        </GeometryDrawing.Brush>
-                                                        <GeometryDrawing.Geometry>
-                                                            <RectangleGeometry Rect="16,16,16,16"/>
-                                                        </GeometryDrawing.Geometry>
-                                                    </GeometryDrawing>
-                                                </DrawingImage.Drawing>
-                                            </DrawingImage>
-                                        </Image.Source>
-                                    </Image>
-                                </Button>
-                            </Grid>
-                        </Border>
-                        <TextBlock Text="روز قبل از" FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Margin="179,64,353,305"/>
-                        <Border CornerRadius="8" UseLayoutRounding="True" Name="borderDateTime" Background="#A3FFFFFF" BorderBrush="#14000000" BorderThickness="1" Margin="250,57,91,302">
-                            <Grid FlowDirection="RightToLeft">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Margin="16,3,16,0" FontFamily="Fonts/#IRANSansX Regular" Style="{StaticResource TextBoxFlat}" Name="textBoxDateTime" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Text="" TextChanged="textBoxDateTime_TextChanged"/>
-                                <Button Name="buttonCalendar" Style="{StaticResource buttonFlat}" Grid.Column="1" Margin="4" Click="buttonCalendar_Click">
-                                    <Image SnapsToDevicePixels="True" Stretch="None">
-                                        <Image.Source>
-                                            <DrawingImage>
-                                                <DrawingImage.Drawing>
-                                                    <GeometryDrawing>
-                                                        <GeometryDrawing.Brush>
-                                                            <VisualBrush Stretch="None">
-                                                                <VisualBrush.Visual>
-                                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE787;" FontSize="14"/>
+                                                                    <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE70D;" FontSize="14"/>
                                                                 </VisualBrush.Visual>
                                                             </VisualBrush>
                                                         </GeometryDrawing.Brush>
@@ -2919,7 +2921,37 @@
                                 </Button>
                             </Grid>
                         </Border>
-                        <Button Name="buttonIsImportant" ToolTip="یادآور مهم" Style="{StaticResource buttonFlat}" Margin="526,57,32,302" Click="buttonIsImportant_Click">
+                        <TextBlock Text="روز قبل از" FontFamily="Fonts/#IRANSansX Regular" FontSize="14" Margin="179,64,353,305"/>
+                        <Button UseLayoutRounding="True" HorizontalContentAlignment="Stretch" Name="borderDateTime" Background="#A3FFFFFF" Click="buttonCalendar_Click" BorderBrush="#14000000" BorderThickness="1" Margin="250,57,200,306">
+                            <Grid FlowDirection="RightToLeft">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="16,3,16,0" FontFamily="Fonts/#IRANSansX Regular" Name="textBoxDateTime" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Text=""/>
+                                <Image Grid.Column="1" Margin="4" SnapsToDevicePixels="True" Stretch="None">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <GeometryDrawing>
+                                                    <GeometryDrawing.Brush>
+                                                        <VisualBrush Stretch="None">
+                                                            <VisualBrush.Visual>
+                                                                <TextBlock FontFamily="Fonts/#Segoe Fluent Icons" Text="&#xE787;" FontSize="14" Foreground="#A3000000"/>
+                                                            </VisualBrush.Visual>
+                                                        </VisualBrush>
+                                                    </GeometryDrawing.Brush>
+                                                    <GeometryDrawing.Geometry>
+                                                        <RectangleGeometry Rect="16,16,14,14"/>
+                                                    </GeometryDrawing.Geometry>
+                                                </GeometryDrawing>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </Button>
+                        <Button Name="buttonIsImportant" ToolTip="یادآور مهم" Style="{StaticResource buttonFlat}" Margin="532,57,32,306" Click="buttonIsImportant_Click">
                             <Grid>
                                 <Image Name="imageNotImportant" SnapsToDevicePixels="True" Stretch="None">
                                     <Image.Source>
@@ -2963,8 +2995,8 @@
                                 </Image>
                             </Grid>
                         </Button>
-                        <Border Name="borderDescription" Background="#A3FFFFFF" BorderBrush="#16000000" BorderThickness="1" CornerRadius="8" Margin="32,129,32,128">
-                            <TextBox Padding="8" FontSize="16" Name="textBoxDescription" Style="{StaticResource TextBoxFlat}" TextWrapping="Wrap" Margin="4" Tag="توضیحات مربوط به یادآور" FontFamily="Fonts/#IRANSansX Regular" TextChanged="textBoxDescription_TextChanged" PreviewKeyUp="textBoxDescription_PreviewKeyUp"/>
+                        <Border Name="borderDescription" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="1" CornerRadius="8" Margin="32,129,32,128">
+                            <TextBox Padding="8" FontSize="16" Name="textBoxDescription" TextWrapping="Wrap" Margin="4" Tag="توضیحات مربوط به یادآور" FontFamily="Fonts/#IRANSansX Regular" TextChanged="textBoxDescription_TextChanged" PreviewKeyUp="textBoxDescription_PreviewKeyUp"/>
                         </Border>
                         <Button FontFamily="Fonts/#IRANSansX Regular" HorizontalContentAlignment="Center" IsEnabled="False" Content="اضافه کردن" Name="buttonAddReminderKey" Margin="32,343,432,23" Click="buttonAddReminderKey_Click">
 
@@ -2994,8 +3026,11 @@
                         <Border Visibility="Collapsed" Name="borderCalendarBack" Background="Transparent" MouseLeftButtonDown="borderCalendarBack_MouseLeftButtonDown"/>
                         <Border Visibility="Collapsed" UseLayoutRounding="True" BorderBrush="White" BorderThickness="1" Name="borderCalendar" CornerRadius="8" Margin="250,101,91,72" Background="#FFF3F3F3">
                             <Border.Effect>
-                                <DropShadowEffect Direction="270" Opacity="0.16" ShadowDepth="8" BlurRadius="16"/>
+                                <DropShadowEffect Direction="270" Opacity="0.12" ShadowDepth="10" BlurRadius="20"/>
                             </Border.Effect>
+                            <Border.RenderTransform>
+                                <TranslateTransform x:Name="translateCalendar" X="0" Y="0"/>
+                            </Border.RenderTransform>
                             <Grid Name="gridCalendarMain" Margin="4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="32"/>

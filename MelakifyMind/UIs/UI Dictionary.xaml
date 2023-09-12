@@ -1557,7 +1557,7 @@ Margin="0,0,0,0">
                 <ControlTemplate TargetType="Button">
                     <Border Padding="{TemplateBinding Padding}" Name="buttonUI" UseLayoutRounding="True" RenderTransformOrigin="0.5,0.5" CornerRadius="6" BorderThickness="1" BorderBrush="#28B4B4B4" Background="#FFFFFFFF">
                         <Border.Effect>
-                            <DropShadowEffect x:Name="buttonUIEffect" Opacity="0.2" ShadowDepth="1" Direction="270" BlurRadius="0"/>
+                            <DropShadowEffect x:Name="buttonUIEffect" Opacity="0.12" ShadowDepth="1" Direction="270" BlurRadius="0"/>
                         </Border.Effect>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">

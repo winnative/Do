@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace MelakifyMind.Behind
+namespace Emtudio.Systems.Entities
 {
     public class Folder
     {
@@ -27,7 +27,7 @@ namespace MelakifyMind.Behind
                 int i = 0;
                 foreach (var item in Reminders)
                 {
-                    if (item.IsImportant == "مهم")
+                    if (item.IsImportant)
                     {
                         i++;
                     }
@@ -66,7 +66,7 @@ namespace MelakifyMind.Behind
                 bool isIt = false;
                 foreach (var item in Reminders)
                 {
-                    if (item.IsImportant == "مهم")
+                    if (item.IsImportant)
                     {
                         isIt = true;
                         i = i + 1;

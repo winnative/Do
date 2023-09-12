@@ -14,7 +14,7 @@ namespace MelakifyMind.Behind
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"C:\emtudio\+Do\base.sqlite");
+            optionsBuilder.UseSqlite(@"base.sqlite");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

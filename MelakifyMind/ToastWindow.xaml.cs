@@ -14,7 +14,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
-using melakify.Entities.Behind;
 using System.IO;
 using System.Globalization;
 using MelakifyMind.Properties;
@@ -24,6 +23,8 @@ using System.Data.SQLite;
 using System.Net;
 using System.Drawing;
 using System.Windows.Forms;
+using Emtudio.Systems.Controllers;
+using Emtudio.Systems.Entities;
 
 namespace melakify.Do
 {
@@ -32,26 +33,25 @@ namespace melakify.Do
     /// </summary>
     public partial class ToastWindow : Window
     {
+        ReminderContext context = new ReminderContext();
         bool hasData = false;
         Storyboard storyToastClose = new Storyboard();
         Storyboard storyToastContent = new Storyboard();
         Storyboard storyToastContentBack = new Storyboard();
-        List<Reminder> reminders = new List<Reminder>();
         PersianCalendar persian = new PersianCalendar();
-        SQLiteConnection connection = new SQLiteConnection(@"DataSource = C:\emtudio\+Do\base.sqlite; Version = 3;");
-        SQLiteCommand command = new SQLiteCommand("CREATE TABLE IF NOT EXISTS TblReminder (Description varchar(50), DaysBefore int, Day int, Month int, Year int, ShowDay int, ShowMonth int, ShowYear int, IsImportant varchar(4))");
-        SQLiteDataReader reader;
+        List<Reminder> Reminders = new List<Reminder>();
         DateTime time = DateTime.Now;
 
         public double CloseLeft { get; set; } = SystemParameters.PrimaryScreenWidth + 100;
 
-        public const string Path = @"C:\emtudio\+Do\base.sqlite";
         public ToastWindow()
         {
             try
             {
                 InitializeComponent();
                 borderToast.Background = Settings.Default.ColorBackground;
+                DataPathChecker.PathChecker();
+                context.OnModelOpening();
                 if (!Settings.Default.FirstReminder)
                 {
                     MainWindow win = new MainWindow();
@@ -74,10 +74,7 @@ namespace melakify.Do
         {
             try
             {
-                if (!Directory.Exists(@"C:\emtudio\+Do"))
-                {
-                    Directory.CreateDirectory(@"C:\emtudio\+Do");
-                }
+                DataPathChecker.PathChecker();
 
                 Topmost = true;
                 DataContext = this;
@@ -89,46 +86,21 @@ namespace melakify.Do
 
                 try
                 {
-                    command.Connection = connection;
-                    if (File.Exists(Path))
+                    if (File.Exists(DataPathChecker.Path))
                     {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                        command.CommandText = "SELECT * FROM TblReminder";
-                        connection.Open();
-                        reader = command.ExecuteReader();
+                        var result = (from remind in context.Reminders.ToList()
+                                     where remind.Time.Date.AddDays(-remind.DaysBefore) == DateTime.Now.Date
+                                     select remind).ToList();
 
-                        while (reader.Read())
-                        {
-                            Reminder reminder = new Reminder();
-                            reminder.Description = (string)reader["Description"];
-                            reminder.DaysBefore = (int)reader["DaysBefore"];
-                            reminder.Day = (int)reader["Day"];
-                            reminder.Month = (int)reader["Month"];
-                            reminder.Year = (int)reader["Year"];
-                            reminder.ShowDay = (int)reader["ShowDay"];
-                            reminder.ShowMonth = (int)reader["ShowMonth"];
-                            reminder.ShowYear = (int)reader["ShowYear"];
-                            reminder.IsImportant = (string)reader["IsImportant"];
-
-                            reminders.Add(reminder);
-                        }
-                        connection.Close();
-
-                        var result = from remind in reminders
-                                     where remind.ShowDay == new PersianCalendar().GetDayOfMonth(DateTime.Now)
-                                     where remind.ShowMonth == new PersianCalendar().GetMonth(DateTime.Now)
-                                     where remind.ShowYear == new PersianCalendar().GetYear(DateTime.Now)
-                                     select remind;
+                        Reminders = result;
 
                         if (result.Count() > 0)
                         {
-                            textBoxDescription.Text = $"{reminders[0].Description} برای {reminders[0].DaysDistance}";
+                            textBoxDescription.Text = $"{Reminders[0].Description} برای {Reminders[0].DaysDistance}";
                             buttonDismiss.Visibility = Visibility.Visible;
                             hasData = true;
                             textBlockReminderCount.Visibility = Visibility.Visible;
-                            textBlockReminderCount.Text = $"({1} از {reminders.Count})";
+                            textBlockReminderCount.Text = $"({1} از {Reminders.Count})";
                         }
                         else
                         {
@@ -156,17 +128,12 @@ namespace melakify.Do
                     }
                     else
                     {
-                        SQLiteConnection.CreateFile(Path);
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-
                         textBoxDescription.Text = "با سلام. یادآوری در حافظه برنامه وجود ندارد!";
                     }
                 }
                 finally
                 {
-                    connection.Close();
+                    
                 }
 
                 Left = SystemParameters.PrimaryScreenWidth - Width;
@@ -220,15 +187,15 @@ namespace melakify.Do
         {
             if (hasData)
             {
-                if (reminders.Count > 1)
+                if (Reminders.Count > 1)
                 {
-                    if (iToast != (reminders.Count))
+                    if (iToast != (Reminders.Count))
                     {
                         storyToastContent.Begin();
-                        textBoxDescription.Text = $"{reminders[iToast].Description} برای {reminders[iToast].DaysDistance}";
+                        textBoxDescription.Text = $"{Reminders[iToast].Description} برای {Reminders[iToast].DaysDistance}";
                         iToast = iToast + 1;
-                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
-                        if (iToast != (reminders.Count))
+                        textBlockReminderCount.Text = $"({iToast} از {Reminders.Count})";
+                        if (iToast != (Reminders.Count))
                         {
                             buttonDismiss.Content = "بعدی";
                         }
@@ -263,15 +230,15 @@ namespace melakify.Do
         {
             if (hasData)
             {
-                if (reminders.Count > 1)
+                if (Reminders.Count > 1)
                 {
-                    if (iToast != (reminders.Count))
+                    if (iToast != (Reminders.Count))
                     {
                         storyToastContent.Begin();
-                        textBoxDescription.Text = $"{reminders[iToast].Description} برای {reminders[iToast].DaysDistance}";
+                        textBoxDescription.Text = $"{Reminders[iToast].Description} برای {Reminders[iToast].DaysDistance}";
                         iToast = iToast + 1;
-                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
-                        if (iToast != (reminders.Count))
+                        textBlockReminderCount.Text = $"({iToast} از {Reminders.Count})";
+                        if (iToast != (Reminders.Count))
                         {
                             buttonDismiss.Content = "بعدی";
                         }
@@ -302,16 +269,16 @@ namespace melakify.Do
         {
             if (hasData)
             {
-                if (reminders.Count > 1)
+                if (Reminders.Count > 1)
                 {
                     if (iToast != 1)
                     {
                         storyToastContentBack.Begin();
                         iToast = iToast - 1;
-                        textBoxDescription.Text = $"{reminders[iToast - 1].Description} برای {reminders[iToast - 1].DaysDistance}";
-                        textBlockReminderCount.Text = $"({iToast} از {reminders.Count})";
+                        textBoxDescription.Text = $"{Reminders[iToast - 1].Description} برای {Reminders[iToast - 1].DaysDistance}";
+                        textBlockReminderCount.Text = $"({iToast} از {Reminders.Count})";
 
-                        if (iToast != (reminders.Count))
+                        if (iToast != (Reminders.Count))
                         {
                             buttonDismiss.Content = "بعدی";
                         }
