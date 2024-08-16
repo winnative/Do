@@ -21,7 +21,6 @@
     <Content Include="Melak +Mind.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.4" />
     <PackageReference Include="DNTPersianUtils.Core" Version="5.7.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

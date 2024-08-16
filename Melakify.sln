@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.33711.374
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelakifyMind", "MelakifyMind\MelakifyMind.csproj", "{5CF23E00-59D9-4C09-88AE-E984B060FA1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelakifyVision", "MelakifyVision\MelakifyVision.csproj", "{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,18 +27,6 @@ Global
 		{5CF23E00-59D9-4C09-88AE-E984B060FA1A}.Release|Default.Build.0 = Release|Any CPU
 		{5CF23E00-59D9-4C09-88AE-E984B060FA1A}.Release|x86.ActiveCfg = Release|x86
 		{5CF23E00-59D9-4C09-88AE-E984B060FA1A}.Release|x86.Build.0 = Release|x86
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Debug|Default.ActiveCfg = Debug|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Debug|Default.Build.0 = Debug|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Debug|x86.Build.0 = Debug|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Release|Default.ActiveCfg = Release|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Release|Default.Build.0 = Release|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Release|x86.ActiveCfg = Release|Any CPU
-		{A398A51D-2C6B-4508-B8B3-C6B1C63F591C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,17 +38,24 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Default = Debug|Default
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Default = Release|Default
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Default = Debug|Default
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|Default = Release|Default
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Default = Debug|Default
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Default = Release|Default
 		Release|x86 = Release|x86
 	EndGlobalSection
 EndGlobal

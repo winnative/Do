@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using static melakify.UI.BackDrop.BackDropCoWorker.Method;
 using static melakify.UI.BackDrop.BackDropCoWorker.Parameter;
+using Microsoft.VisualBasic;
 
 namespace melakify.UI.BackDrop
 {
@@ -67,7 +68,7 @@ namespace melakify.UI.BackDrop
                 2);
             }
         }
-
+        public static bool IsWindows11_22523_OrGreater { get; } = new Version(10, 0, 22523) <= Environment.OSVersion.Version;
         public static void UseNewMica(Window window, bool isDark = false)
         {
             RefreshFrame(window);
@@ -75,16 +76,31 @@ namespace melakify.UI.BackDrop
             if (isDark)
             {
                 SetWindowAttribute(
+                    new WindowInteropHelper(window).Handle,
+                    DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,
+                    0x01);
+            }
+            else
+            {
+                SetWindowAttribute(
+                    new WindowInteropHelper(window).Handle,
+                    DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,
+                    0x00);
+            }
+
+            if (IsWindows11_22523_OrGreater)
+            {
+                SetWindowAttribute(
                 new WindowInteropHelper(window).Handle,
-                DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,
+                DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
                 4);
             }
             else
             {
                 SetWindowAttribute(
                 new WindowInteropHelper(window).Handle,
-                DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
-                4);
+                DWMWINDOWATTRIBUTE.DWMWA_MICA_EFFECT,
+                0x01);
             }
         }
 

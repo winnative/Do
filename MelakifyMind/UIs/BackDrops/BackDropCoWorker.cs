@@ -24,7 +24,8 @@ namespace melakify.UI.BackDrop
             public enum DWMWINDOWATTRIBUTE
             {
                 DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
-                DWMWA_SYSTEMBACKDROP_TYPE = 38
+                DWMWA_SYSTEMBACKDROP_TYPE = 38,
+                DWMWA_MICA_EFFECT = 1029
             }
 
             [StructLayout(LayoutKind.Sequential)]
@@ -39,7 +40,7 @@ namespace melakify.UI.BackDrop
 
         public static class Method
         {
-            [DllImport("DwmApi.dll")]
+            [DllImport("dwmApi.dll")]
             static extern int DwmExtendFrameIntoClientArea(
                 IntPtr hwnd,
                 ref Parameter.MARGINS pMarInset);
